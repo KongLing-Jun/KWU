@@ -1,0 +1,4 @@
+.githooks/** text eol=lf
+benchmarks/**/*.sh text eol=lf
+internal/project/testdata/projects-v2/contracts.json text eol=lf
+internal/project/testdata/projects-v1/contracts.json text eol=lf

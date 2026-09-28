@@ -1,0 +1,1 @@
+{"input":{"productConcept":"水杯"},"expectedStatus":"needs_input","requiredInstructions":["status=needs_input","missingFields","不要替用户猜测市场"],"evaluation":"static-contract-only"}

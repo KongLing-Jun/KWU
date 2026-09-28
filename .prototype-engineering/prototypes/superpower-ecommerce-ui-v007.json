@@ -1,0 +1,87 @@
+{
+  "artifacts": {
+    "boundary": ".prototype-engineering/records/superpower-ecommerce-ui-v007/boundary.json",
+    "brief": ".prototype-engineering/records/superpower-ecommerce-ui-v007/brief.md",
+    "record": ".prototype-engineering/records/superpower-ecommerce-ui-v007/record.md",
+    "repositoryMap": ".prototype-engineering/records/superpower-ecommerce-ui-v007/repository-map.md",
+    "scenarios": ".prototype-engineering/records/superpower-ecommerce-ui-v007/scenarios.json"
+  },
+  "boundaryVersion": 4,
+  "checks": [
+    {
+      "at": "2026-08-21T14:09:34+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v007/verification.md",
+      "name": "frontend-production-build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T14:09:35+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v007/verification.md",
+      "name": "dashboard-contract-browser-qa",
+      "status": "passed"
+    }
+  ],
+  "createdAt": "2026-08-21T13:55:46+00:00",
+  "decision": "continue",
+  "evidence": [
+    ".prototype-engineering/evidence/superpower-ecommerce-ui-v007/verification.md"
+  ],
+  "git": {
+    "baseCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72",
+    "verifiedCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72"
+  },
+  "history": [
+    {
+      "at": "2026-08-21T13:55:46+00:00",
+      "from": null,
+      "to": "draft"
+    },
+    {
+      "at": "2026-08-21T13:57:46+00:00",
+      "from": "draft",
+      "to": "discovered"
+    },
+    {
+      "at": "2026-08-21T13:58:19+00:00",
+      "from": "discovered",
+      "to": "framed"
+    },
+    {
+      "at": "2026-08-21T13:58:46+00:00",
+      "from": "framed",
+      "to": "bounded"
+    },
+    {
+      "at": "2026-08-21T13:59:06+00:00",
+      "from": "bounded",
+      "to": "frozen"
+    },
+    {
+      "at": "2026-08-21T13:59:06+00:00",
+      "from": "frozen",
+      "to": "building"
+    },
+    {
+      "at": "2026-08-21T14:09:35+00:00",
+      "from": "building",
+      "to": "verified"
+    },
+    {
+      "at": "2026-08-21T14:10:10+00:00",
+      "from": "verified",
+      "to": "recorded"
+    },
+    {
+      "at": "2026-08-21T14:10:10+00:00",
+      "from": "recorded",
+      "to": "decided"
+    }
+  ],
+  "id": "superpower-ecommerce-ui-v007",
+  "name": "superpower-ecommerce-ui",
+  "parentId": "superpower-ecommerce-ui-v006",
+  "phase": "decided",
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-21T14:10:10+00:00",
+  "version": 7
+}

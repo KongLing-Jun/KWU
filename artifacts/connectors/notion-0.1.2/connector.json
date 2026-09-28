@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "id": "notion",
+  "version": "0.1.2",
+  "name": "Notion",
+  "provider": "Notion",
+  "description": "创建、搜索和管理 Notion 工作区。用自然语言读取页面、查询数据库、更新内容、整理知识库。",
+  "category": "productivity",
+  "icon_url": "https://kwu-cloud.oss-cn-guangzhou.aliyuncs.com/connectors/icons/v1/notion.svg",
+  "examples": ["读取这个 Notion 页面并总结", "把确认后的结果更新到这个页面"],
+  "kind": "mcp",
+  "capabilities": ["mcp_tools", "local_mcp_oauth", "workspace_read", "workspace_write"],
+  "min_client_version": "0.9.0",
+  "platforms": [{"os": "windows", "architectures": ["x64"]}],
+  "entrypoints": {"mcp": "mcp.json"}
+}

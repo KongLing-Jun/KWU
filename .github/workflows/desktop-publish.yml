@@ -1,0 +1,652 @@
+name: Desktop publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Exact desktop-vX.Y.Z Draft/Release tag"
+        required: true
+        type: string
+      confirmation:
+        description: "Type PUBLISH <tag> TARGETS <normalized-list> [BOOTSTRAP]"
+        required: true
+        type: string
+      arm64_acceptance_confirmation:
+        description: "Full publish: type ACCEPT desktop-vX.Y.Z ARM64 after real Win11 ARM validation"
+        required: false
+        type: string
+      arm64_acceptance_sha256:
+        description: "Full publish: SHA256 of the exact validated Draft arm64 installer"
+        required: false
+        type: string
+      mode:
+        description: "Full publication or cloud-only recovery"
+        required: true
+        type: choice
+        options:
+          - full
+          - cloud-only
+        default: full
+      release_target:
+        description: "Comma-separated targets in canonical order, or all"
+        required: true
+        type: string
+        default: all
+      bootstrap:
+        description: "Publish the one-time complete migration version"
+        required: true
+        type: boolean
+        default: false
+      cloud_mode:
+        description: "Cloud records are mandatory"
+        required: true
+        type: choice
+        options:
+          - required
+        default: required
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-stable-release
+  cancel-in-progress: false
+
+env:
+  RELEASE_REPOSITORY: xiaoxiaotest9527-bit/KWU-release
+  OSS_BUCKET: kwu-desktop-releases
+  OSS_PUBLIC_BASE_URL: https://kwu-desktop-releases.oss-cn-guangzhou.aliyuncs.com
+  OSS_REGION: cn-guangzhou
+  OSS_ENDPOINT: https://oss-cn-guangzhou.aliyuncs.com
+
+jobs:
+  resolve:
+    name: Confirm publication intent and source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      tag: ${{ steps.release.outputs.tag }}
+      version: ${{ steps.release.outputs.version }}
+      source_commit: ${{ steps.release.outputs.source_commit }}
+      tag_object: ${{ steps.release.outputs.tag_object }}
+      notes_path: ${{ steps.release.outputs.notes_path }}
+      targets: ${{ steps.release.outputs.targets }}
+    steps:
+      - name: Require the exact human confirmation
+        id: intent
+        shell: pwsh
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_ARM64_CONFIRMATION: ${{ inputs.arm64_acceptance_confirmation }}
+          INPUT_ARM64_SHA256: ${{ inputs.arm64_acceptance_sha256 }}
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_RELEASE_TARGET: ${{ inputs.release_target }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+          INPUT_CLOUD_MODE: ${{ inputs.cloud_mode }}
+        run: |
+          if ($env:GITHUB_REF -ne 'refs/heads/main-v3') {
+            throw 'Desktop Publish must be dispatched from main-v3'
+          }
+          $targets = @($env:INPUT_RELEASE_TARGET -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+          $order = @('windows-amd64', 'windows-arm64', 'macos-universal')
+          if ($targets.Count -eq 0) {
+            throw 'release_target must be a non-empty comma-separated selection'
+          }
+          if ($targets -contains 'all') {
+            if ($targets.Count -ne 1) { throw 'release_target all cannot be combined with another target' }
+            $targets = $order
+          }
+          elseif (@($targets | Where-Object { $order -notcontains $_ }).Count) {
+            throw 'release_target contains an unknown target'
+          }
+          $targets = @($order | Where-Object { $targets -contains $_ })
+          "targets=$($targets -join ',')" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          $suffix = if ($env:INPUT_BOOTSTRAP -eq 'true') { ' BOOTSTRAP' } else { '' }
+          $expected = "PUBLISH $env:INPUT_TAG TARGETS $($targets -join ',')$suffix"
+          if ($env:INPUT_CONFIRMATION -cne $expected) { throw "Confirmation must exactly match: $expected" }
+          if ($env:INPUT_BOOTSTRAP -eq 'true' -and $targets.Count -ne 3) {
+            throw 'bootstrap requires all three targets'
+          }
+          if ($env:INPUT_MODE -eq 'full' -and $targets -contains 'windows-arm64') {
+            if ($env:INPUT_ARM64_CONFIRMATION -cne "ACCEPT $env:INPUT_TAG ARM64") {
+              throw "ARM64 acceptance confirmation must exactly match: ACCEPT $env:INPUT_TAG ARM64"
+            }
+            if ($env:INPUT_ARM64_SHA256.Trim().ToLowerInvariant() -notmatch '^[0-9a-f]{64}$') {
+              throw 'arm64_acceptance_sha256 must be an exact 64-character SHA256'
+            }
+          }
+          if ($env:INPUT_CLOUD_MODE -ne 'required') { throw 'cloud_mode must be required' }
+          if ($env:INPUT_MODE -eq 'cloud-only' -and $env:INPUT_CLOUD_MODE -ne 'required') {
+            throw 'cloud-only recovery requires cloud_mode=required'
+          }
+
+      - name: Check out trusted release tooling and full history
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Resolve and verify immutable source tag
+        id: release
+        shell: pwsh
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          RESOLVED_TARGETS: ${{ steps.intent.outputs.targets }}
+        run: |
+          $parameters = @{
+            Action = 'Resolve'
+            Mode = 'tag'
+            Tag = $env:INPUT_TAG
+            ReleaseTargets = $env:RESOLVED_TARGETS
+          }
+          ./scripts/desktop-actions-draft.ps1 @parameters
+
+  stage-full-release:
+    name: Validate Draft provenance and stage assets
+    if: ${{ inputs.mode == 'full' }}
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      receipt_windows_amd64: ${{ steps.stage.outputs.receipt_windows_amd64 }}
+      receipt_windows_arm64: ${{ steps.stage.outputs.receipt_windows_arm64 }}
+      receipt_macos_universal: ${{ steps.stage.outputs.receipt_macos_universal }}
+    steps:
+      - name: Check out trusted release tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          # The helper revalidates the private source tag with git ls-remote.
+          # Keep only this job-scoped, read-only token; checkout removes it in post-job cleanup.
+          persist-credentials: true
+
+      - name: Check out frozen source only for approved release notes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.source_commit }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Download and verify the requested Draft assets
+        id: stage
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+          INPUT_ARM64_CONFIRMATION: ${{ inputs.arm64_acceptance_confirmation }}
+          INPUT_ARM64_SHA256: ${{ inputs.arm64_acceptance_sha256 }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action ValidateDraft `
+            -ReleaseState draft-or-published `
+            -AllowFinalizedDraft `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -SourceCommit '${{ needs.resolve.outputs.source_commit }}' `
+            -TagObject '${{ needs.resolve.outputs.tag_object }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ArtifactsDirectory release-assets `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+            -Arm64AcceptanceConfirmation $env:INPUT_ARM64_CONFIRMATION `
+            -Arm64AcceptanceSHA256 $env:INPUT_ARM64_SHA256 `
+
+  validate-windows:
+    name: Revalidate Windows installer payloads
+    if: ${{ inputs.mode == 'full' && (contains(needs.resolve.outputs.targets, 'windows-amd64') || contains(needs.resolve.outputs.targets, 'windows-arm64')) }}
+    needs: [resolve, stage-full-release]
+    runs-on: windows-2025
+    timeout-minutes: 15
+    steps:
+      - name: Check out validation tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Download exact approved Windows Draft assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+        run: |
+          $bindings = @{
+            'windows-amd64' = 'Clouvia-windows-amd64-installer.exe'
+            'windows-arm64' = 'Clouvia-windows-arm64-installer.exe'
+          }
+          foreach ($target in $bindings.Keys) {
+            if (-not $env:INPUT_RELEASE_TARGET.Contains($target)) { continue }
+            $directory = Join-Path release-assets $target
+            New-Item -ItemType Directory -Path $directory -Force | Out-Null
+            gh release download '${{ needs.resolve.outputs.tag }}' --repo $env:RELEASE_REPOSITORY `
+              --pattern $bindings[$target] --dir $directory
+            if ($LASTEXITCODE -ne 0) { throw "Failed to download exact Draft asset for $target" }
+          }
+
+      - name: Compare Windows downloads with approved receipts
+        shell: pwsh
+        env:
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          RECEIPT_WINDOWS_AMD64: ${{ needs.stage-full-release.outputs.receipt_windows_amd64 }}
+          RECEIPT_WINDOWS_ARM64: ${{ needs.stage-full-release.outputs.receipt_windows_arm64 }}
+        run: |
+          $receipts = @{
+            'windows-amd64' = $env:RECEIPT_WINDOWS_AMD64
+            'windows-arm64' = $env:RECEIPT_WINDOWS_ARM64
+          }
+          foreach ($target in $receipts.Keys) {
+            if (-not $env:INPUT_RELEASE_TARGET.Contains($target)) { continue }
+            ./scripts/desktop-actions-publish.ps1 -Action ValidateAssetReceipt `
+              -ReceiptTarget $target -AssetReceipt $receipts[$target] `
+              -ArtifactsDirectory (Join-Path release-assets $target)
+          }
+
+      - name: Verify payload architectures, not the NSIS shell
+        shell: pwsh
+        env:
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+        run: |
+          if ($env:INPUT_RELEASE_TARGET.Contains('windows-amd64')) {
+            ./scripts/assert-windows-release-architecture.ps1 `
+              -Architecture amd64 `
+              -InstallerPath release-assets/windows-amd64/Clouvia-windows-amd64-installer.exe `
+              -ExpectedVersion '${{ needs.resolve.outputs.version }}' `
+              -ExpectedProductName '云智企办' `
+              -ExpectedCompanyName 'Clouvia' `
+              -RequireTrustedSignature
+          }
+          if ($env:INPUT_RELEASE_TARGET.Contains('windows-arm64')) {
+            ./scripts/assert-windows-release-architecture.ps1 `
+              -Architecture arm64 `
+              -InstallerPath release-assets/windows-arm64/Clouvia-windows-arm64-installer.exe `
+              -ExpectedVersion '${{ needs.resolve.outputs.version }}' `
+              -ExpectedProductName '云智企办' `
+              -ExpectedCompanyName 'Clouvia' `
+              -RequireTrustedSignature
+          }
+
+  validate-macos:
+    name: Revalidate macOS universal DMG
+    if: ${{ inputs.mode == 'full' && contains(needs.resolve.outputs.targets, 'macos-universal') }}
+    needs: [resolve, stage-full-release]
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - name: Check out validation tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Download exact approved macOS Draft asset
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+        run: |
+          New-Item -ItemType Directory -Path release-assets/macos-universal -Force | Out-Null
+          gh release download '${{ needs.resolve.outputs.tag }}' --repo $env:RELEASE_REPOSITORY `
+            --pattern Clouvia-darwin-universal.dmg --dir release-assets/macos-universal
+          if ($LASTEXITCODE -ne 0) { throw 'Failed to download exact macOS Draft asset' }
+
+      - name: Compare macOS download with approved receipt
+        shell: pwsh
+        env:
+          ASSET_RECEIPT: ${{ needs.stage-full-release.outputs.receipt_macos_universal }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 -Action ValidateAssetReceipt `
+            -ReceiptTarget macos-universal -AssetReceipt $env:ASSET_RECEIPT `
+            -ArtifactsDirectory release-assets/macos-universal
+
+      - name: Verify both slices and ad-hoc code signature structure
+        shell: bash
+        run: scripts/assert-macos-release-architecture.sh release-assets/macos-universal/Clouvia-darwin-universal.dmg '${{ needs.resolve.outputs.version }}'
+
+  publish-full-release:
+    name: Sign and publish approved GitHub and OSS release
+    if: ${{ always() && inputs.mode == 'full' && needs.stage-full-release.result == 'success' && (needs.validate-windows.result == 'success' || needs.validate-windows.result == 'skipped') && (needs.validate-macos.result == 'success' || needs.validate-macos.result == 'skipped') }}
+    needs: [resolve, stage-full-release, validate-windows, validate-macos]
+    runs-on: ubuntu-24.04
+    environment: desktop-release
+    timeout-minutes: 30
+    steps:
+      - name: Check out trusted signing and publication tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          # The helper revalidates the private source tag immediately before publication.
+          # Keep only this job-scoped, read-only token; checkout removes it in post-job cleanup.
+          persist-credentials: true
+
+      - name: Check out frozen source only for approved release notes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.source_commit }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version-file: desktop/go.mod
+          cache: true
+          cache-dependency-path: desktop/go.sum
+
+      - name: Prebuild cloud release publisher
+        working-directory: desktop
+        shell: bash
+        run: go build -o "$RUNNER_TEMP/publish-cloud-release" ./cmd/publish-cloud-release
+
+      - name: Download exact approved Draft assets for publication
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+        run: |
+          $bindings = @{
+            'windows-amd64' = 'Clouvia-windows-amd64-installer.exe'
+            'windows-arm64' = 'Clouvia-windows-arm64-installer.exe'
+            'macos-universal' = 'Clouvia-darwin-universal.dmg'
+          }
+          New-Item -ItemType Directory -Path release-assets -Force | Out-Null
+          foreach ($target in $bindings.Keys) {
+            if (-not $env:INPUT_RELEASE_TARGET.Contains($target)) { continue }
+            gh release download '${{ needs.resolve.outputs.tag }}' --repo $env:RELEASE_REPOSITORY `
+              --pattern $bindings[$target] --dir release-assets
+            if ($LASTEXITCODE -ne 0) { throw "Failed to download exact Draft asset for $target" }
+          }
+
+      - name: Compare publication downloads with approved receipts
+        shell: pwsh
+        env:
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          RECEIPT_WINDOWS_AMD64: ${{ needs.stage-full-release.outputs.receipt_windows_amd64 }}
+          RECEIPT_WINDOWS_ARM64: ${{ needs.stage-full-release.outputs.receipt_windows_arm64 }}
+          RECEIPT_MACOS_UNIVERSAL: ${{ needs.stage-full-release.outputs.receipt_macos_universal }}
+        run: |
+          $receipts = @{
+            'windows-amd64' = $env:RECEIPT_WINDOWS_AMD64
+            'windows-arm64' = $env:RECEIPT_WINDOWS_ARM64
+            'macos-universal' = $env:RECEIPT_MACOS_UNIVERSAL
+          }
+          $selectedReceipts = @($receipts.Keys | Where-Object { $env:INPUT_RELEASE_TARGET.Contains($_) } |
+            ForEach-Object { $receipts[$_] })
+          ./scripts/desktop-actions-publish.ps1 -Action ValidateAssetReceipts `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET -AssetReceipts $selectedReceipts `
+            -ArtifactsDirectory release-assets
+
+      - name: Install pinned ossutil
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/ossutil-2.3.0-linux-amd64.zip"
+          curl --fail --silent --show-error --location \
+            --output "$archive" \
+            https://gosspublic.alicdn.com/ossutil/v2/2.3.0/ossutil-2.3.0-linux-amd64.zip
+          echo "3ae4d9fc85a7a6e9f5654d1599766f1a3a42a3692870887b5ae9338d582ef65a  $archive" | sha256sum --check --strict
+          unzip -q "$archive" -d "$RUNNER_TEMP/ossutil"
+          install -m 0755 "$RUNNER_TEMP/ossutil/ossutil-2.3.0-linux-amd64/ossutil" "$RUNNER_TEMP/ossutil-bin"
+
+      - name: Recheck cloud readiness immediately before publication
+        shell: pwsh
+        env:
+          KWU_CLOUD_RELEASE_TOKEN: ${{ secrets.KWU_CLOUD_RELEASE_TOKEN }}
+          KWU_CLOUD_BASE_URL: ${{ vars.KWU_CLOUD_BASE_URL }}
+          INPUT_CLOUD_MODE: ${{ inputs.cloud_mode }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action CloudPreflight `
+            -CloudMode $env:INPUT_CLOUD_MODE `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL
+
+      # Windows Authenticode bytes were frozen on the fixed signing machine before
+      # Draft upload. macOS remains ad-hoc signed and unnotarized in this release.
+      - name: Minisign and publish immutable GitHub and OSS assets
+        id: publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          MINISIGN_PRIVATE_KEY: ${{ secrets.MINISIGN_PRIVATE_KEY }}
+          MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          KWU_CLOUD_RELEASE_TOKEN: ${{ secrets.KWU_CLOUD_RELEASE_TOKEN }}
+          KWU_CLOUD_BASE_URL: ${{ vars.KWU_CLOUD_BASE_URL }}
+          INPUT_CLOUD_MODE: ${{ inputs.cloud_mode }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+          INPUT_ARM64_CONFIRMATION: ${{ inputs.arm64_acceptance_confirmation }}
+          INPUT_ARM64_SHA256: ${{ inputs.arm64_acceptance_sha256 }}
+          RECEIPT_WINDOWS_AMD64: ${{ needs.stage-full-release.outputs.receipt_windows_amd64 }}
+          RECEIPT_WINDOWS_ARM64: ${{ needs.stage-full-release.outputs.receipt_windows_arm64 }}
+          RECEIPT_MACOS_UNIVERSAL: ${{ needs.stage-full-release.outputs.receipt_macos_universal }}
+        run: |
+          $receipts = @()
+          foreach ($binding in @(
+            @{ Target = 'windows-amd64'; Receipt = $env:RECEIPT_WINDOWS_AMD64 },
+            @{ Target = 'windows-arm64'; Receipt = $env:RECEIPT_WINDOWS_ARM64 },
+            @{ Target = 'macos-universal'; Receipt = $env:RECEIPT_MACOS_UNIVERSAL }
+          )) {
+            if ($env:INPUT_RELEASE_TARGET.Contains($binding.Target)) { $receipts += $binding.Receipt }
+          }
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action PublishGitHubOss `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -SourceCommit '${{ needs.resolve.outputs.source_commit }}' `
+            -TagObject '${{ needs.resolve.outputs.tag_object }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ArtifactsDirectory release-assets `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+            -OssutilPath "$env:RUNNER_TEMP/ossutil-bin" `
+            -OssBucket $env:OSS_BUCKET `
+            -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+            -CloudMode $env:INPUT_CLOUD_MODE `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL `
+            -CloudPublisherPath "$env:RUNNER_TEMP/publish-cloud-release" `
+            -CloudConcurrency 3 `
+            -Arm64AcceptanceConfirmation $env:INPUT_ARM64_CONFIRMATION `
+            -Arm64AcceptanceSHA256 $env:INPUT_ARM64_SHA256 `
+            -AssetReceipts $receipts `
+            -WorkDirectory "$env:RUNNER_TEMP/desktop-publish"
+
+      - name: Publish and verify cloud release rows
+        shell: pwsh
+        env:
+          KWU_CLOUD_RELEASE_TOKEN: ${{ secrets.KWU_CLOUD_RELEASE_TOKEN }}
+          KWU_CLOUD_BASE_URL: ${{ vars.KWU_CLOUD_BASE_URL }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action PublishCloudRecords `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+            -CloudMode required `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL `
+            -CloudPublisherPath "$env:RUNNER_TEMP/publish-cloud-release" `
+            -CloudManifestDirectory "$env:RUNNER_TEMP/desktop-publish/oss" `
+            -CloudManifestPattern 'latest-{target}.json' `
+            -CloudConcurrency 3
+
+      - name: Advance selected stable pointers last
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action PublishPointers `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -SourceCommit '${{ needs.resolve.outputs.source_commit }}' `
+            -TagObject '${{ needs.resolve.outputs.tag_object }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+            -OssutilPath "$env:RUNNER_TEMP/ossutil-bin" `
+            -OssBucket $env:OSS_BUCKET `
+            -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+            -WorkDirectory "$env:RUNNER_TEMP/desktop-publish"
+
+      - name: Record publication result
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          {
+            echo "## Desktop publication"
+            echo
+            echo "- Tag: \`${{ needs.resolve.outputs.tag }}\`"
+            echo "- Source commit: \`${{ needs.resolve.outputs.source_commit }}\`"
+            echo "- Cloud mode: \`required\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  publish-cloud-only:
+    name: Recover cloud release rows only
+    if: ${{ inputs.mode == 'cloud-only' }}
+    needs: resolve
+    runs-on: ubuntu-24.04
+    environment: desktop-release
+    timeout-minutes: 20
+    steps:
+      - name: Check out trusted cloud publication tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          # Cloud-only recovery also revalidates the private source tag before POST.
+          # Keep only this job-scoped, read-only token; checkout removes it in post-job cleanup.
+          persist-credentials: true
+
+      - name: Check out frozen source only for approved release notes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.source_commit }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version-file: desktop/go.mod
+          cache: true
+          cache-dependency-path: desktop/go.sum
+
+      - name: Prebuild cloud release publisher
+        working-directory: desktop
+        shell: bash
+        run: go build -o "$RUNNER_TEMP/publish-cloud-release" ./cmd/publish-cloud-release
+
+      - name: Validate already-published assets and provenance
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+        run: |
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action ValidateDraft `
+            -ReleaseState published `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -SourceCommit '${{ needs.resolve.outputs.source_commit }}' `
+            -TagObject '${{ needs.resolve.outputs.tag_object }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ArtifactsDirectory release-assets `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+          foreach ($name in @(Get-ChildItem release-assets -File | ForEach-Object Name)) {
+            gh release download '${{ needs.resolve.outputs.tag }}' `
+              --repo $env:RELEASE_REPOSITORY `
+              --pattern "$name.minisig" `
+              --dir release-assets
+            if ($LASTEXITCODE -ne 0) { throw "Failed to download $name.minisig" }
+          }
+
+      - name: Verify published minisign signatures
+        working-directory: desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          for asset in ../release-assets/*.exe ../release-assets/*.dmg
+          do
+            [ -e "$asset" ] || continue
+            go run ./cmd/sign verify "$asset"
+          done
+
+      - name: Download immutable OSS manifest
+        shell: pwsh
+        env:
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+        run: |
+          $targets = @($env:INPUT_RELEASE_TARGET -split ',' | ForEach-Object { $_.Trim() })
+          foreach ($target in $targets) {
+            Invoke-WebRequest `
+              -Uri "$env:OSS_PUBLIC_BASE_URL/releases/${{ needs.resolve.outputs.tag }}/$target/latest.json" `
+              -OutFile "oss-latest-$target.json"
+          }
+
+      - name: Recheck cloud readiness and publish only cloud rows
+        shell: pwsh
+        env:
+          KWU_CLOUD_RELEASE_TOKEN: ${{ secrets.KWU_CLOUD_RELEASE_TOKEN }}
+          KWU_CLOUD_BASE_URL: ${{ vars.KWU_CLOUD_BASE_URL }}
+          INPUT_RELEASE_TARGET: ${{ needs.resolve.outputs.targets }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_BOOTSTRAP: ${{ inputs.bootstrap }}
+        run: |
+          $targets = @($env:INPUT_RELEASE_TARGET -split ',' | ForEach-Object { $_.Trim() })
+          foreach ($target in $targets) {
+            ./scripts/desktop-actions-publish.ps1 `
+              -Action ValidateOssManifest `
+              -Tag '${{ needs.resolve.outputs.tag }}' `
+              -Version '${{ needs.resolve.outputs.version }}' `
+              -SourceCommit '${{ needs.resolve.outputs.source_commit }}' `
+              -TagObject '${{ needs.resolve.outputs.tag_object }}' `
+              -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+              -ArtifactsDirectory release-assets `
+              -OssManifestPath "oss-latest-$target.json" `
+              -ManifestTarget $target `
+              -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+              -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+              -Confirmation $env:INPUT_CONFIRMATION `
+              -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true')
+          }
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action CloudPreflight `
+            -CloudMode required `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL
+          ./scripts/desktop-actions-publish.ps1 `
+            -Action PublishCloudRecords `
+            -Tag '${{ needs.resolve.outputs.tag }}' `
+            -Version '${{ needs.resolve.outputs.version }}' `
+            -NotesFile (Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}') `
+            -ReleaseTargets $env:INPUT_RELEASE_TARGET `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Bootstrap:($env:INPUT_BOOTSTRAP -eq 'true') `
+            -CloudMode required `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL `
+            -CloudPublisherPath "$env:RUNNER_TEMP/publish-cloud-release" `
+            -CloudManifestDirectory '${{ github.workspace }}' `
+            -CloudManifestPattern 'oss-latest-{target}.json' `
+            -CloudConcurrency 3

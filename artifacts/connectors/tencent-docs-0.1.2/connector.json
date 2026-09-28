@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "id": "tencent-docs",
+  "version": "0.1.2",
+  "name": "腾讯文档",
+  "provider": "Tencent",
+  "description": "创建、编辑和协作腾讯文档。用自然语言管理在线表格、文档和幻灯片，轻松完成内容查询、数据整理和团队协同。",
+  "category": "productivity",
+  "icon_url": "https://kwu-cloud.oss-cn-guangzhou.aliyuncs.com/connectors/icons/v1/tencent-docs.png",
+  "examples": ["在普通对话中使用 腾讯文档"],
+  "kind": "mcp",
+  "capabilities": ["mcp_tools", "local_mcp_oauth", "cloud_docs_read", "cloud_docs_write"],
+  "min_client_version": "0.9.0",
+  "platforms": [{"os": "windows", "architectures": ["x64"]}],
+  "entrypoints": {"mcp": "mcp.json"}
+}

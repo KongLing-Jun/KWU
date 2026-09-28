@@ -1,0 +1,37 @@
+{
+  "subject": "Mock capability tool to Host-owned dashboard JSON to subscribed UI end-to-end loop",
+  "inside": [
+    "Finite capability mock tool registry and deterministic tool request",
+    "Tool-to-dashboard-action composition without paths or UI source",
+    "Existing binding, revision, idempotency and atomic JSON persistence",
+    "Capability dashboard changed event emitted after committed mutation",
+    "Frontend event subscription, document reload and registry rendering",
+    "Floating prototype-only trigger and visible execution state"
+  ],
+  "outside": [
+    {
+      "system": "Real MCP protocol transport and model runtime",
+      "contract": "invokeTool(toolName, scope) returns only after requesting a declared Host dashboard action; unsupported names fail closed.",
+      "adapter": "DeterministicCapabilityMockToolAdapter",
+      "scenarioIds": ["mock-tool-success", "mock-tool-replay", "unsupported-tool"]
+    },
+    {
+      "system": "Real Shopify, eBay and 1688 APIs",
+      "contract": "The mock tool supplies labeled deterministic values and provenance that must not be presented as live platform data.",
+      "adapter": "MockSupplyComparisonFixture",
+      "scenarioIds": ["mock-tool-success"]
+    },
+    {
+      "system": "Production MCP progress and task protocol",
+      "contract": "The prototype exposes local pending/success/failure state only; no durable MCP run lifecycle is claimed.",
+      "adapter": "LocalMockToolExecutionState",
+      "scenarioIds": ["tool-failure"]
+    },
+    {
+      "system": "Cross-process event delivery and cloud sync",
+      "contract": "Wails process-local events notify mounted clients; reopening still recovers from task JSON.",
+      "adapter": "WailsCapabilityDashboardChangedEvent",
+      "scenarioIds": ["event-refresh", "reload-persistence"]
+    }
+  ]
+}

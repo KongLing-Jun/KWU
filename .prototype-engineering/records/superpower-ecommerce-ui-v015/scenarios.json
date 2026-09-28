@@ -1,0 +1,10 @@
+{
+  "scenarios": [
+    {"id":"persisted-evidence","description":"A bound Desktop task atomically installs and reloads a validated EvidenceDocument beside its dashboard.","fixture":"Prototype catalog with Mock and official-research provenance"},
+    {"id":"desktop-real-session","description":"A ready Desktop session receives the visible question and hidden bounded evidence context; streamed assistant text is projected into the matching follow-up.","fixture":"Configured active session and two selected sources"},
+    {"id":"session-unavailable","description":"When no ready Desktop session exists, the workspace does not claim real execution and uses the labelled deterministic preview adapter only in browser preview.","fixture":"Pure Vite runtime or blocked controller"},
+    {"id":"source-navigation","description":"Clicking answer source n reveals a collapsed canvas, scrolls to the matching widget and applies transient focus without changing citation selection.","fixture":"Answer referencing one inline and one canvas widget"},
+    {"id":"scope-rejection","description":"Evidence JSON with mismatched capability/workspace/task scope, duplicate IDs or oversized fields is rejected before persistence.","fixture":"Invalid EvidenceDocument seeds"},
+    {"id":"external-credentials-absent","description":"The UI retains explicit Mock/research provenance and never reports live Shopify/eBay/1688 collection without authorized adapters.","fixture":"No marketplace credentials"}
+  ]
+}

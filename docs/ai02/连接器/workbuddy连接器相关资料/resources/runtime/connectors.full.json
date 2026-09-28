@@ -1,0 +1,3913 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-08-01T15:20:00+08:00",
+  "target": {
+    "product": "WorkBuddy",
+    "version": "5.3.5",
+    "platform": "Windows",
+    "executable": "D:\\work buddy\\WorkBuddy\\WorkBuddy.exe",
+    "appAsar": "D:\\work buddy\\WorkBuddy\\resources\\app.asar",
+    "rendererBundle": "D:\\work buddy\\WorkBuddy\\resources\\app.asar\\renderer\\assets\\index-BKQ8hgtn.js"
+  },
+  "extraction": {
+    "source": "Electron renderer React runtime, ConnectorPanel hook registry",
+    "registeredCount": 73,
+    "visibleInObservedPersonalUiCount": 64,
+    "credentialPolicy": "No credential values exported. Empty tokenValues and variable placeholders are retained; non-template secret-looking values would be redacted. Embedded icons are replaced by MIME/length/SHA-256 metadata."
+  },
+  "summary": {
+    "count": 73,
+    "typeCounts": {
+      "unspecified": 57,
+      "cli": 14,
+      "skill-only": 2
+    },
+    "authModeCounts": {
+      "unspecified": 52,
+      "server-side": 4,
+      "token": 16,
+      "mcp": 1
+    },
+    "cliCount": 15,
+    "mcpCount": 71,
+    "tokenConfigCount": 16,
+    "skillCount": 50,
+    "transportCounts": {
+      "streamable-http": 1,
+      "streamableHttp": 32,
+      "unspecified": 16,
+      "cli": 14,
+      "sse": 4,
+      "stdio": 4
+    },
+    "withProviderId": 10,
+    "withExamplesZh": 73,
+    "totalExamplesZh": 314,
+    "totalExamplesEn": 314,
+    "visibilityCounts": {
+      "internal": 37,
+      "iOA": 42,
+      "cloudhosted": 35,
+      "selfhosted": 35,
+      "unspecified": 27,
+      "plan:ultimate": 1,
+      "plan:exclusive": 1
+    },
+    "hiddenDefinitions": [
+      {
+        "id": "tencent-docs-oa",
+        "name": "腾讯文档企业版",
+        "visibleIn": [
+          "iOA",
+          "plan:ultimate",
+          "plan:exclusive"
+        ]
+      },
+      {
+        "id": "tapd-woa",
+        "name": "TAPD（司内版）",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "cnb-woa",
+        "name": "CNB（司内版）",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "iwiki-woa",
+        "name": "iWiki",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "gongfeng-woa",
+        "name": "Gongfeng",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "zhiyan-cicd",
+        "name": "智研构建部署",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "km",
+        "name": "KM",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "bugly",
+        "name": "Bugly 质量概览",
+        "visibleIn": [
+          "iOA"
+        ]
+      },
+      {
+        "id": "anydev",
+        "name": "司内研发环境(AnyDev)",
+        "visibleIn": [
+          "iOA"
+        ]
+      }
+    ]
+  },
+  "connectors": [
+    {
+      "id": "tdx-connector",
+      "name": "通达信",
+      "description": "通过通达信 MCP 查询全球股票行情数据、条件选股、研究报告、公告资讯和宏观信息。支持个股基本面分析、同行业对比和智能选股筛查。",
+      "mcpConfig": {
+        "url": "https://txmcp.tdx.com.cn:3001/txmcp",
+        "type": "streamable-http"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查询贵州茅台(600519)最近的研究报告",
+        "筛选市盈率低于20、ROE高于15%的全球股票",
+        "查询近期宏观经济政策动向",
+        "分析半导体行业龙头股的基本面数据"
+      ],
+      "examples_en": [
+        "Find recent research reports for Kweichow Moutai (600519)",
+        "Screen global stocks with P/E below 20 and ROE above 15%",
+        "Query recent macroeconomic policy trends",
+        "Analyze fundamental data of leading semiconductor stocks"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 3794,
+        "sha256": "611513698ed935f388513e279daa6585809782e829d46c0599616593ec2fc63e",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "westock-mcp",
+      "name": "腾讯自选股",
+      "description": "直连腾讯自选股，实时掌握毫秒级行情与资金动态，用自然语言分析自选数据、设置股价提醒、管理模拟交易，轻松搞定盯盘与投资决策。",
+      "mcpConfig": {
+        "url": "https://stockbuddy.qq.com/cgi/cgi-bin/openai/mcp/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "把宁德时代加到我的自选",
+        "帮我找半导体相关的股票",
+        "看看我有哪些自选股票",
+        "查一下腾讯控股的资金流向",
+        "茅台和宁德时代今天行情怎么样",
+        "帮我看看贵州茅台近3个月的日K线走势",
+        "查一下比亚迪最新的财务报表",
+        "帮我找高ROE低估值的A股",
+        "今天MACD金叉信号的股票有哪些",
+        "帮我买入200股寒武纪做模拟交易",
+        "看看我的模拟交易账户还剩多少可用资金",
+        "我的模拟交易最近盈亏怎么样",
+        "贵州茅台涨到1300元时提醒我",
+        "宁德时代跌破300元帮我发个提醒",
+        "腾讯控股日涨幅超过5%时提醒我"
+      ],
+      "examples_en": [
+        "Add CATL to my watchlist",
+        "Find semiconductor-related stocks",
+        "What stocks are in my watchlist",
+        "Check capital flow for Tencent Holdings",
+        "How are Moutai and CATL doing today",
+        "Show me Moutai's daily K-line trend for the past 3 months",
+        "Get BYD's latest financial statements",
+        "Find A-shares with high ROE and low valuation",
+        "Which stocks have MACD golden cross signals today",
+        "Paper trade buy 200 shares of Cambricon for me",
+        "How much available cash is left in my paper trading account",
+        "How is my recent paper trading profit and loss",
+        "Alert me when Kweichow Moutai rises to 1300 yuan",
+        "Send me an alert when CATL drops below 300 yuan",
+        "Alert me when Tencent Holdings' daily gain exceeds 5%"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 21494,
+        "sha256": "eb088886ae362da18d3077756f1990000b6cc39000b9aedfac00a74bd1e01887",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "qq-mail",
+      "name": "QQ邮箱",
+      "description": "收发、搜索和整理 QQ 邮件。用自然语言读取邮件内容、汇总邮件线程、管理文件夹。",
+      "mcpConfig": {
+        "url": "https://api.mail.qq.com/mcp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "找出最近两周来自 hr@company.com 的所有邮件，按时间排序，告诉我总共有几封、主要说的是什么",
+        "帮我生成上周的邮件汇总：来自客户的有多少封、来自内部同事的有多少封、哪个主题（销售/技术/运营）的邮件最多",
+        "搜索所有主题包含【报销】或【发票】且来自财务部的邮件，列出发件人、日期和摘要，我需要核对一笔款项",
+        "把所有标记为【星标】或【重要】的未读邮件整理成一份清单，按发件时间从新到旧排列，帮我快速决定优先处理哪封"
+      ],
+      "examples_en": [
+        "Find all emails from hr@company.com in the past two weeks, sort by date, and tell me the total count and key topics",
+        "Generate a weekly email summary: how many are from clients, how many from internal colleagues, and which topic (sales/tech/ops) has the most",
+        "Search all emails with subject containing 'reimbursement' or 'invoice' from the finance team, list sender, date, and summary",
+        "Organize all starred or important unread emails into a list sorted by newest first, so I can decide which to handle first"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 78938,
+        "sha256": "1194e6a23b2067bb32e493f86aa5560e745528357456a83ac6fe332ea221069d",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "ima-mcp",
+      "name": "ima知识库",
+      "description": "引用知识库资料及文件，浏览知识库详情。",
+      "mcpConfig": {
+        "url": "https://ima.qq.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "在 ima 知识库中搜索『季度复盘』相关的资料",
+        "查看『产品手册』ima 知识库的详情和文件列表",
+        "引用 ima 知识库中关于 OpenAPI 的内容回答这个问题"
+      ],
+      "examples_en": [
+        "Search for materials related to 'quarterly review' in ima knowledge base",
+        "Show details and file list of 'Product Manual' ima knowledge base",
+        "Answer this question by referencing the OpenAPI materials in ima knowledge base"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 17650,
+        "sha256": "8f69245f3811ac6e98194df6be538078a4553747d512459cd3a151872bd375e2",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "lexiang",
+      "name": "乐享知识库",
+      "description": "搜索、创建和管理乐享知识库中的文档。支持导入 Markdown、按标签整理内容、追踪团队文档的更新动态。",
+      "providerId": "lexiang-ol",
+      "mcpConfig": {
+        "url": "https://mcp.lexiang-app.com/mcp"
+      },
+      "skills": [
+        {
+          "name": "README",
+          "description": "",
+          "contentPath": "skill/README.md"
+        },
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skill/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "在乐享知识库里搜索所有包含【API 接口】的文档，返回匹配的文档标题、最后编辑时间和简要内容摘要",
+        "找出【技术方案】知识库里所有超过 3 个月没有更新的文档，列出文档名称和最后编辑人，我需要推动大家更新",
+        "把一份 Markdown 格式的【2025 年技术规划】导入到乐享，自动转换成带层级结构的知识库文档，保留代码块和表格格式",
+        "从乐享的【产品文档】知识库里提取所有标记为【v2.0】标签的文档，整理成一份版本文档清单，并生成目录导航",
+        "我要整理乐享里的所有【待办事项】相关文档，把它们统一移到【个人管理】文件夹，并更新标签分类",
+        "搜索乐享知识库中最近 7 天被编辑过的所有文档，按编辑频次排序，告诉我团队最近关注的热点话题是什么"
+      ],
+      "examples_en": [
+        "Search the lexiang knowledge base for all documents containing 'API interface', return matching titles, last edit time, and brief content summary",
+        "Find all documents in the 'Technical Solutions' knowledge base not updated for over 3 months, list document names and last editor — I need to prompt updates",
+        "Import a Markdown file '2025 Tech Roadmap' into lexiang, auto-convert to hierarchical knowledge base docs while preserving code blocks and tables",
+        "Extract all documents tagged with 'v2.0' from the 'Product Docs' knowledge base, compile a version documentation list and generate a navigation index",
+        "I want to organize all 'TODO' related documents in lexiang, move them to the 'Personal Management' folder, and update tag classifications",
+        "Search for all documents edited in lexiang within the past 7 days, rank by edit frequency, and tell me what topics the team is most focused on"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 15038,
+        "sha256": "d6d3bcbe4fc507b0903672927380694262e2001ac04317e9035af8aefee21d65",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-docs",
+      "name": "腾讯文档",
+      "description": "创建、编辑和协作腾讯文档。用自然语言管理在线表格、文档和幻灯片，轻松完成内容查询、数据整理和团队协同。",
+      "mcpConfig": {
+        "url": "https://docs.qq.com/openapi/mcp"
+      },
+      "skills": [],
+      "examples_zh": [
+        "帮我在腾讯文档里新建一个在线表格，包含姓名、部门、入职日期三列，并填入示例数据",
+        "打开我最近编辑的腾讯文档，帮我总结文档的主要内容和关键要点",
+        "在腾讯文档的表格里查找所有【销售额】大于 10 万的记录，按金额从高到低排序",
+        "帮我把这份会议纪要整理成腾讯文档，按议题分段并标注负责人和截止日期"
+      ],
+      "examples_en": [
+        "Create a new spreadsheet in Tencent Docs with columns for name, department, and hire date, and fill in sample data",
+        "Open my recently edited Tencent Doc and summarize the main content and key points",
+        "Search the Tencent Docs spreadsheet for all records where sales exceed 100k, sorted by amount descending",
+        "Organize these meeting notes into a Tencent Doc, split by topic with owners and deadlines noted"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 77302,
+        "sha256": "d502328bb80eff5a8347c712ab245d2248aff7f16527672bca2d0a5553ce2ae0",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-docs-oa",
+      "name": "腾讯文档企业版",
+      "description": "创建、编辑和协作腾讯文档。用自然语言管理在线表格、文档和幻灯片，轻松完成内容查询、数据整理和团队协同。",
+      "authMode": "server-side",
+      "providerId": "tdocs-app",
+      "mcpConfig": {
+        "url": "https://saas.docs.qq.com/api/v6/open/agent/mcp"
+      },
+      "skills": [],
+      "visibleIn": [
+        "iOA",
+        "plan:ultimate",
+        "plan:exclusive"
+      ],
+      "examples_zh": [
+        "帮我在腾讯文档里新建一个在线表格，包含姓名、部门、入职日期三列，并填入示例数据",
+        "打开我最近编辑的腾讯文档，帮我总结文档的主要内容和关键要点",
+        "在腾讯文档的表格里查找所有【销售额】大于 10 万的记录，按金额从高到低排序",
+        "帮我把这份会议纪要整理成腾讯文档，按议题分段并标注负责人和截止日期"
+      ],
+      "examples_en": [
+        "Create a new spreadsheet in Tencent Docs with columns for name, department, and hire date, and fill in sample data",
+        "Open my recently edited Tencent Doc and summarize the main content and key points",
+        "Search the Tencent Docs spreadsheet for all records where sales exceed 100k, sorted by amount descending",
+        "Organize these meeting notes into a Tencent Doc, split by topic with owners and deadlines noted"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 77302,
+        "sha256": "d502328bb80eff5a8347c712ab245d2248aff7f16527672bca2d0a5553ce2ae0",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "tmeet",
+      "name": "腾讯会议",
+      "description": "通过命令行创建、查询和管理腾讯会议。支持快速发起会议、查看日程安排、管理参会人员。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=14"
+        },
+        "init": {
+          "darwin": "npm install -g @tencentcloud/tmeet",
+          "linux": "npm install -g @tencentcloud/tmeet",
+          "win32": "npm install -g @tencentcloud/tmeet"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "tmeet --version",
+            "linux": "tmeet --version",
+            "win32": "tmeet.cmd --version"
+          },
+          "minVersion": "1.0.14"
+        },
+        "auth": {
+          "darwin": "tmeet auth login --no-browser",
+          "linux": "tmeet auth login --no-browser",
+          "win32": "tmeet.cmd auth login --no-browser"
+        },
+        "unAuth": {
+          "darwin": "tmeet auth logout",
+          "linux": "tmeet auth logout",
+          "win32": "tmeet.cmd auth logout"
+        },
+        "status": {
+          "darwin": "tmeet auth status",
+          "linux": "tmeet auth status",
+          "win32": "tmeet.cmd auth status"
+        },
+        "statusMatch": "Logged in",
+        "authUrlDomain": "meeting.tencent.com"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "帮我创建一个明天下午 3 点的会议，主题是周报评审，时长 1 小时",
+        "查看我今天的所有会议安排",
+        "取消明天的周报评审会议"
+      ],
+      "examples_en": [
+        "Create a meeting for tomorrow at 3 PM, topic: weekly review, duration: 1 hour",
+        "Show all my meetings scheduled for today",
+        "Cancel tomorrow's weekly review meeting"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 998,
+        "sha256": "38b2a824e3c5943cb6a9b67e6720541e64312a7fd93fe8643a81d39b753aeb3d",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tapd-woa",
+      "name": "TAPD（司内版）",
+      "description": "TAPD MCP工具通过MCP协议操作TAPD中的各类资源，包括需求、缺陷、任务、迭代、测试用例、wiki和评论等。",
+      "providerId": "enterprise_taihu-tapd",
+      "mcpConfig": {
+        "url": "https://mcpgw.knot.woa.com/tapd/"
+      },
+      "skills": [],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "查看我的待办需求和缺陷",
+        "获取需求【客户反馈】的内容，拆分成子需求并分配处理人",
+        "将迭代【v1.0.0 迭代】内未完成的需求移动到下一个迭代",
+        "流转缺陷【缺陷1】状态到「已解决」，并添加评论说明修复方案",
+        "将需求【客户反馈】流转到完成状态，并填写 2 个工时"
+      ],
+      "examples_en": [
+        "Show my pending stories and bugs",
+        "Get the content of story 'Customer Feedback', break it down into sub-stories and assign owners",
+        "Move unfinished stories in iteration 'v1.0.0' to the next iteration",
+        "Change bug 'Bug 1' status to 'Resolved' and add a comment explaining the fix",
+        "Mark story 'Customer Feedback' as done and log 2 hours of work"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 7902,
+        "sha256": "adaa42e3dc9cf69ddd4358ba7b4a3050f8eee0754126a2280d51070259869739",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "cnb-woa",
+      "name": "CNB（司内版）",
+      "description": "通过自然语言管理 CNB 平台：仓库、Issue、PR、流水线、制品库等操作。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=22"
+        },
+        "init": {
+          "darwin": "npm install -g @cnbcool/cnb-cli",
+          "linux": "npm install -g @cnbcool/cnb-cli",
+          "win32": "npm install -g @cnbcool/cnb-cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "cnb -v",
+            "linux": "cnb -v",
+            "win32": "cnb.cmd -v"
+          },
+          "minVersion": "1.10.16"
+        },
+        "auth": {
+          "darwin": "cnb login --woa",
+          "linux": "cnb login --woa",
+          "win32": "cnb.cmd login --woa"
+        },
+        "unAuth": {
+          "darwin": "cnb logout",
+          "linux": "cnb logout",
+          "win32": "cnb.cmd logout"
+        },
+        "status": {
+          "darwin": "cnb status",
+          "linux": "cnb status",
+          "win32": "cnb.cmd status"
+        },
+        "statusMatch": "已登录",
+        "authUrlDomain": "cnb.woa.com",
+        "authWaitForExit": true,
+        "authSuppressBrowser": true,
+        "authDeviceFlow": {
+          "uriPattern": "(https?://[^\\s]*/oauth2/device[^\\s]*)",
+          "codePattern": "user_code=([^&\\s]+)",
+          "defaultExpiresInSeconds": 300,
+          "codeEmbeddedInUri": true
+        },
+        "userProvidedData": []
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "获取当前 Issue 的详情",
+        "在当前 PR 上发表评论：已完成代码评审",
+        "查看当前 PR 的 CI 构建状态",
+        "给当前 Issue 添加 bug 标签",
+        "列出当前 PR 的变更文件"
+      ],
+      "examples_en": [
+        "Get details of the current issue",
+        "Comment on the current PR: code review completed",
+        "Check the CI build status of the current PR",
+        "Add the bug label to the current issue",
+        "List changed files in the current PR"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 3058,
+        "sha256": "09bca5b35ac76cdb8a510e75e6968a32bce4f5f90b6fcadc4fcc15d07f3adbb9",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "iwiki-woa",
+      "name": "iWiki",
+      "description": "iWiki的MCP服务，为大模型赋予文档创建、检索等能力：支持创建 iWiki 文档、Markdown 文档，能够通过检索找出相关联的文档，也可以获取空间、文档的基本信息和元数据信息。",
+      "providerId": "enterprise_taihu-iwiki",
+      "mcpConfig": {
+        "url": "https://prod.mcp.it.woa.com/app_iwiki_mcp/mcp3"
+      },
+      "skills": [],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "在 iWiki 中创建一篇新的 Markdown 文档，标题是「技术方案设计」",
+        "搜索 iWiki 中所有与「微服务架构」相关的文档",
+        "获取 iWiki 空间「团队知识库」的基本信息",
+        "查看 iWiki 文档「接口规范」的元数据信息",
+        "在 iWiki 中检索最近更新的文档列表"
+      ],
+      "examples_en": [
+        "Create a new Markdown document in iWiki titled 'Technical Design'",
+        "Search iWiki for all documents related to 'microservice architecture'",
+        "Get basic info of the iWiki space 'Team Knowledge Base'",
+        "View metadata of the iWiki document 'API Specification'",
+        "Retrieve recently updated documents in iWiki"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1898,
+        "sha256": "cd8b429d52bd0654e1d43e053205d0fd932aea28fb47f51402fee97b5b9c7bd7",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "gongfeng-woa",
+      "name": "Gongfeng",
+      "description": "工蜂 API 的 MCP 服务器，支持仓库管理、文件操作等功能。",
+      "providerId": "enterprise_taihu-gongfeng",
+      "mcpConfig": {
+        "url": "https://mcpgw.knot.woa.com/gongfeng"
+      },
+      "skills": [],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "列出我在工蜂上的所有仓库",
+        "查看仓库 my-project 的最近提交记录",
+        "获取仓库 my-project 中 README.md 文件的内容",
+        "搜索工蜂仓库中包含「config」的文件",
+        "查看仓库 my-project 的分支列表"
+      ],
+      "examples_en": [
+        "List all my repositories on Gongfeng",
+        "View recent commits of the repository my-project",
+        "Get the content of README.md in the repository my-project",
+        "Search for files containing 'config' in the Gongfeng repository",
+        "View the branch list of the repository my-project"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1134,
+        "sha256": "01178e49c8c739893a1355df8f06839bc0210c2e17f0bf313aafc57d789f3483",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "zhiyan-cicd",
+      "name": "智研构建部署",
+      "description": "智研构建部署官方MCP，操作能力支持TKE容器部署，查询能力包括：流水线执行记录、制品版本、发布评审单、部署历史等。",
+      "providerId": "enterprise_zhiyan-delivery",
+      "mcpConfig": {
+        "url": "https://mcpgw.knot.woa.com/zhiyan/delivery"
+      },
+      "skills": [],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "查看最近的流水线执行记录",
+        "查询制品库中最新的制品版本",
+        "帮我发起一次TKE容器部署",
+        "查看发布评审单的审批状态",
+        "查询最近的部署历史记录"
+      ],
+      "examples_en": [
+        "View recent pipeline execution records",
+        "Query the latest artifact versions in the repository",
+        "Initiate a TKE container deployment",
+        "Check the approval status of release review orders",
+        "Query recent deployment history"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 2618,
+        "sha256": "ee47c18466ad9051b4bf32b92905b2500ec2750533228be4f644dd6b74b79138",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "wecom",
+      "name": "企业微信",
+      "description": "企业微信10 人及以下企业支持消息、文档、日程、会议、待办等MCP能力； 10 人以上企业仅支持创建、读取文档和智能表格。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "darwin": "npm install -g @wecom/cli",
+          "linux": "npm install -g @wecom/cli",
+          "win32": "npm install -g @wecom/cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "wecom-cli --version",
+            "linux": "wecom-cli --version",
+            "win32": "wecom-cli.cmd --version"
+          },
+          "minVersion": "0.1.9"
+        },
+        "auth": {
+          "darwin": "wecom-cli init --noninteractive --no-open",
+          "linux": "wecom-cli init --noninteractive --no-open",
+          "win32": "wecom-cli.cmd init --noninteractive --no-open"
+        },
+        "unAuth": {
+          "darwin": "rm -rf \"$HOME/.config/wecom\"",
+          "linux": "rm -rf \"$HOME/.config/wecom\"",
+          "win32": "rmdir /s /q \"%USERPROFILE%\\.config\\wecom\""
+        },
+        "status": {
+          "darwin": "wecom-cli auth show",
+          "linux": "wecom-cli auth show",
+          "win32": "wecom-cli.cmd auth show"
+        },
+        "statusMatch": "\"id\"\\s*:\\s*\"",
+        "authUrlDomain": "work.weixin.qq.com",
+        "authWaitForExit": true,
+        "authQrModal": true
+      },
+      "skills": [],
+      "examples_zh": [
+        "查询通讯录中所有属于「研发组」的成员，列出姓名、职位和联系方式",
+        "帮我给张三发一条企微消息：明天上午 10 点的周会改到下午 3 点，请注意",
+        "在企业微信里创建一个会议：主题「Q2 复盘」，明天下午 2 点，邀请产品和研发同学",
+        "查询本周所有截止日期在今天之前但状态还是「进行中」的待办事项，按优先级排序",
+        "帮我在企业微信文档里新建一个页面，标题是「五月产品规划」，放到「产品团队」目录下"
+      ],
+      "examples_en": [
+        "Query all members in the 'R&D Team' group from the contact list, including name, title, and contact info",
+        "Send a WeCom message to Zhang San: tomorrow's 10am weekly meeting is moved to 3pm, please take note",
+        "Create a WeCom meeting titled 'Q2 Retrospective' at 2pm tomorrow and invite the product and engineering teams",
+        "Find all to-do items due before today that are still 'In Progress', sorted by priority",
+        "Create a new WeCom document titled 'May Product Planning' and place it under the 'Product Team' directory"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 3238,
+        "sha256": "a9547288f34aafdf29cdca4c62480bb33276016169893ca37d8823c4b120b01b",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "feishu",
+      "name": "飞书",
+      "description": "通过命令行管理飞书/Lark 全产品能力：即时通讯、邮箱、日历、云文档、电子表格、多维表格（Base）、幻灯片、画板、知识库、云空间、妙记、视频会议、任务、审批、考勤、通讯录、OKR 等。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "darwin": "npm install -g @larksuite/cli",
+          "linux": "npm install -g @larksuite/cli",
+          "win32": "npm install -g @larksuite/cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "lark-cli --version",
+            "linux": "lark-cli --version",
+            "win32": "lark-cli.cmd --version"
+          },
+          "minVersion": "1.0.80"
+        },
+        "auth": [
+          {
+            "command": {
+              "darwin": "lark-cli config init --new --lang en",
+              "linux": "lark-cli config init --new --lang en",
+              "win32": "lark-cli.cmd config init --new --lang en"
+            },
+            "skipIf": {
+              "darwin": "lark-cli config show",
+              "linux": "lark-cli config show",
+              "win32": "lark-cli.cmd config show"
+            },
+            "authWaitForExit": true,
+            "authUrlDomain": "open.feishu.cn"
+          },
+          {
+            "command": {
+              "darwin": "lark-cli auth login --recommend",
+              "linux": "lark-cli auth login --recommend",
+              "win32": "lark-cli.cmd auth login --recommend"
+            },
+            "authWaitForExit": true,
+            "authUrlDomain": "accounts.feishu.cn"
+          }
+        ],
+        "unAuth": {
+          "darwin": "lark-cli auth logout",
+          "linux": "lark-cli auth logout",
+          "win32": "lark-cli.cmd auth logout"
+        },
+        "status": {
+          "darwin": "lark-cli auth status",
+          "linux": "lark-cli auth status",
+          "win32": "lark-cli.cmd auth status"
+        },
+        "statusMatchJson": {
+          "identity": "user"
+        }
+      },
+      "skills": [],
+      "examples_zh": [
+        "在飞书群【产品周会】里用机器人发一条通知：今天 15:00 在 3 楼会议室开周会，请带上周的进展材料",
+        "查下周我和张三、李四的飞书日程，找出三人都空闲的 2 小时时段，并创建一个标题为【Q2 规划对齐】的日程，邀请他们俩，预定一间会议室",
+        "在飞书多维表格【任务跟踪】里新增一行：标题=Q2 上线评审、负责人=张三、截止=2026-05-20、状态=进行中；并按负责人聚合未完成任务数",
+        "把今天的飞书妙记【产品评审会】整理成纪要（摘要 + 待办 + 关键发言人），新建一篇飞书云文档发到【会议纪要】文件夹，并在群里分享链接",
+        "用 KQL 搜索我飞书邮箱最近一周来自财务部、主题包含【报销】的邮件，列出发件人、日期和摘要"
+      ],
+      "examples_en": [
+        "Send a bot notification to the Feishu group 'Product Weekly': weekly meeting at 15:00 in Room 3F, please bring last week's progress materials",
+        "Check my Feishu calendar and those of Zhang San and Li Si next week, find a 2-hour slot when all three are free, create an event titled 'Q2 Planning Sync', invite them, and book a meeting room",
+        "Add a row to the Feishu Bitable 'Task Tracker': title=Q2 Launch Review, owner=Zhang San, due=2026-05-20, status=In Progress; also aggregate open tasks by owner",
+        "Turn today's Feishu Minutes 'Product Review' into notes (summary + action items + key speakers), create a new Feishu Doc under the 'Meeting Notes' folder, and share the link in the group",
+        "Use KQL to search my Feishu Mail for emails from the finance team in the past week with 'reimbursement' in the subject; list sender, date, and summary"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 8314,
+        "sha256": "ffd49e3f7cbb7ee984262f2d21f0241320735056aee75d8fae53641500f50e1c",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "dingtalk",
+      "name": "钉钉",
+      "description": "通过命令行管理钉钉全产品能力：AI 表格、考勤、日历、群聊与机器人、通讯录、开放平台文档、DING 消息、钉钉文档、钉钉云盘、AI 听记、邮箱、OA 审批、日志、待办。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=16"
+        },
+        "init": {
+          "darwin": "npm install -g dingtalk-workspace-cli",
+          "linux": "npm install -g dingtalk-workspace-cli",
+          "win32": "npm install -g dingtalk-workspace-cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "dws --version",
+            "linux": "dws --version",
+            "win32": "dws.cmd --version"
+          },
+          "minVersion": "1.0.55"
+        },
+        "auth": {
+          "darwin": "dws auth login -y",
+          "linux": "dws auth login -y",
+          "win32": "dws.cmd auth login -y"
+        },
+        "unAuth": {
+          "darwin": "dws auth reset",
+          "linux": "dws auth reset",
+          "win32": "dws.cmd auth reset"
+        },
+        "status": {
+          "darwin": "dws auth status",
+          "linux": "dws auth status",
+          "win32": "dws.cmd auth status"
+        },
+        "statusMatch": "\"authenticated\"\\s*:\\s*true",
+        "statusMatchJson": {
+          "authenticated": "true"
+        },
+        "authUrlDomain": "login.dingtalk.com",
+        "authSuppressBrowser": true,
+        "authWaitForExit": true
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "在钉钉群【产品周会】里用机器人发一条通知：今天 15:00 在 3 楼会议室开周会，记得带上周的进展材料",
+        "查一下我下周的钉钉日程，列出和【客户对接】相关的会议（时间、参会人、会议室），并帮我找出三人都空闲的时段约一次同步会",
+        "在钉钉 AI 表格【任务跟踪】里新增一行：标题=Q2 上线评审、负责人=张三、截止时间=2026-05-20、状态=进行中",
+        "用 KQL 搜索我钉钉邮箱里最近一周来自财务部、主题包含【报销】的邮件，列出发件人、日期和摘要",
+        "把今天的 AI 听记【产品评审会】整理成纪要（摘要 + 待办 + 关键发言人），并按【日报】模版提交到钉钉日志 @ 我的直属领导"
+      ],
+      "examples_en": [
+        "Send a bot notification to the DingTalk group 'Product Weekly': weekly meeting at 15:00 in Room 3F, please bring last week's progress materials",
+        "Show my DingTalk schedule for next week, list meetings related to 'client sync' (time, attendees, room), and find a slot when all three of us are free for a sync",
+        "Add a row to the DingTalk AI Table 'Task Tracker': title=Q2 Launch Review, owner=Zhang San, due=2026-05-20, status=In Progress",
+        "Use KQL to search my DingTalk Mail for emails from the finance team in the past week with 'reimbursement' in the subject; list sender, date, and summary",
+        "Turn today's AI Minutes 'Product Review' into notes (summary + action items + key speakers), then submit it as a Daily Report in DingTalk Reports and @ my direct manager"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1266,
+        "sha256": "efa3cc1207861d115f4102a13d5ded197bb03cb06f8c8133bba3d6d2ac01ffd2",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-survey",
+      "name": "腾讯问卷",
+      "description": "创建、管理和分析腾讯问卷。用自然语言快速生成问卷、查看回收数据、设置题目逻辑。",
+      "mcpConfig": {
+        "url": "https://wj.qq.com/api/v2/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我创建一个员工满意度调查问卷",
+        "查看问卷的回收数据并生成汇总报告",
+        "给问卷添加一道单选题并设置跳转逻辑"
+      ],
+      "examples_en": [
+        "Create an employee satisfaction survey",
+        "View survey responses and generate a summary report",
+        "Add a single-choice question with skip logic"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 7246,
+        "sha256": "134012280d17ef1dec526f69fde2232c5997bc074d09de49ada88fce4b9fe270",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tapd",
+      "name": "TAPD",
+      "description": "管理需求、缺陷、任务和迭代。查询项目进度、拆分需求、流转状态、填写工时，覆盖需求到发布的研发全生命周期。",
+      "mcpConfig": {
+        "url": "https://websocket.tapd.cn/mcp/mcp"
+      },
+      "skills": [
+        {
+          "name": "tapd-skill",
+          "description": "",
+          "contentPath": "skills/tapd-skill.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "selfhosted",
+        "cloudhosted"
+      ],
+      "examples_zh": [
+        "查看我的待办需求和缺陷",
+        "获取需求【客户反馈】的内容，拆分成子需求并分配处理人",
+        "将迭代【v1.0.0 迭代】内未完成的需求移动到下一个迭代",
+        "流转缺陷【缺陷1】状态到「已解决」，并添加评论说明修复方案",
+        "将需求【客户反馈】流转到完成状态，并填写 2 个工时"
+      ],
+      "examples_en": [
+        "Show my pending stories and bugs",
+        "Get the content of story 'Customer Feedback', break it down into sub-stories and assign owners",
+        "Move unfinished stories in iteration 'v1.0.0' to the next iteration",
+        "Change bug 'Bug 1' status to 'Resolved' and add a comment explaining the fix",
+        "Mark story 'Customer Feedback' as done and log 2 hours of work"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 46046,
+        "sha256": "113c2044916d8b785dfeeaa95d4cb0879b0b29010d39e6a72de1f364ff57543f",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "cnb-api",
+      "name": "CNB",
+      "description": "通过自然语言管理 CNB 平台：仓库、Issue、PR、流水线、制品库等操作。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=22"
+        },
+        "init": {
+          "darwin": "npm install -g @cnbcool/cnb-cli",
+          "linux": "npm install -g @cnbcool/cnb-cli",
+          "win32": "npm install -g @cnbcool/cnb-cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "cnb -v",
+            "linux": "cnb -v",
+            "win32": "cnb.cmd -v"
+          },
+          "minVersion": "1.10.16"
+        },
+        "auth": {
+          "darwin": "cnb login",
+          "linux": "cnb login",
+          "win32": "cnb.cmd login"
+        },
+        "unAuth": {
+          "darwin": "cnb logout",
+          "linux": "cnb logout",
+          "win32": "cnb.cmd logout"
+        },
+        "status": {
+          "darwin": "cnb status",
+          "linux": "cnb status",
+          "win32": "cnb.cmd status"
+        },
+        "statusMatch": "已登录",
+        "authUrlDomain": "cnb.cool",
+        "authWaitForExit": true,
+        "authSuppressBrowser": true,
+        "authDeviceFlow": {
+          "uriPattern": "(https?://[^\\s]*/oauth2/device[^\\s]*)",
+          "codePattern": "user_code=([^&\\s]+)",
+          "defaultExpiresInSeconds": 300,
+          "codeEmbeddedInUri": true
+        },
+        "userProvidedData": []
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal"
+      ],
+      "examples_zh": [
+        "获取当前 Issue 的详情",
+        "在当前 PR 上发表评论：已完成代码评审",
+        "查看当前 PR 的 CI 构建状态",
+        "给当前 Issue 添加 bug 标签",
+        "列出当前 PR 的变更文件"
+      ],
+      "examples_en": [
+        "Get details of the current issue",
+        "Comment on the current PR: code review completed",
+        "Check the CI build status of the current PR",
+        "Add the bug label to the current issue",
+        "List changed files in the current PR"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 3058,
+        "sha256": "09bca5b35ac76cdb8a510e75e6968a32bce4f5f90b6fcadc4fcc15d07f3adbb9",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-weiyun",
+      "name": "微云",
+      "description": "查看、下载、删除微云文件，并且提供上传文件到微云、生成分享链接能力，帮你管理微云文件",
+      "mcpConfig": {
+        "url": "https://www.weiyun.com/api/v3/mcpserver",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "查看我的微云文件列表",
+        "帮我把这个文件上传到微云",
+        "将刚刚上传的文件生成一个分享链接发到微信群",
+        "下载微云文件中的日志文件",
+        "删除微云文件中的日志文件"
+      ],
+      "examples_en": [
+        "View my Weiyun file list",
+        "Help me upload this file to Weiyun",
+        "Generate a sharing link for the recently uploaded file and send it to the WeChat group",
+        "Download the log file from Weiyun",
+        "Delete the log file in Weiyun"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2838,
+        "sha256": "e9370e73d8dd1bc40a0c95f113980e0721cd4adbe356807f5ad99755ddfb8a28",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "km",
+      "name": "KM",
+      "description": "KM官方MCP，发现腾讯精彩。",
+      "providerId": "enterprise_km",
+      "mcpConfig": {
+        "url": "https://prod.mcp.it.woa.com/paasfront_km-pro_woa_com/mcp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "KM今天的热文有啥？",
+        "KM最新文章有啥？",
+        "我最近参加的KM活动有什么？"
+      ],
+      "examples_en": [
+        "What are today's trending articles on KM?",
+        "What are the latest articles on KM?",
+        "What KM events have I recently joined?"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 12838,
+        "sha256": "29938ad596bdd54a3e262255018e55f02b43d4a5f4879b36ff486e706f34609c",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "fbs-connector",
+      "name": "福帮手",
+      "description": "福帮手人机协同连接器：面向 WorkBuddy 的身份识别、场景包查询、首值与继续使用记录、乐包状态确认和超级合伙人交接。",
+      "mcpConfig": {
+        "url": "https://api2.u3w.com/fbs-mcp/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "先确认我当前的福帮手身份和最稳妥的下一步，再继续推进。",
+        "根据 skill_whoami 返回的场景包读取内容，并产出一张首值执行卡。",
+        "在同一个 binding 上记录 first_value_completed 或 continued_use_completed。",
+        "先查询乐包状态，再判断是否适合领取或兑换。"
+      ],
+      "examples_en": [
+        "Check my current FBSir identity and the safest next step before continuing.",
+        "Read the scene pack returned by skill_whoami and produce one first-value action card.",
+        "Record first_value_completed or continued_use_completed on the same binding.",
+        "Check lebao status first, then explain whether claim or redeem is appropriate."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 5286,
+        "sha256": "63546b34a2b66ab3976c42b49ef08804fdf6128c5be717a313d2d564965c92b9",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "kdocs",
+      "name": "金山文档",
+      "description": "创建、搜索和管理金山文档（WPS 云文档）。支持新建多种文档类型（Word/Excel/PDF/PPT/智能表格/多维表格/智能文档）、读取与搜索文档内容、编辑更新、分享、移动重命名整理、标签收藏管理、知识库空间操作、网页剪藏，以及接龙转表格、AI PPT 生成等。",
+      "authMode": "server-side",
+      "providerId": "wps",
+      "mcpConfig": {
+        "url": "https://mcp-center.wps.cn/skill_hub/mcp"
+      },
+      "skills": [],
+      "examples_zh": [
+        "搜索我金山文档里所有包含「周报」的文档，列出标题和最近修改时间",
+        "帮我在金山文档根目录新建一个智能文档，标题是「Q3 项目总结」，把以下内容写进去",
+        "读取「项目计划.xlsx」表格的内容，按优先级整理后输出",
+        "把这个网页保存到我的金山文档：https://example.com/article"
+      ],
+      "examples_en": [
+        "Search all documents in my Kingsoft Docs containing 'weekly report' and list titles with last modified time",
+        "Create a new smart document in my Kingsoft Docs root with title 'Q3 Project Summary' and write the following content",
+        "Read the content of 'Project Plan.xlsx' and organize it by priority",
+        "Save this webpage to my Kingsoft Docs: https://example.com/article"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 3406,
+        "sha256": "8064aa18b9561c1fcf72908d96507e30fd0104728049995af11877067f37116b",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "pkulaw",
+      "name": "北大法宝·法律智能检索",
+      "description": "语义（自然语言描述） + 关键词（精确/模糊查询）双模式检索法规与案例，结果均带 pkulaw.com 原文链接，可追溯、可复核、可直接引用。",
+      "mcpConfig": {
+        "url": "https://apim-gateway.pkulaw.com/mcp-law-agg/1.0.0/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "微信聊天记录作为民事诉讼电子证据，法院的认定标准和审查重点是什么？",
+        "员工连续旷工三天，公司能否解除劳动合同？请检索相关法律依据。",
+        "房屋租赁合同到期后房东拒绝退还押金，有没有类似司法案例？",
+        "查一下当前现行有效的「数据出境安全评估」中央层级法规。",
+        "民间借贷只有微信转账记录、没有借条，能要回钱吗？有没有类似判例？"
+      ],
+      "examples_en": [
+        "What are the courts' standards and review focus for accepting WeChat chat records as electronic evidence in civil litigation?",
+        "Can a company terminate an employment contract after three consecutive days of absence? Find the legal basis.",
+        "Are there similar judicial cases where a landlord refused to refund a rental deposit after the lease ended?",
+        "List currently-in-force central-level Chinese regulations on cross-border data transfer security assessment.",
+        "Can I recover a private loan proven only by WeChat transfer records without an IOU? Any similar cases?"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 14978,
+        "sha256": "eac3f5da903edf930afbb3225e44fc30476e65ec0144ba14b067a8db329768fa",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "qcc-company",
+      "name": "企查查",
+      "description": "查询和核实企业工商登记信息。支持股东结构、实际控制人、受益所有人、高管团队、对外投资、财务数据、年报及上市信息查询，用自然语言快速完成企业身份核验与背景调查。",
+      "mcpConfig": {
+        "url": "https://agent.qcc.com/mcp/company/stream",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "查询 企查查 的对外投资布局",
+        "帮我查下\"企查查科技股份有限公司\"的股东结构",
+        "帮我查询\"企查查科技股份有限公司\"的变更记录，来了解企业沿革情况",
+        "查询 企查查科技股份有限公司 的联系方式"
+      ],
+      "examples_en": [
+        "Look up the external investment portfolio of Qichacha.",
+        "Check the shareholder structure of Qichacha Tec Co., Ltd.",
+        "Query the change records of Qichacha Tec Co., Ltd. to understand its corporate history.",
+        "Find the contact information of Qichacha Tec Co., Ltd."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 5826,
+        "sha256": "80f3edc7bb3f2ee3f515c233e6879138a475d2f704dcad50268b67ed9ea4e139",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tyc-mcp",
+      "name": "天眼查",
+      "description": "通过天眼查 MCP 查询多维度企业数据。支持工商登记、股东结构、司法风险、知识产权、董监高、经营数据等 160+ 项企业数据能力，用自然语言完成企业尽调与商业情报分析。",
+      "mcpConfig": {
+        "url": "https://mcp.tianyancha.com/v1",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "查一下北京金堤科技有限公司的基本工商信息",
+        "帮我查下比亚迪股份有限公司的股东结构",
+        "查询腾讯科技（深圳）有限公司的知识产权信息",
+        "看看阿里巴巴集团有没有司法风险"
+      ],
+      "examples_en": [
+        "Look up the basic registration info of Beijing Jindi Technology Co., Ltd.",
+        "Show me the shareholder structure of BYD Company Limited",
+        "Query intellectual property info of Tencent Technology (Shenzhen) Co., Ltd.",
+        "Check if Alibaba Group has any legal risks"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 182498,
+        "sha256": "e82e1afac614c4e37e5f694221dd0f6e278d170e6d89f26123c819e2c12e9758",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "ctrip-wendao",
+      "name": "携程问道",
+      "description": "通过携程问道 API 获取旅行规划与攻略。支持酒店查询、机票搜索、景点推荐、行程规划、美食住宿攻略。",
+      "type": "skill-only",
+      "authMode": "token",
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "携程问道授权",
+        "description": "输入携程问道 API Token（从携程问道开放平台申请）",
+        "docUrl": "https://www.ctrip.com/wendao/openclaw",
+        "docLabel": "去携程问道开放平台申请 Token",
+        "fields": [
+          {
+            "key": "WENDAO_API_KEY",
+            "label": "API Token",
+            "type": "password",
+            "required": true,
+            "placeholder": "输入从携程问道开放平台获取的 API Token",
+            "description": "在携程问道开放平台 (ctrip.com/wendao/openclaw) 申请并复制的 API Token"
+          }
+        ]
+      },
+      "tokenValues": {
+        "WENDAO_API_KEY": ""
+      },
+      "examples_zh": [
+        "帮我规划一个三天两夜的三亚旅行",
+        "查一下下周五从北京到上海的机票",
+        "推荐杭州西湖附近性价比高的酒店",
+        "成都有哪些必打卡的美食和景点",
+        "暑假带孩子去日本玩一周，帮我做个攻略"
+      ],
+      "examples_en": [
+        "Plan a 3-day trip to Sanya",
+        "Search flights from Beijing to Shanghai next Friday",
+        "Recommend budget-friendly hotels near West Lake, Hangzhou",
+        "What are must-visit food spots and attractions in Chengdu",
+        "Plan a one-week family trip to Japan for summer vacation"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2514,
+        "sha256": "ea07fa5a4adc109a723eb68357bf21aac87822a468494fdb00d6e5830d544461",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "netease-mail",
+      "name": "网易邮箱",
+      "description": "通过 IMAP/SMTP 连接邮箱，支持收发邮件、搜索、附件下载。支持 163、126、yeah.net 等网易邮箱及其他标准 IMAP/SMTP 邮箱。",
+      "type": "skill-only",
+      "authMode": "token",
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "邮箱授权",
+        "description": "输入邮箱地址和 IMAP/SMTP 授权码（非登录密码）。支持 163、126、yeah.net 等网易邮箱，以及其他支持 IMAP/SMTP 的邮箱。",
+        "docUrl": "https://help.mail.163.com/faqDetail.do?code=d7a5dc8471cd0c0e8b4b8f4f8e49998b374173cfe9171305fa1ce630d7f67ac286624f309a1a7089",
+        "docLabel": "如何开启 IMAP/SMTP 并获取授权码",
+        "fields": [
+          {
+            "key": "NETEASE_EMAIL_USER",
+            "label": "邮箱地址",
+            "type": "text",
+            "required": true,
+            "placeholder": "yourname@163.com",
+            "description": "完整邮箱地址，如 xxx@163.com、xxx@126.com、xxx@yeah.net"
+          },
+          {
+            "key": "NETEASE_EMAIL_PASS",
+            "label": "IMAP/SMTP 授权码",
+            "type": "password",
+            "required": true,
+            "placeholder": "在邮箱设置中生成的授权码",
+            "description": "在邮箱网页端「设置 → POP3/SMTP/IMAP」页面开启服务后生成的客户端授权码，不是登录密码"
+          }
+        ]
+      },
+      "tokenValues": {
+        "NETEASE_EMAIL_USER": "",
+        "NETEASE_EMAIL_PASS": ""
+      },
+      "examples_zh": [
+        "帮我发一封邮件给 colleague@company.com，主题是周报，正文写本周完成了3个任务",
+        "查看我最近2小时的收件箱有没有新邮件",
+        "搜索最近一周主题包含「发票」的邮件",
+        "下载 UID 12345 这封邮件的附件到 Downloads 目录"
+      ],
+      "examples_en": [
+        "Send an email to colleague@company.com with subject 'Weekly Report' and body about 3 completed tasks",
+        "Check my inbox for new emails in the last 2 hours",
+        "Search for emails with 'invoice' in the subject from the past week",
+        "Download attachments from email UID 12345 to Downloads folder"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 32518,
+        "sha256": "6c72814d0bb9b312d7ef682608a55e5bc067e8db4961c9ed5703ad25a7f4699a",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "baidu-netdisk",
+      "name": "百度网盘",
+      "description": "连接百度网盘，支持文件与分类浏览、关键词及语义检索、文件和文件夹管理、创建分享链接、查询容量，以及保存文本内容或通过 URL 转存文件。",
+      "authMode": "server-side",
+      "providerId": "baidu-netdisk",
+      "mcpConfig": {
+        "url": "https://mcp-pan.baidu.com/sse",
+        "type": "sse"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "查看我百度网盘根目录下的文件，并告诉我还剩多少可用空间",
+        "从文件名、文档内容和图片文字中搜索与「项目合同」相关的文件",
+        "找出网盘里与海边日落相关的图片和视频",
+        "新建一个「AIGC 调研资料」文件夹，把相关文件复制进去",
+        "为「周报.docx」创建一个有效期 7 天、带提取码的分享链接",
+        "把这段会议纪要保存到百度网盘，或者通过下载链接转存文件"
+      ],
+      "examples_en": [
+        "List the files in my Baidu Netdisk root directory and show the remaining storage space",
+        "Search file names, document contents, and text in images for files related to 'Project Contracts'",
+        "Find images and videos in my Netdisk related to sunsets by the sea",
+        "Create an 'AIGC Research Materials' folder and copy the relevant files into it",
+        "Create a password-protected share link for 'Weekly Report.docx' that expires in 7 days",
+        "Save these meeting notes to Baidu Netdisk, or transfer a file from a download URL"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1226,
+        "sha256": "330bff32c5b22190a95ee81405473716b4ce87d053aeee202c3f3c151fead6e7",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "description": "在 GitHub 上克隆、推送代码，查看和管理仓库与 Pull Request，用自然语言完成代码协作。",
+      "authMode": "server-side",
+      "mcpConfig": {
+        "url": "https://api.githubcopilot.com/mcp/"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skill/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "帮我克隆 https://github.com/torvalds/linux 到本地并简要介绍这个仓库的结构",
+        "查看仓库 owner/repo 里所有 open 状态的 Pull Request，按更新时间倒序，告诉我每个 PR 的标题、作者和变更规模",
+        "在当前分支提交所有改动并推送到 GitHub，提交消息按我做的变更自动生成",
+        "给 owner/repo 的 PR #123 添加一条评论说明测试已通过，并把它标记为 ready for review"
+      ],
+      "examples_en": [
+        "Clone https://github.com/torvalds/linux locally and briefly describe the repository structure",
+        "List all open pull requests in owner/repo sorted by most recently updated, with title, author, and change size for each",
+        "Commit all current changes and push to GitHub, generate the commit message based on my edits",
+        "Add a comment to PR #123 in owner/repo saying tests passed, and mark it as ready for review"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1306,
+        "sha256": "d0fb7094ad8f2197a21c864ee47f08b92085985bece2806e22d4d6f530a293d9",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "description": "创建、搜索和管理 Notion 工作区。用自然语言读取页面、查询数据库、更新内容、整理知识库。",
+      "mcpConfig": {
+        "url": "https://mcp.notion.com/mcp"
+      },
+      "skills": [],
+      "examples_zh": [
+        "搜索我 Notion 里所有包含「周报」的页面，按最近编辑时间排序，列出标题和摘要",
+        "帮我在「项目管理」数据库中新建一条记录：标题是 Q3 产品规划，状态设为进行中，负责人是我",
+        "查询「任务看板」数据库中所有状态为【待处理】且截止日期在本周内的任务，按优先级排序",
+        "把今天会议的纪要整理成一个新页面，放到「会议记录」目录下，包含参会人、讨论要点和待办事项"
+      ],
+      "examples_en": [
+        "Search all pages in my Notion containing 'weekly report', sort by last edited time, and list titles with summaries",
+        "Create a new entry in my 'Project Management' database: title is Q3 Product Roadmap, status set to In Progress, assigned to me",
+        "Query all tasks in my 'Task Board' database with status 'To Do' and due date within this week, sorted by priority",
+        "Organize today's meeting notes into a new page under 'Meeting Notes', including attendees, key discussion points, and action items"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1350,
+        "sha256": "a534d02c8c9810dd765b5bf2a0455665a210b94dba5a1049255d5113d0ba0aed",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-qidian-cs",
+      "name": "腾讯企点客服",
+      "description": "腾讯企点客服连接器：用自然语言处理工单（查询/创建/更新/状态变更）、查询坐席在线与实时接待、检索/拉取客户资料、拉取人工/大模型/文本机器人的会话记录和消息、查看客服实时监控、会话监控、客服满意度与响应度报表等数据。",
+      "authMode": "mcp",
+      "mcpConfig": {
+        "url": "https://sse.qidian.qq.com/qidian-cs/mcp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查一下我最近一周处理的工单",
+        "用 VIP 模板帮我建一张工单，处理人是我",
+        "现在客服谁在线？",
+        "拉一下昨天的人工会话聊天记录",
+        "出一份本周的客服满意度和响应度报表"
+      ],
+      "examples_en": [
+        "Show me the tickets I've handled in the past week",
+        "Create a ticket using the VIP template, assigned to me",
+        "Which agents are online right now?",
+        "Pull yesterday's human-agent chat transcripts",
+        "Generate this week's customer service CSAT and response time report"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 5042,
+        "sha256": "222815e866a187e854db72ecddfcd2afdd3f3d7a7f82670649140cf67f64f1b5",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "edgeone-pages",
+      "name": "EdgeOne Makers",
+      "description": "将项目部署到 EdgeOne Makers 并返回线上访问地址，支持全栈、云函数、AI Agent 等开发场景。",
+      "mcpConfig": {
+        "url": ""
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "开发个番茄时钟并部署到 EdgeOne Makers"
+      ],
+      "examples_en": [
+        "Develop a Pomodoro timer and deploy it to EdgeOne Makers"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 4594,
+        "sha256": "6253b5b1ac31edff41438eaaaba8e7350c981394a4b365606b5d8e202f9e4347",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "cloudbase",
+      "name": "腾讯云 CloudBase",
+      "description": "腾讯云开发 CloudBase 全栈开发、部署、调试与排障连接器。覆盖 Web 应用、微信小程序、uni-app、原生 App HTTP API、云函数、CloudRun、NoSQL/MySQL 数据库、云存储、静态托管、身份认证、AI 大模型调用、AI Agent、资源巡检与 Spec 工作流。",
+      "mcpConfig": {
+        "url": ""
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "darwin": "npm install -g @cloudbase/cli@latest",
+          "linux": "npm install -g @cloudbase/cli@latest",
+          "win32": "npm install -g @cloudbase/cli@latest"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "tcb --version",
+            "linux": "tcb --version",
+            "win32": "tcb.cmd --version"
+          },
+          "minVersion": "3.7.0"
+        },
+        "auth": {
+          "darwin": "tcb login --flow web --yes",
+          "linux": "tcb login --flow web --yes",
+          "win32": "tcb.cmd login --flow web --yes"
+        },
+        "unAuth": {
+          "darwin": "tcb logout",
+          "linux": "tcb logout",
+          "win32": "tcb.cmd logout"
+        },
+        "status": {
+          "darwin": "tcb env list",
+          "linux": "tcb env list",
+          "win32": "tcb.cmd env list"
+        },
+        "authWaitForExit": true,
+        "authSuppressBrowser": true,
+        "authUrlDomain": "tcb.cloud.tencent.com"
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我用 CloudBase 创建一个 React Web 应用，并配置登录、数据库和静态托管部署",
+        "帮我开发一个微信小程序页面，接入 wx.cloud 云开发、云函数和数据库",
+        "创建一个 HTTP 云函数，并用 CloudBase CLI 部署和验证日志",
+        "帮我检查 CloudBase 环境的云函数、CloudRun 和数据库是否有异常",
+        "使用 CloudBase AI 实现一个支持流式输出的智能体，并部署到云端"
+      ],
+      "examples_en": [
+        "Create a React web app with CloudBase authentication, database access, and static hosting deployment",
+        "Build a WeChat Mini Program page using wx.cloud, cloud functions, and CloudBase database",
+        "Create an HTTP cloud function, deploy it with CloudBase CLI, and verify logs",
+        "Inspect my CloudBase environment for issues across cloud functions, CloudRun, and databases",
+        "Build a streaming AI agent with CloudBase AI and deploy it to the cloud"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1558,
+        "sha256": "b1afcc0d88122af4a0806088b8c6af35883514b962023e44576eabf0e74dedfa",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "bugly",
+      "name": "Bugly 质量概览",
+      "description": "查看产品的质量概览，包括崩溃率、ANR率、FOOM（OOM）率、启动耗时。",
+      "providerId": "enterprise_bugly",
+      "mcpConfig": {
+        "url": "https://bugly.mcp.it.woa.com",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "查看应用的大盘质量概览",
+        "查看应用的版本质量概览",
+        "查看应用的今天质量概览"
+      ],
+      "examples_en": [
+        "View the overall quality overview of the app",
+        "View the version-level quality overview of the app",
+        "View today's quality overview of the app"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2486,
+        "sha256": "2e9cc6db88c036a93b953111e23531b0926835477116179fc13d6e82fb6dd2fa",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "bugly-token",
+      "name": "Bugly 质量概览",
+      "description": "查看产品的质量概览 包括崩溃率 anr率 foom（oom）率 启动耗时",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://bugly.tds.qq.com/mcp",
+        "type": "streamableHttp",
+        "headers": {
+          "Authorization": "Bearer ${BUGLY_ACCESS_TOKEN}"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "Bugly 质量概览 MCP 对接配置",
+        "description": "连接您的 Bugly 账号，用于查看产品的崩溃率、ANR 率、FOOM（OOM）率与启动耗时等质量概览。Token 仅存储在本机 ~/.workbuddy 下，不会上传云端。",
+        "docUrl": "https://bugly.tds.qq.com/v2/user/token",
+        "docLabel": "如何获取 Bugly Access Token？",
+        "fields": [
+          {
+            "key": "BUGLY_ACCESS_TOKEN",
+            "label": "密钥",
+            "placeholder": "在 Bugly 控制台 → 右上角头像 → 个人令牌→ 复制密钥",
+            "type": "password",
+            "required": true,
+            "description": "用于访问 Bugly OpenAPI 的个人访问令牌，将以 Authorization: Bearer 形式注入请求头。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "BUGLY_ACCESS_TOKEN": ""
+      },
+      "visibleIn": [
+        "internal"
+      ],
+      "examples_zh": [
+        "查看应用的大盘质量概览",
+        "查看应用的版本质量概览",
+        "查看应用的今天质量概览"
+      ],
+      "examples_en": [
+        "View the overall quality overview of the app",
+        "View the version-level quality overview of the app",
+        "View today's quality overview of the app"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2486,
+        "sha256": "2e9cc6db88c036a93b953111e23531b0926835477116179fc13d6e82fb6dd2fa",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "neo-crm",
+      "name": "销售易CRM",
+      "description": "用自然语言查客户、推商机、盘线索、领公海、写跟进，一句话打通销售工作闭环。",
+      "mcpConfig": {
+        "url": "https://mcp.xiaoshouyi.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "我要去拜访XXX，帮我准备一下",
+        "把我名下超过 30 天没跟进的客户列出来",
+        "搜一下公海里制造业、上周新进的线索 Top 10"
+      ],
+      "examples_en": [
+        "I'm going to visit XXX, help me get prepared",
+        "List my customers with no follow-up in the past 30 days",
+        "Find the top 10 manufacturing leads added to the public pool last week"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 4922,
+        "sha256": "8c0c0174cb8ead29dcf6b19a0a1bd7ff35c025b93f08d0381e324251c71784c1",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "xiaoe-cloud-cli",
+      "name": "小鹅通",
+      "description": "用自然语言管理小鹅通店铺：查询课程与学员，创建和编辑课程，查看订单，并查找或上传图片、音频、电子书和文档素材。",
+      "mcpConfig": {
+        "url": "https://agent.xiaoe-tech.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "列出最近更新的课程，帮我看看它们的上下架状态",
+        "先列出我的课程，我选一门后再查看课程详情和学员列表",
+        "查询最近 7 天的订单，并打开其中一笔查看详情",
+        "帮我创建一门课程，先询问课程名称和必要信息，提交前让我确认",
+        "把这份文档上传到当前店铺的素材中心"
+      ],
+      "examples_en": [
+        "List recently updated courses and show their publication status",
+        "List my courses first, then let me choose one to view its details and student list",
+        "Query orders from the past 7 days and open one to show its details",
+        "Help me create a course. Ask for its name and required details, then get my confirmation before submitting",
+        "Upload this document to the current shop's material library"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2054,
+        "sha256": "104dc458c53679aee6aae308829bcf4eb94bb78973c4a1b1b57969a544d552b5",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "yuandian-mcp",
+      "name": "华宇元典法律数据",
+      "description": "华宇元典法律数据为智能体提供法律法规、案例文书、企业信息 MCP 工具能力。",
+      "mcpConfig": {
+        "url": "https://open.chineselaw.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "夫妻共同财产是怎么规定的？要现行有效的法条原文，附出处。",
+        "股东转让了认缴出资但未届期的股权后,对受让前的公司债务还要担责吗?有类似裁判吗?",
+        "合作方恒大地产集团,签合同前帮我扫一遍司法风险。"
+      ],
+      "examples_en": [
+        "Please provide the current effective legal provisions on marital community property, including the original statutory text and authoritative sources.",
+        "Where a shareholder transfers equity for subscribed capital contributions that have not yet become due, does the transferor remain liable for corporate debts arising before the transfer? Please identify relevant judicial precedents and court rulings.",
+        "Our prospective counterparty is Evergrande Real Estate Group. Please perform a comprehensive due diligence review of its litigation, enforcement, insolvency, and other legal risks before we enter into the contract."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 14558,
+        "sha256": "f52d068ed75a32de43f2f46ca0ad74ee714fb736782a716111d4c8067b8fd563",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "anydev",
+      "name": "司内研发环境(AnyDev)",
+      "description": "云研发的Skill服务，为大模型赋予AnyDev环境的全生命周期管理能力：支持查询和智能推荐环境模板、一键创建云研发环境，能够远程执行命令、上传文件、自动化部署，也可以按需开启 SSH 连接、调整环境 CPU/内存/磁盘配置、锁定环境防止回收，以及监控运行状态和排查报错日志。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node"
+        },
+        "init": {
+          "darwin": "npx -y @tencent/anydev-workbuddy-installer@latest",
+          "linux": "npx -y @tencent/anydev-workbuddy-installer@latest",
+          "win32": "npx -y @tencent/anydev-workbuddy-installer@latest"
+        },
+        "npmRegistries": [
+          "https://mirrors.tencent.com/npm/",
+          "https://mirrors.cloud.tencent.com/npm/",
+          "https://registry.npmmirror.com/",
+          "https://mirrors.tuna.tsinghua.edu.cn/npm/",
+          "https://mirrors.huaweicloud.com/repository/npm/",
+          "https://registry.npmjs.org/"
+        ],
+        "versionCheck": {
+          "command": {
+            "darwin": "anydev version",
+            "linux": "anydev version",
+            "win32": "anydev.exe version"
+          },
+          "minVersion": "3.4.1"
+        },
+        "auth": {
+          "darwin": "anydev login",
+          "linux": "anydev login",
+          "win32": "anydev.exe login"
+        },
+        "unAuth": {
+          "darwin": "anydev logout",
+          "linux": "anydev logout",
+          "win32": "anydev.exe logout"
+        },
+        "status": {
+          "darwin": "anydev status",
+          "linux": "anydev status",
+          "win32": "anydev.exe status"
+        },
+        "statusMatch": "Logged in as",
+        "authUrlDomain": "devc.woa.com",
+        "authWaitForExit": true,
+        "authSuppressBrowser": false
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "iOA"
+      ],
+      "examples_zh": [
+        "帮我创建一个云研发环境",
+        "查询我的云研发环境列表",
+        "开启云研发环境 SSH",
+        "部署项目到云研发环境"
+      ],
+      "examples_en": [
+        "Create a cloud dev environment",
+        "List my cloud dev environments",
+        "Open SSH to a cloud dev environment",
+        "Deploy project to a cloud dev environment"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 23670,
+        "sha256": "ad05d21cd830d695694ab95347f9b6602d67dce2b1248fb684fafff8f33c97c7",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": false
+    },
+    {
+      "id": "weisheng-scrm",
+      "name": "微盛企微管家SCRM",
+      "description": "查询或管理企业微信中的客户信息、客户标签、客户群、营销素材、活码、群发、跟进记录、联系人、商机、汇报、抽奖、客户日程、聊天记录等业务能力。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "",
+        "type": "stdio",
+        "env": {
+          "SCRM_APP_KEY": "",
+          "SCRM_BASE_URL": "https://open.wshoto.com",
+          "npm_config_registry": "https://registry.npmmirror.com"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "微盛企微管家SCRM授权配置",
+        "description": "输入微盛企微管家的 APP KEY，用于查询或管理企业微信中的客户信息、标签、客户群、营销素材、活码、群发、跟进记录、联系人、商机、汇报、抽奖、客户日程、聊天记录等业务能力。APP KEY 仅存储在本机，不会上传到云端。",
+        "docUrl": "https://docs.qq.com/doc/p/7695c3515c714ddc9b1e233c0c0c5c550ac82332?nlc=1",
+        "docLabel": "如何获取 APP KEY？",
+        "fields": [
+          {
+            "key": "SCRM_APP_KEY",
+            "label": "APP KEY",
+            "placeholder": "请输入APP KEY",
+            "type": "password",
+            "required": true,
+            "description": "企业微信 → 工作台 → 企微管家 → 我的 → 我的 APP KEY"
+          }
+        ]
+      },
+      "tokenValues": {
+        "SCRM_APP_KEY": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查询一下我上周新增了几个客户",
+        "创建我的员工活码，欢迎语设置为：您好👋，很高兴为您服务！有任何需求随时和我说～",
+        "我下午要去拜访张三这个客户，请整理他的客户画像信息，帮我准备一下",
+        "帮我给最新添加的客户，根据沟通内容和需求，生成几个跟进任务给对应员工，包含跟进目标、话术",
+        "帮我创建一个今天下午两点的日程，提醒我跟进最近添加的客户，内容是主动向客户介绍新功能"
+      ],
+      "examples_en": [
+        "How many new customers did I get last week?",
+        "Create my staff QR code with welcome message: Hello 👋, glad to serve you! Feel free to reach out anytime~",
+        "I'm visiting customer Zhang San this afternoon. Please pull up their profile and help me prepare.",
+        "Generate follow-up tasks for recently added customers based on their chat content and needs, including goals and talking points",
+        "Create a schedule at 2 PM today to remind me to follow up with recently added customers and introduce new features"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 5058,
+        "sha256": "74d0e03e8df153be9addb7577c4be093ba046c90101f02626f65b19628049f0e",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "zfs-fssc-ai",
+      "name": "中兴新云AI智报",
+      "description": "财务云 AI 报销助手：用自然语言完成报销申请、发票查询识别、报销单查询与费用审批等操作。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcpdemo.ztccloud.com.cn/sse",
+        "type": "sse",
+        "headers": {
+          "X-Zfs-Login-Key": "${ZFS_LOGIN_KEY}",
+          "X-Zfs-Login-Password": "${ZFS_PASSWORD}"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "财务云账号登录",
+        "description": "连接您的财务云账号以使用 AI 智报。账号与密码仅用于向财务云登录换取会话凭证；密码不会被连接器存储，仅在服务端发起登录时使用。",
+        "fields": [
+          {
+            "key": "ZFS_LOGIN_KEY",
+            "label": "财务云账号",
+            "placeholder": "请输入您的账号",
+            "type": "text",
+            "required": true,
+            "description": "用于登录财务云的账号。"
+          },
+          {
+            "key": "ZFS_PASSWORD",
+            "label": "财务云密码",
+            "placeholder": "请输入您的财务云登录密码",
+            "type": "password",
+            "required": true,
+            "description": "您的财务云登录密码。仅用于登录换取会话凭证，不会被平台保存。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "ZFS_LOGIN_KEY": "",
+        "ZFS_PASSWORD": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查询本月已提交的报销单",
+        "创建一张去北京出差的差旅报销单",
+        "我有一笔餐费要报销，帮我走流程"
+      ],
+      "examples_en": [
+        "Show my submitted reimbursement bills this month",
+        "Create a travel reimbursement for my Beijing business trip",
+        "I have a meal expense to reimburse, please start the process"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 5050,
+        "sha256": "d19e5ace6e4e4ab4c8198d37ebd476f69f342d5aaba2435fcee0559e2766bebe",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencentads",
+      "name": "腾讯营销投放",
+      "description": "腾讯营销投放 Skill，为大模型赋予广告投放管理能力：支持广告账户授权、广告/智投项目的创建与更新、创意管理、广告数据查询与分析、推广内容资产管理，以及操作日志查询等完整的广告投放全链路操作。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=20"
+        },
+        "init": {
+          "darwin": "npm install -g tencentads-cli@latest",
+          "linux": "npm install -g tencentads-cli@latest",
+          "win32": "npm install -g tencentads-cli@latest"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "tencentads --version",
+            "linux": "tencentads --version",
+            "win32": "tencentads.cmd --version"
+          },
+          "minVersion": "1.1.5"
+        },
+        "auth": {
+          "darwin": "tencentads auth login",
+          "linux": "tencentads auth login",
+          "win32": "tencentads.cmd auth login"
+        },
+        "unAuth": {
+          "darwin": "tencentads auth logout --force",
+          "linux": "tencentads auth logout --force",
+          "win32": "tencentads.cmd auth logout --force"
+        },
+        "status": {
+          "darwin": "tencentads auth status",
+          "linux": "tencentads auth status",
+          "win32": "tencentads.cmd auth status"
+        },
+        "statusMatchJson": {
+          "status": "active"
+        },
+        "authUrlDomain": "ad.qq.com",
+        "authWaitForExit": true
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查一下账户 52480523 当前的日预算是多少，并修改为 1000 元",
+        "请帮我更新广告 100869559303（广告主 ID: 80429989），开启一键起量，预算设为 200 元",
+        "帮我查看账户 69159768 在 2026 年 4 月 29 日到 5 月 18 日的商品维度投放数据，按天和商品分组，重点看消耗、曝光、点击",
+        "请帮我批量修改广告 92811836282（广告主 ID: 74752792）的投放时段为每天 06:00-24:00",
+        "帮我创建一条智能投放项目，广告主 ID: 79029085，推直播间智投，出价 65 元/下单",
+        "分析广告 100329364591（账户 78649746）的投放效果，识别问题并给出优化建议",
+        "帮我查询推广内容资产列表，账号 80957915，资产类型为短剧，名称包含「神级制造」",
+        "帮我查一下广告 103519996520 在 2026 年 5 月 19 日到 25 日的操作日志"
+      ],
+      "examples_en": [
+        "Check the daily budget for account 52480523 and update it to 1000 CNY",
+        "Update ad 100869559303 (advertiser ID: 80429989): enable auto-acquisition with budget 200 CNY",
+        "Show product-dimension delivery data for account 69159768 from Apr 29 to May 18, 2026, grouped by day and product, focusing on spend, impressions, and clicks",
+        "Batch update the delivery schedule for ad 92811836282 (advertiser ID: 74752792) to 06:00-24:00 daily",
+        "Create a smart delivery campaign for advertiser 79029085, targeting live streaming, bid 65 CNY per order",
+        "Analyze ad 100329364591 (account 78649746) for performance issues and provide optimization suggestions",
+        "List marketing assets for account 80957915, asset type: short drama, name contains 'Shenjizaozao'",
+        "Query operation logs for ad 103519996520 from May 19 to May 25, 2026"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 3074,
+        "sha256": "ea4689aed706c08b95a537c639e20fe49d6b33333a8035d740199bc5c0fb913f",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "gildata",
+      "name": "恒生聚源 MCP",
+      "description": "连接恒生聚源 MCP，查询金融结构化数据、研究报告、公司公告、新闻资讯、条件选股、宏观行业、工商企业数据。支持基金经理观点持仓一致性分析、行业速报生成、金融资讯热点解读。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://api.gildata.com/mcp-servers/aidata-assistant-srv-tool?token=${GILDATA_TOKEN}",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "恒生聚源授权",
+        "description": "连接您的恒生聚源 MCP，用于查询金融结构化数据、研究报告、公司公告、新闻资讯、条件选股、宏观行业、工商企业数据。Token 与接口地址仅存储在本机 ~/.workbuddy 下。",
+        "docUrl": "https://www.feishu.cn/docx/MeCmd4q0Yo7nmkx9D8IcMYbknob",
+        "docLabel": "如何使用恒生聚源 MCP 并获取授权 token",
+        "fields": [
+          {
+            "key": "GILDATA_TOKEN",
+            "label": "Access Token",
+            "placeholder": "请填写恒生聚源下发的 Access Token",
+            "type": "password",
+            "required": true,
+            "description": "用于访问恒生聚源 MCP 的个人访问令牌。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "GILDATA_TOKEN": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我分析张坤在 2024 年底的观点与持仓一致性",
+        "生成半导体行业的 24 小时速报",
+        "今天有什么重要的金融新闻要闻？",
+        "帮我筛选市盈率低于 15 的沪深 300 成分股",
+        "查询贵州茅台最近的研究报告"
+      ],
+      "examples_en": [
+        "Analyze the consistency of Zhang Kun's views and holdings at end of 2024",
+        "Generate a 24-hour industry brief for the semiconductor sector",
+        "What are today's top financial news stories?",
+        "Screen CSI 300 constituents with P/E ratio below 15",
+        "Find recent research reports for Kweichow Moutai"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 59894,
+        "sha256": "3e2887d5d18cf3a4b5364a9910165459dfa9f0276689e8a0a729bfcaaee61466",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-map",
+      "name": "腾讯地图",
+      "description": "接入腾讯地图各类位置服务，包括地点搜索、路线规划（驾车/公交/步行/骑行）、地址正逆解析、沿途搜索和天气查询等。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcp.map.qq.com/sse?key=${TENCENT_MAP_KEY}&format=0",
+        "type": "sse"
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "腾讯地图 Key 配置",
+        "description": "连接你的腾讯地图开发者 Key，用于地点搜索、路线规划、地址解析等。Key 仅存储在本机 ~/.workbuddy下。",
+        "docUrl": "https://lbs.qq.com/dev/console/quick-register",
+        "docLabel": "如何获取腾讯地图 Key？",
+        "fields": [
+          {
+            "key": "TENCENT_MAP_KEY",
+            "label": "Key",
+            "type": "text",
+            "required": true
+          }
+        ]
+      },
+      "tokenValues": {
+        "TENCENT_MAP_KEY": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "亚洲金融大厦附近有什么美食",
+        "从腾讯北京总部大楼去西二旗地铁沿途哪里有加油站？",
+        "从北京天安门去首都机场T3有多远，打车需要多长时间？",
+        "北京市朝阳区的天气怎么样？"
+      ],
+      "examples_en": [
+        "What restaurants are near the Asia Financial Building?",
+        "Where are gas stations along the route from Tencent Beijing HQ to Xierqi Subway Station?",
+        "How far is it from Tiananmen to Capital Airport T3, and how long will a taxi take?",
+        "What's the weather like in Chaoyang District, Beijing?"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 7530,
+        "sha256": "543671c1b3f4c4af2884813aa5f1ab39c1674bae84a634e05475ebdc3fd20098",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "qixinhuiyan-mcp",
+      "name": "启信慧眼",
+      "description": "通过启信慧眼 MCP 接入企业全景数据能力，支持用户用自然语言完成企业搜索、工商画像、风险识别、经营动态、知识产权等商业情报分析。",
+      "mcpConfig": {
+        "url": "https://mcp.qixin.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "查询上海合合信息科技股份有限公司的注册信息",
+        "查询上海合合信息科技股份有限公司的股东信息",
+        "查询上海合合信息科技股份有限公司近30天的招投标信息"
+      ],
+      "examples_en": [
+        "Query the registration information of Shanghai Hehe Information Technology Co., Ltd.",
+        "Query the shareholder information of Shanghai Hehe Information Technology Co., Ltd.",
+        "Query the bidding and tendering information of Shanghai Hehe Information Technology Co., Ltd. in the past 30 days."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 15338,
+        "sha256": "2cd7cd90c93fe06424af41c0eee90a80b7584fc77dcfe8e6b9c16b3a6563db9c",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "patsnap-search",
+      "name": "智慧芽专利&文献融合检索",
+      "description": "在智慧芽全球专利数据库和文献库中进行融合检索，支持自然语言、语义搜索、关键词检索和多维过滤，并获取专利或文献信息。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://connect.zhihuiya.com/2b0355/logic-mcp?apikey=${PATSNAP_API_KEY}",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "填写智慧芽 API Key",
+        "description": "API Key 仅存储在本机，由 WorkBuddy 在连接 MCP 服务时注入到连接 URL 的 apikey 参数中，不会上传到云端。",
+        "docUrl": "https://open.zhihuiya.com/dashboard/api-keys",
+        "docLabel": "查看 API Key 获取说明",
+        "fields": [
+          {
+            "key": "PATSNAP_API_KEY",
+            "label": "智慧芽 API Key",
+            "type": "password",
+            "required": true,
+            "placeholder": "粘贴你的智慧芽 API Key",
+            "description": "请从智慧芽开放平台或企业管理员提供的 MCP/API 凭证中获取。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "PATSNAP_API_KEY": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我检索固态电池电解质相关的专利和论文",
+        "查找近五年 CRISPR 递送系统相关的核心专利和文献",
+        "获取公开号 CN109123456A 的专利基本信息和权利要求",
+        "帮我找宁德时代在钠离子电池方向的专利布局"
+      ],
+      "examples_en": [
+        "Search patents and papers about solid-state battery electrolytes.",
+        "Find key patents and literature on CRISPR delivery systems from the last five years.",
+        "Fetch the details for patent publication CN109123456A.",
+        "Analyze CATL's patent activity in sodium-ion batteries."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 3074,
+        "sha256": "f61a130c53835da0e7ece98bbae2cc82d4b26ed60cd95a7f224d4b896724a51c",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "mastergo-vibe-mcp",
+      "name": "MasterGo 莫高设计",
+      "description": "连接 MasterGo 画布，让 AI 进行设计、修改、同步和获取 D2C 代码。",
+      "mcpConfig": {
+        "url": "",
+        "type": "stdio",
+        "env": {
+          "NO_PROXY": "localhost,127.0.0.1,::1"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "使用 MasterGo MCP，为我设计一个任务管理系统界面",
+        "用当前文件已订阅的团队组件库生成 CRM 客户管理页面",
+        "把当前选中按钮背景改成黑色，文字改成白色",
+        "为我生成一套按钮组件，要求有大中小尺寸和不同的状态",
+        "获取我当前选中图层的前端代码"
+      ],
+      "examples_en": [
+        "Use MasterGo MCP to design a task management system interface",
+        "Generate a CRM customer management page using the team component library subscribed to the current file",
+        "Change the background color of the current selected button to black and the text to white",
+        "Generate a set of button components, requiring large, medium, and small sizes and different states",
+        "Get the front-end code of the currently selected layer"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 4830,
+        "sha256": "660a50304af4e15d88011e506ae20553b13e9babdee8d60912135e9d8198bd50",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tc-chengxin",
+      "name": "同程程心",
+      "description": "同程程心可通过自然语言查询机票、火车票、酒店、景点、度假产品等旅行资源，支持火空联程、智能交通推荐、特价机票搜索、景区门票预订，以及完整行程规划，显著提升出行效率。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "env": {
+          "TC_CONNECTOR_HOME": "$HOME/.workbuddy/connectors-marketplace/connectors/tc-chengxin"
+        },
+        "init": {
+          "darwin": "npm install -g \"$TC_CONNECTOR_HOME/cli/tc-chengxin-cli.tgz\"",
+          "linux": "npm install -g \"$TC_CONNECTOR_HOME/cli/tc-chengxin-cli.tgz\"",
+          "win32": "npm install -g \"%TC_CONNECTOR_HOME%\\cli\\tc-chengxin-cli.tgz\""
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "tc-chengxin --version",
+            "linux": "tc-chengxin --version",
+            "win32": "tc-chengxin.cmd --version"
+          },
+          "minVersion": "1.0.3"
+        },
+        "auth": {
+          "darwin": "tc-chengxin auth login --no-wait",
+          "linux": "tc-chengxin auth login --no-wait",
+          "win32": "tc-chengxin.cmd auth login --no-wait"
+        },
+        "unAuth": {
+          "darwin": "tc-chengxin auth logout",
+          "linux": "tc-chengxin auth logout",
+          "win32": "tc-chengxin.cmd auth logout"
+        },
+        "status": {
+          "darwin": "tc-chengxin auth status",
+          "linux": "tc-chengxin auth status",
+          "win32": "tc-chengxin.cmd auth status"
+        },
+        "statusMatch": "Logged in",
+        "authUrlDomain": "m.ly.com"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "北京到上海的机票，明天出发",
+        "上海到北京的特价机票",
+        "苏州到上海的高铁",
+        "上海外滩附近的五星级酒店",
+        "苏州到南京的汽车票",
+        "帮我规划从苏州出发到杭州玩三天",
+        "杭州有哪些适合亲子的景点"
+      ],
+      "examples_en": [
+        "Flights from Beijing to Shanghai departing tomorrow",
+        "Cheap flights from Shanghai to Beijing",
+        "High-speed trains from Suzhou to Shanghai",
+        "Five-star hotels near the Bund in Shanghai",
+        "Bus tickets from Suzhou to Nanjing",
+        "Plan a 3-day trip from Suzhou to Hangzhou",
+        "Family-friendly attractions in Hangzhou"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 9646,
+        "sha256": "2340a1b69b1abcf8b7d47418b495af140749a634f488e2a6154851db65d61be6",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "agentkey",
+      "name": "AgentKey",
+      "description": "AgentKey 是 AI 助手获取可信工具和实时数据的能力市场。支持网页搜索、URL抓取、新闻、社交媒体、股票市场价格、电商产品数据、企业/公司数据、天气、地图和地理位置、旅行（航班/酒店）、实时信息或任何第三方API。",
+      "mcpConfig": {
+        "url": "https://api.agentkey.app/workbuddy/v1/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "用 AgentKey 搜索并总结小红书近 7 天关于 AI 办公工具的热门内容，给出 5 个适合做公众号或短视频的选题方向。",
+        "用 AgentKey 搜索 Instagram 近 3 天关于瑜伽垫的热门帖子，分析 5 个高互动内容的选题、钩子和形式。",
+        "用 AgentKey 结合 Yahoo Finance 和 Google News 分析 NVIDIA 最近一次财报后的市场反应，解释股价变化原因。",
+        "用 AgentKey 搜索淘宝、京东和 1688 上的华强北蓝牙耳机，对比价格区间和用户评价。",
+        "用 AgentKey 搜索 GitHub 近 30 天新晋热门项目，整理 3-5 个高星项目的用途、star 数和适合的 Agent 应用场景。"
+      ],
+      "examples_en": [
+        "Use AgentKey to search and summarize trending Xiaohongshu (RED) content about AI office tools from the past 7 days, then give me 5 content angles suitable for a newsletter or short-form video.",
+        "Use AgentKey to search Instagram for trending posts about yoga mats from the past 3 days, and analyze the topic, hook, and format of 5 high-engagement posts.",
+        "Use AgentKey with Yahoo Finance and Google News to analyze the market reaction to NVIDIA's latest earnings report, and explain what drove the stock price move.",
+        "Use AgentKey to search Taobao, JD, and 1688 for Huaqiangbei Bluetooth earbuds, and compare price ranges and user reviews.",
+        "Use AgentKey to find GitHub projects that have trended in the past 30 days, and summarize 3–5 high-star repos: what they do, star count, and which agent use cases they fit."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1014,
+        "sha256": "76ea322c57b9d1cacea94dbd375332f87122bf318941accfda43f6a778474070",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "zsxq",
+      "name": "知识星球",
+      "description": "用自然语言管理知识星球：浏览星球内容、发帖评论、搜索主题、回答问题、管理笔记、查看用户信息。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "darwin": "npm install -g zsxq-cli",
+          "linux": "npm install -g zsxq-cli",
+          "win32": "npm install -g zsxq-cli"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "zsxq-cli --version",
+            "linux": "zsxq-cli --version",
+            "win32": "zsxq-cli.cmd --version"
+          },
+          "minVersion": "0.4.9"
+        },
+        "auth": {
+          "darwin": "zsxq-cli auth login --no-wait",
+          "linux": "zsxq-cli auth login --no-wait",
+          "win32": "zsxq-cli.cmd auth login --no-wait"
+        },
+        "unAuth": {
+          "darwin": "zsxq-cli auth logout",
+          "linux": "zsxq-cli auth logout",
+          "win32": "zsxq-cli.cmd auth logout"
+        },
+        "status": {
+          "darwin": "zsxq-cli auth status",
+          "linux": "zsxq-cli auth status",
+          "win32": "zsxq-cli.cmd auth status"
+        },
+        "authUrlDomain": "garden.zsxq.com",
+        "authSuppressBrowser": true,
+        "statusMatch": "Logged in as"
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "列出我加入的所有星球",
+        "帮我在「生财有术」搜索关于「跨境电商」的主题",
+        "帮我发一篇帖子，标题是「今天的学习心得」",
+        "查看我的知识星球用户资料",
+        "帮我创建一条公开笔记，内容是本周的阅读总结",
+        "看看最近大家在讨论什么热门话题"
+      ],
+      "examples_en": [
+        "List all my Zsxq groups",
+        "Search for topics about AI in my groups",
+        "Post a new topic about today's learnings",
+        "Show my Zsxq user profile",
+        "Create a public note summarizing this week's reading",
+        "Show me the latest trending topics"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1562,
+        "sha256": "084e953a7649c797666e73ce91aa447064d6cb637368370738f563ba439fd015",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tencent-health-nges",
+      "name": "腾讯健康NGES",
+      "description": "腾讯健康NGES MCP服务，支持智能问数和合规审核等功能",
+      "mcpConfig": {
+        "url": "https://test.nges.qq.com/mcp/aggregate",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查看本月的拜访KPI达成情况",
+        "帮我对以下话术进行合规审核"
+      ],
+      "examples_en": [
+        "Help me check the KPI completion for this month",
+        "Help me audit the following statement"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 188190,
+        "sha256": "6db5e534540c0cec6bc86400fbf76c5cd1ca800674b975dcfa487f8f6c437bff",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "awesun",
+      "name": "向日葵远程控制",
+      "description": "通过命令行管理远端设备，实时监测在线状态、秒级发起远程控制、快速传输文件及远程截屏。零部署、免更新，轻松实现智能批量运维。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "darwin": "npm install -g @aweray/awesun-cli@latest",
+          "linux": "npm install -g @aweray/awesun-cli@latest",
+          "win32": "npm install -g @aweray/awesun-cli@latest"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "awesun-cli --version",
+            "linux": "awesun-cli --version",
+            "win32": "awesun-cli --version"
+          },
+          "minVersion": "1.0.1",
+          "versionPattern": "(\\d+\\.\\d+\\.\\d+)"
+        },
+        "auth": {
+          "darwin": "awesun-cli login --qrcode --url",
+          "linux": "awesun-cli login --qrcode --url",
+          "win32": "awesun-cli login --qrcode --url"
+        },
+        "unAuth": {
+          "darwin": "awesun-cli logout --clean",
+          "linux": "awesun-cli logout --clean",
+          "win32": "awesun-cli logout --clean"
+        },
+        "status": {
+          "darwin": "awesun-cli login status",
+          "linux": "awesun-cli login status",
+          "win32": "awesun-cli login status"
+        },
+        "statusMatch": "Logged in as",
+        "authUrlDomain": "cc.sunlogin.oray.com",
+        "authWaitForExit": true
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "selfhosted",
+        "cloudhosted"
+      ],
+      "examples_zh": [
+        "使用向日葵帮我列出所有在线设备，按设备名称、在线状态和最后上线时间整理成表格",
+        "使用向日葵帮我把办公电脑设备上的 D:\\test.txt 下载到本地桌面",
+        "使用向日葵帮我建立办公电脑设备的CMD远程连接，运行 ipconfig 和 tasklist 检查网络和进程情况",
+        "使用向日葵帮我把办公电脑设备的 3000 端口映射到本地 18000，我要访问远程的 Web 服务",
+        "使用向日葵帮我给办公电脑屏幕截图，保存到本地桌面，看看远程桌面当前的状态",
+        "使用向日葵帮我把办公电脑重启一下，重启前先告诉我它的在线状态"
+      ],
+      "examples_en": [
+        "Use AweSun to list all online devices with their name, status, and last online time in a table",
+        "Use AweSun to download D:\\test.txt from my office PC to my local desktop",
+        "Use AweSun to establish a CMD remote connection to my office PC, run ipconfig and tasklist to check network and process status",
+        "Use AweSun to forward port 3000 from my office PC to local port 18000 so I can access the remote web service",
+        "Use AweSun to take a screenshot of my office PC desktop and save it locally to check its current state",
+        "Use AweSun to restart my office PC, but show me its online status before rebooting"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1734,
+        "sha256": "99dd621507bdc91c6a507f69f4ac3ff4ee1fb7586b920a6519c551a9e619cc1a",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "canva",
+      "name": "Canva可画",
+      "description": "无缝调用Canva可画的设计能力。一句话生成海报、演示文稿、小红书封面等设计，通过文字描述调整尺寸、填充品牌模板及检索已有内容",
+      "mcpConfig": {
+        "url": "https://mcp.canva.cn/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "帮我总结 Q2 产品策略文档",
+        "为我们的 AI 发布会生成一个风格大胆的 pitch deck",
+        "将我的小红书帖子调整为微信朋友圈尺寸并导出为 PNG",
+        "用产品发布内容填充我们的品牌模板，8 页，专业风格",
+        "将这个 PDF [插入链接] 导入 Canva可画"
+      ],
+      "examples_en": [
+        "Summarize my Q2 product strategy doc",
+        "Generate a pitch deck for our AI launch with a bold tone",
+        "Resize my XiaoHongShu post for WeChat Moments and export as a PNG",
+        "Populate our branded template with content for a product launch presentation, 8 slides, professional tone",
+        "Import this PDF [insert URL] into Canva"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 125486,
+        "sha256": "d37adf9f0d84dfdb1dfe20c8081ba17f018eab10591070515c1ea8be69a8d181",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "qingflow",
+      "name": "轻流",
+      "description": "轻流无代码平台连接器。通过自然语言创建应用、管理表单数据、处理审批流程、查询和导出数据，一站式连接轻流全部能力。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcp.qingflow.com/mcp",
+        "type": "streamableHttp",
+        "headers": {
+          "Authorization": "Bearer ${QINGFLOW_TOKEN}"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "fields": [
+          {
+            "key": "QINGFLOW_TOKEN",
+            "label": "轻流授权码",
+            "type": "string",
+            "required": true,
+            "description": "获取授权码方式：登录轻流 → 左下角头像 → 个人中心 → 账户信息 → 安全信息 → 授权码",
+            "help_zh": "获取方式：登录轻流 → 左下角头像 → 个人中心 → 账户信息 → 安全信息 → 授权码",
+            "help_en": "How to obtain: Log in to QingFlow → Click the avatar in the bottom-left corner → Personal Center → Account Information → Security Information → Authorization Code",
+            "placeholder": "mcp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        ]
+      },
+      "tokenValues": {
+        "QINGFLOW_TOKEN": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我在轻流创建一个请假单应用，包含请假类型、开始时间、结束时间、请假天数等字段",
+        "查看我工作空间下所有的应用列表",
+        "帮我查询请假单中所有待审批的记录",
+        "导出资产盘点表的数据为 Excel 文件"
+      ],
+      "examples_en": [
+        "Create a leave request app in QingFlow with fields like leave type, start time, end time, and days",
+        "List all apps in my workspace",
+        "Query all pending approval records in the leave form",
+        "Export asset inventory data to an Excel file"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 49298,
+        "sha256": "69abd9d40fccd7bf0f31ba4fbab88ea64072f365e1940708551c6f6cc72dae42",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "region-insight",
+      "name": "区域洞察",
+      "description": "区域洞察提供 POI 定位、围栏内 POI 查询与聚合能力。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcp.isjike.com/mcp-servers/region-insight/sse",
+        "type": "sse",
+        "headers": {
+          "Authorization": "Bearer ${REGION_INSIGHT_API_KEY}"
+        }
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "区域洞察 API Key 配置",
+        "description": "请输入从数据平台生成的区域洞察 API Key。Key 仅保存在您本机，WorkBuddy 在连接时将其注入请求头；Key 失效时请通过下方链接重新生成并更新。",
+        "docUrl": "https://data.isjike.com/console/keys",
+        "docLabel": "如何获取 API Key？",
+        "fields": [
+          {
+            "key": "REGION_INSIGHT_API_KEY",
+            "type": "password",
+            "required": true,
+            "label": "区域洞察 API Key",
+            "description": "前往数据平台的 API Key 页面生成并复制完整 Key；请勿填写账号密码。",
+            "placeholder": "粘贴 API Key，例如 sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        ]
+      },
+      "tokenValues": {
+        "REGION_INSIGHT_API_KEY": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "查找上海妇女用品商店并返回 GCJ-02 坐标",
+        "统计成都建设路邻里生活广场周边 1000 米内不同分类的 POI 数量",
+        "查询指定圆形区域内的餐饮 POI 列表"
+      ],
+      "examples_en": [
+        "Find Shanghai Women's Articles Store and return its GCJ-02 coordinates",
+        "Count POIs by category within 1,000 meters of Chengdu Jianshe Road Neighborhood Life Plaza",
+        "List dining POIs within a specified circular area"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 73822,
+        "sha256": "8788bc00156f5ddcf306c7d6494d38ddca34af720a4f04a5b815bcf18f4a1215",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "wk-workbuddy",
+      "name": "威科先行",
+      "description": "威科先行依托全面、准确、及时更新的法规、案例等法律数据研发的MCP服务，支持语义检索、关键词检索等场景。",
+      "mcpConfig": {
+        "url": "https://mcp.wkinfo.com.cn/mcp-servers/integrated/",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "在北京，根据近三年的案例观点，股权激励纠纷是否属于劳动争议？",
+        "北上深关于\"未约定竞业限制经济补偿时用人单位支付标准\"的规定"
+      ],
+      "examples_en": [
+        "In Beijing, according to the case view of the past three years, is the equity incentive dispute a labor dispute?",
+        "Provisions of Beijing, Shanghai and Shenzhen on \"Payment Standards for Employers when Economic Compensation for Non-competitive Restrictions is Not Agreed\""
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 2994,
+        "sha256": "5a23fee26cf628d84f3616a922e12521344d427d654efd2f0fab120f69acb484",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "fyopen-lawsearch",
+      "name": "法研·法律法规检索",
+      "description": "法研·法律法规检索，支持自然语言获取精准、现行有效的法规条文，将高质量、海量的法规知识库，无缝接入各类AI应用与工作流中。",
+      "mcpConfig": {
+        "url": "https://api.cjbdi.com:8443/354347/mcp_law_service",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "不满两周岁子女抚养权",
+        "中华人民共和国民法典第一千零八十四条"
+      ],
+      "examples_en": [
+        "Child custody for children under two years of age",
+        "Article 1084 of the Civil Code of the People's Republic of China"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 158358,
+        "sha256": "85befa90ea79faaa226a033e5d61e9c572b241882d2b4c7a77a99b83a3026786",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "yzf-invoice-mcp-server",
+      "name": "云帐房AI开票",
+      "description": "通过自然语言使用云帐房 AI 开票能力，完成开票信息识别、商品税收分类匹配，并前往电子税局开票。",
+      "mcpConfig": {
+        "url": "https://super-ai-app.yunzhangfang.com/api/mcp/invoice/stream",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我开专票给云帐房网络科技有限公司，开票项目是软件服务费，含税金额 12000 元",
+        "帮我开普票给云帐房网络科技有限公司，开票项目是信息技术服务费，含税金额 8600 元",
+        "帮我开专票给云帐房网络科技有限公司，开票项目是咨询服务费，含税金额 5300 元",
+        "帮我开普票给云帐房网络科技有限公司，开票项目是系统维护费，含税金额 2800 元"
+      ],
+      "examples_en": [
+        "Create a special VAT invoice for Yunzhangfang Network Technology Co., Ltd., invoice item software service fee, tax-included amount 12000 CNY",
+        "Create a general VAT invoice for Yunzhangfang Network Technology Co., Ltd., invoice item information technology service fee, tax-included amount 8600 CNY",
+        "Create a special VAT invoice for Yunzhangfang Network Technology Co., Ltd., invoice item consulting service fee, tax-included amount 5300 CNY",
+        "Create a general VAT invoice for Yunzhangfang Network Technology Co., Ltd., invoice item system maintenance fee, tax-included amount 2800 CNY"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 1714,
+        "sha256": "5917915f5399da76019d2beace170b9f95ca69dbac50cd1924137c2b2b0c576f",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tongzhou-fin-research",
+      "name": "同舟金融研究",
+      "description": "连接公开行情、研报检索、行业图谱与同舟投研材料，支持批量查询与事件窗口分析，为股市研究提供可复核证据。",
+      "mcpConfig": {
+        "url": "https://mcp-gateway.textmind-gz.com/mcp/tongzhou-research",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "分析半导体设备行业近期景气和估值变化",
+        "梳理一则政策事件对产业链上下游的影响",
+        "对比一家公司的行情、公告和机构观点",
+        "批量查询多只半导体成分股的近期日K和均线",
+        "计算某政策事件发布前后多只相关标的的事件窗口收益"
+      ],
+      "examples_en": [
+        "Analyze recent semiconductor-equipment conditions and valuation changes",
+        "Trace how a policy event affects an industry value chain",
+        "Compare a company's market data, announcements, and institutional views",
+        "Batch query recent daily K-lines and moving averages for multiple semiconductor stocks",
+        "Compute event-window returns for multiple related tickers around a policy announcement"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 97694,
+        "sha256": "5e5c1f67f0b6c73d7f7a3957ec67a7c2f9c6dd8369390cd3fd0764867f134f87",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "tec-do",
+      "name": "Tec-Do 2.0 广告与增长情报",
+      "description": "面向出海广告投放和增长团队的 AI 能力集合。",
+      "mcpConfig": {
+        "url": "https://tec-chi-external-skill-mcp.tec-do.cn/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "查询美国 TikTok 电商品类的 CPM、CTR 和 CPC 基准",
+        "搜索美国宠物用品品类近 30 天的 TikTok 热门广告素材",
+        "为 example.com 生成结构化竞品分析报告",
+        "分析论坛和评论站点中关于智能喂食器的客户之声与情感"
+      ],
+      "examples_en": [
+        "Query CPM, CTR, and CPC benchmarks for TikTok ecommerce in the US",
+        "Search top TikTok ads for pet products in the US over the last 30 days",
+        "Generate a structured competitor analysis report for example.com",
+        "Analyze voice-of-customer feedback and sentiment about smart pet feeders"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 292790,
+        "sha256": "e32ae76632aae3b5b505ece8d8f96601356706179c42b1132590a596bdb4079e",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "yingmi-mcp",
+      "name": "盈米MCP",
+      "description": "查询基金与市场数据，完成基金研究、组合分析、财富规划及金融内容生成。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://stargate.yingmi.com/mcp/v2?apiKey=${YINGMI_API_KEY}",
+        "type": "streamableHttp",
+        "env": {
+          "YINGMI_API_KEY": "${YINGMI_API_KEY}"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "盈米 MCP 授权",
+        "description": "填写盈米 MCP API Key 以启用基金与市场数据查询。Key 仅保存在本机 ~/.workbuddy 下，不会上传云端。",
+        "docUrl": "https://qieman.com/mcp",
+        "docLabel": "如何获取 API Key？",
+        "fields": [
+          {
+            "key": "YINGMI_API_KEY",
+            "label": "API Key",
+            "type": "password",
+            "required": true,
+            "placeholder": "粘贴从盈米 MCP 页面获取的 API Key",
+            "description": "登录盈米 MCP 开通服务后复制个人 API Key，将作为 Query 参数 apiKey 注入 MCP 请求。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "YINGMI_API_KEY": ""
+      },
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "查询基金 005827 的基本信息和近期表现",
+        "分析这几只基金的底层资产分布和组合风险",
+        "根据家庭收支和目标制定一份财富规划方案",
+        "查询今天的市场热点并生成一份市场简报"
+      ],
+      "examples_en": [
+        "Show the profile and recent performance of fund 005827",
+        "Analyze the underlying asset allocation and risks of these funds",
+        "Create a wealth plan based on my household finances and goals",
+        "Find today's market highlights and create a market brief"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 11786,
+        "sha256": "e17922680155ac8fd958ba454b46a86de017dce139f7edcd8c43dace26868ae6",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "jinshuju",
+      "name": "金数据",
+      "description": "用自然语言操作金数据（jinshuju.net）：创建/复制/编辑表单与主题，增删改查与批量修改表单数据，查询账户套餐与团队成员。",
+      "mcpConfig": {
+        "url": "https://jinshuju.net/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "列一下我金数据里的表单",
+        "帮我建一个“2026 春季发布会”报名表，要姓名、手机号、公司、职位",
+        "把 form_token 为 abCdEf 的表单里最近 7 天的报名数据导出来",
+        "查一下我这个金数据账户的套餐还剩多少额度"
+      ],
+      "examples_en": [
+        "List all forms in my Jinshuju account",
+        "Create a registration form for the 2026 Spring Launch with name, phone, company and title fields",
+        "Export the entries submitted in the last 7 days for form abCdEf",
+        "How much quota is left on my Jinshuju plan?"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 5078,
+        "sha256": "31893a79eb957e7ac59b7edc91d5d7ff470d2fa9deaa0bd85deeb826df558018",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "lovrabet-cli",
+      "name": "Lovrabet CLI",
+      "description": "通过 Lovrabet Runtime CLI 访问已发布应用的数据集、运行态 API、SQL、BFF、文件、OCR、Artifact 和知识库能力。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "init": {
+          "darwin": "npm install -g @lovrabet/lovrabet-cli --registry=https://registry.npmmirror.com",
+          "linux": "npm install -g @lovrabet/lovrabet-cli --registry=https://registry.npmmirror.com",
+          "win32": "npm install -g @lovrabet/lovrabet-cli --registry=https://registry.npmmirror.com"
+        },
+        "auth": {
+          "darwin": "lovrabet auth device --url-only --source workbuddy",
+          "linux": "lovrabet auth device --url-only --source workbuddy",
+          "win32": "lovrabet auth device --url-only --source workbuddy"
+        },
+        "authUrlDomain": "user.lovrabet.com",
+        "unAuth": {
+          "darwin": "lovrabet auth logout --global",
+          "linux": "lovrabet auth logout --global",
+          "win32": "lovrabet auth logout --global"
+        },
+        "status": {
+          "darwin": "lovrabet auth status --global --check",
+          "linux": "lovrabet auth status --global --check",
+          "win32": "lovrabet auth status --global --check"
+        },
+        "statusMatch": "Status: valid",
+        "runtime": {
+          "type": "node",
+          "version": ">=20"
+        },
+        "npmRegistries": [
+          "https://registry.npmmirror.com"
+        ],
+        "versionCheck": {
+          "command": {
+            "darwin": "lovrabet --version",
+            "linux": "lovrabet --version",
+            "win32": "lovrabet --version"
+          },
+          "minVersion": "2.1.17",
+          "versionPattern": "(\\d+\\.\\d+\\.\\d+)"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "查看我可以访问的 Lovrabet 应用列表",
+        "帮我查找订单相关的数据集，并展示字段结构",
+        "查询 CRM 客户数据中最近创建的 20 条记录",
+        "执行已发布的运行态 SQL 查询并返回摘要"
+      ],
+      "examples_en": [
+        "List the Lovrabet runtime apps I can access.",
+        "Find datasets related to orders and show their schema.",
+        "Query the latest 20 CRM customer records.",
+        "Run a published runtime SQL query and summarize the result."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 29258,
+        "sha256": "866dbc59630de48b1a07eefa404c9a2fe17857af97406f7ef51beadc821fc79e",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "moka",
+      "name": "Moka HR 智能体",
+      "description": "招聘和人事一体的 AI 同事，把查询与执行收进一个对话。人才推荐、招聘动态、考勤绩效、审批待办，一句话问清；智能寻聘、面试分析与面试官评估，一句话发起。",
+      "mcpConfig": {
+        "url": "https://mcp.mokahr.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [],
+      "examples_zh": [
+        "我还有多少年假？什么时候过期？",
+        "我这个月考勤有没有异常，迟到了几次？",
+        "出差报销的标准是什么？",
+        "我上个月的加班为什么只结算了 2 小时？",
+        "我名下有哪些待筛选的候选人？",
+        "帮我找 3 年以上 Go 经验、在杭州的后端候选人"
+      ],
+      "examples_en": [
+        "How much annual leave do I have left, and when does it expire?",
+        "Any attendance exceptions this month? How many times was I late?",
+        "What are the reimbursement rules for business trips?",
+        "Why were only 2 hours of my overtime settled last month?",
+        "Which candidates assigned to me are pending screening?",
+        "Find backend candidates in Hangzhou with 3+ years of Go experience"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 347838,
+        "sha256": "96407c2fee644f398b9195bb3da75065dbc5ff75a8d543cd22f4c0bc5418d4d4",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "infimind-ecommerce-image",
+      "name": "极睿电商生图",
+      "description": "通过 MCP 生成 KOC 种草拼图、商品主图与电商商品详情页，并查询任务生成结果。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "",
+        "type": "stdio",
+        "env": {
+          "MCP_TOKEN": "${MCP_TOKEN}"
+        }
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "极睿电商生图 MCP 配置",
+        "description": "每位用户须登录个人账户，手动创建名为 WorkBuddy 的独立 Token，且不得在其他 MCP 客户端复用。仅专业版或企业版个人账户可调用，任务消耗该用户本人积分。凭证由 WorkBuddy 仅保存在本机。",
+        "docUrl": "https://my.feishu.cn/wiki/X9vHw25KvidOhVktH7ScwZ5Anxb?fromScene=spaceOverview",
+        "docLabel": "查看 WorkBuddy Token 获取与配置教程",
+        "fields": [
+          {
+            "key": "MCP_TOKEN",
+            "label": "WorkBuddy Token",
+            "type": "password",
+            "required": true,
+            "placeholder": "登录极睿个人账户 → MCP Token 管理 → 创建 Token → 名称填写 WorkBuddy",
+            "description": "仅填写本人账户创建的独立 Token，请勿在其他 MCP 客户端复用。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "MCP_TOKEN": ""
+      },
+      "examples_zh": [
+        "用这些商品图生成一组 KOC 种草拼图",
+        "根据商品素材生成一套电商详情页",
+        "用这些商品素材生成 5 张电商商品主图"
+      ],
+      "examples_en": [
+        "Create KOC seeding collages from these product images",
+        "Generate an e-commerce product detail page from these assets",
+        "Generate five e-commerce product main images from these assets"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 870,
+        "sha256": "76751a7b7f77c5dbc19ddd8023f90f5801368e0c966594690a92968e2f109019",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "infimind-video",
+      "name": "极睿视频",
+      "description": "通过自然语言使用极睿视频的专业视频生成和视频分析能力，支持多素材参考、任务进度查询与结构化分析结果。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "",
+        "type": "stdio",
+        "env": {
+          "SORA_MCP_TOKEN": "${SORA_MCP_TOKEN}"
+        }
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "极睿视频 MCP 连接配置",
+        "description": "请输入在极睿视频中为本次连接创建、专用于 WorkBuddy 的 MCP Token。凭证仅保存在本机 WorkBuddy 配置目录中，不会随 Connector 上架包分发；不得在其他 MCP 客户端复用。",
+        "docUrl": "https://aigc-next.iclip.cn/mcp-tokens",
+        "docLabel": "前往极睿视频创建 Token",
+        "fields": [
+          {
+            "key": "SORA_MCP_TOKEN",
+            "label": "MCP Token",
+            "type": "password",
+            "required": true,
+            "placeholder": "粘贴仅显示一次的 MCP Token",
+            "description": "用于访问你本人的极睿视频账户、本人积分和任务。请勿分享；不再使用或疑似泄露时，请立即在 Token 管理页撤销。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "SORA_MCP_TOKEN": ""
+      },
+      "examples_zh": [
+        "用这张商品图生成一段 10 秒的竖屏展示视频",
+        "用首尾两张图片生成一段自然过渡的视频",
+        "分析这个商品视频的脚本、风格、卖点和爆款公式"
+      ],
+      "examples_en": [
+        "Create a 10-second vertical product video from this image",
+        "Generate a smooth transition video from these first and last frames",
+        "Analyze this product video's script, style, selling points, and viral formula"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 8410,
+        "sha256": "e54d9e27d93c12f8a763636338084e99c1c346b47ac8f21fa04fd5f29f9d2d29",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "linkfox-product-selection",
+      "name": "Linkfox 选品",
+      "description": "跨境电商选品一站式 AI 工具集，整合 竞品查询/ABA/Keepa/Sorftime/Jungle Scout/卖家精灵/SIF/极目/商业洞察/合规检测等 多项子能力，覆盖选品、关键词、竞品、评论、利基与趋势、合规检测。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcp-tool-gateway.linkfox.com/mcp/any-tool",
+        "type": "streamableHttp",
+        "headers": {
+          "Authorization": "${LINKFOX_AGENT_API_KEY}"
+        }
+      },
+      "skills": [],
+      "tokenConfig": {
+        "title": "Linkfox 选品 授权配置",
+        "description": "输入Linkfox Agent的 API Key，用于使用Linkfox 选品的所有服务。",
+        "docUrl": "https://skill.linkfox.com/linkfoxskills/guide.htm",
+        "docLabel": "如何获取 Linkfox 的 API Key？",
+        "fields": [
+          {
+            "key": "LINKFOX_AGENT_API_KEY",
+            "label": "API Key",
+            "placeholder": "注册后，在 个人中心 → API设置 中创建API Key",
+            "type": "password",
+            "required": true,
+            "description": "用于访问 Linkfox 选品服务的Key。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "LINKFOX_AGENT_API_KEY": ""
+      },
+      "examples_zh": [
+        "用 Jungle Scout 筛选美国站月销量 500+ 的商品",
+        "查 Keepa 上某 ASIN 近 90 天价格和 BSR 趋势",
+        "用智慧芽检索商品图相似外观专利"
+      ],
+      "examples_en": [
+        "Filter US products with 500+ monthly sales via Jungle Scout",
+        "Check 90-day Keepa price and BSR trend for an ASIN",
+        "Search similar design patents from a product image"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 6222,
+        "sha256": "c0dd3ea6afcf5cdc4f20393f3b9b84dece568f19ccb058152df743f918f7fdb8",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "gangtise-mcp",
+      "name": "Gangtise投研",
+      "description": "Gangtise MCP汇聚机构级观点，纪要，日程等另类数据，提供投研AI Agent预生成数据及全球行情/财务/估值/宏观行业等结构化数据。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://openapi.gangtise.com/application/open-mcp/",
+        "type": "streamableHttp",
+        "headers": {
+          "accessKey": "${GTS_ACCESS_KEY}",
+          "secretKey": "${GTS_SECRET_KEY}"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "Gangtise投研 MCP",
+        "description": "Gangtise MCP汇聚机构级观点，纪要，日程等另类数据，提供投研AI Agent预生成数据及全球行情/财务/估值/宏观行业等结构化数据。Key 与接口地址仅存储在本机 ~/.workbuddy 下。",
+        "docUrl": "https://open-platform.gangtise.com/",
+        "docLabel": "如何使用 Gangtise投研 MCP并获取授权Key",
+        "fields": [
+          {
+            "key": "GTS_ACCESS_KEY",
+            "label": "Access Key",
+            "placeholder": "请填入 Gangtise OpenAPI 开发者账号 Access Key",
+            "type": "password",
+            "required": true,
+            "description": "登录 Gangtise 开放平台复制 Access Key 并粘贴至输入框内。"
+          },
+          {
+            "key": "GTS_SECRET_KEY",
+            "label": "Secret Key",
+            "placeholder": "请填入 Gangtise OpenAPI 开发者账号 Secret Key",
+            "type": "password",
+            "required": true,
+            "description": "登录 Gangtise 开放平台复制 Secret Key 并粘贴至输入框内。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "GTS_ACCESS_KEY": "",
+        "GTS_SECRET_KEY": ""
+      },
+      "examples_zh": [
+        "过去30天，国内外机构对英伟达有哪些共识与分歧？",
+        "为宁德时代生成一页式投资摘要，并补充投资逻辑、同业对比、估值与主要风险",
+        "近期人形机器人产业的路演、调研与会议纪要，提炼产业链变化及重点公司",
+        "围绕“AI资本开支已经见顶”生成多空辩论，并列出关键论据与验证指标",
+        "对比中际旭创最新年报与业绩会中的管理层讨论，提炼经营指引及表述变化"
+      ],
+      "examples_en": [
+        "Where do Chinese and international institutions agree and disagree on NVIDIA over the past 30 days?",
+        "Create a one-page investment brief on CATL covering its investment thesis, peers, valuation, and key risks.",
+        "Summarize recent humanoid robotics roadshows, research visits, and meeting notes, highlighting value-chain shifts and key companies.",
+        "Debate whether AI capex has peaked, with key bull and bear arguments and validation metrics.",
+        "Compare management commentary in Zhongji Innolight's latest annual report and earnings call, highlighting guidance and shifts in messaging."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 24830,
+        "sha256": "1dd14d90bc974ce7868d8cd995e9af4af9e4078445739cba5e4fd210521849b2",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "archive-hospital-mcp",
+      "name": "腾讯健康全周期管理平台",
+      "description": "全周期管理平台机构端 AI 智能体的 MCP 连接器。基于原有全周期管理平台，通过引入对话式 AI 智能体，实现理解管理者意图，调度平台原有能力模块完成患者数据查询管理等操作",
+      "mcpConfig": {
+        "url": "https://bingli.tengmed.com/mcp",
+        "type": "streamableHttp"
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "examples_zh": [
+        "目前管理了多少患者",
+        "帮我查一下最近收藏的患者列表",
+        "帮我查看张三的数据情况，总结异常指标和需要关注的重点情况",
+        "张三最近三个月血压怎么样，给个趋势分析"
+      ],
+      "examples_en": [
+        "How many patients are currently under management?",
+        "Show me the list of recently favorited patients",
+        "Pull up Zhang San's data — summarize abnormal indicators and key areas of concern",
+        "How has Zhang San's blood pressure been trending over the past three months? Give me a trend analysis"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 3110,
+        "sha256": "1b6d11bd0bf246ebe7943751cb831d913f6bc065fb22c6a2f4fe759ecc2f5602",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "lemonclaw",
+      "name": "柠檬云",
+      "description": "连接柠檬云财务、进销存、业财和发票系统，支持查账、开票、业务查询、经营分析等企业经营场景。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "runtime": {
+          "type": "node",
+          "version": ">=18"
+        },
+        "init": {
+          "win32": "npm install -g https://download.ningmengyun.com/Skills/lemonclaw-cli-launcher-1.0.1.tgz",
+          "darwin": "npm install -g https://download.ningmengyun.com/Skills/lemonclaw-cli-launcher-1.0.1.tgz",
+          "linux": "npm install -g https://download.ningmengyun.com/Skills/lemonclaw-cli-launcher-1.0.1.tgz"
+        },
+        "auth": {
+          "win32": "lemonclaw-cli.cmd auth login",
+          "darwin": "lemonclaw-cli auth login",
+          "linux": "lemonclaw-cli auth login"
+        },
+        "status": {
+          "win32": "lemonclaw-cli.cmd auth status",
+          "darwin": "lemonclaw-cli auth status",
+          "linux": "lemonclaw-cli auth status"
+        },
+        "unAuth": {
+          "win32": "lemonclaw-cli.cmd auth logout",
+          "darwin": "lemonclaw-cli auth logout",
+          "linux": "lemonclaw-cli auth logout"
+        },
+        "statusMatchJson": {
+          "status": "authenticated"
+        },
+        "authUrlDomain": "www.ningmengyun.com",
+        "authWaitForExit": true,
+        "versionCheck": {
+          "command": {
+            "win32": "lemonclaw-cli.cmd --version",
+            "darwin": "lemonclaw-cli --version",
+            "linux": "lemonclaw-cli --version"
+          },
+          "minVersion": "1.0.1"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "帮我查一下柠檬云软件账套列表，并告诉我柠檬云软件能做些什么"
+      ],
+      "examples_en": [
+        "Please help me check the Lemon Cloud software account list and tell me what Lemon Cloud software can do."
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/svg+xml",
+        "length": 10434,
+        "sha256": "43b1b486861f5cc05403814d4fbdaf556e10bdd9e243493666ce71a9f73c2c88",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "wind-finance",
+      "name": "Wind 金融数据",
+      "description": "通过自然语言查询股票、基金、指数、债券、公告、财经新闻和宏观经济数据。",
+      "authMode": "token",
+      "mcpConfig": {
+        "url": "https://mcp.wind.com.cn/vserver_workbuddy/mcp/",
+        "type": "streamableHttp",
+        "headers": {
+          "Authorization": "Bearer ${WIND_API_KEY}",
+          "Accept": "application/json, text/event-stream"
+        }
+      },
+      "skills": [
+        {
+          "name": "SKILL",
+          "description": "",
+          "contentPath": "skills/SKILL.md"
+        }
+      ],
+      "tokenConfig": {
+        "title": "Wind 金融数据 MCP 配置",
+        "description": "填写 Wind API Key 以启用万得金融数据查询，支持股票、债券、基金、指数、宏观数据的查询与分析。Key 仅保存在本机 ~/.workbuddy 下，不会上传云端。",
+        "docUrl": "https://aifinmarket.wind.com.cn/#/user/overview",
+        "docLabel": "如何获取 API Key？",
+        "fields": [
+          {
+            "key": "WIND_API_KEY",
+            "label": "Wind API Key（个人密钥）",
+            "placeholder": "请输入您的个人 Wind API Key",
+            "type": "password",
+            "required": true,
+            "description": "用于访问Wind MCP 的个人访问令牌。"
+          }
+        ]
+      },
+      "tokenValues": {
+        "WIND_API_KEY": ""
+      },
+      "examples_zh": [
+        "筛选沪深市场市值超过500亿且连续5日上涨的股票",
+        "查询贵州茅台2024年ROE、营业收入和净利润",
+        "查询沪深300最近20日的MACD和涨跌幅",
+        "查询中国GDP最近10期数据"
+      ],
+      "examples_en": [
+        "Screen A-share stocks with market capitalization above 50 billion RMB and five consecutive rising days",
+        "Show Kweichow Moutai 2024 ROE, revenue, and net profit",
+        "Show CSI 300 MACD and price changes over the last 20 days",
+        "Show the latest 10 observations of China GDP"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 2862,
+        "sha256": "f4007c23d966c9ef266f5593847a6b4abb66dfa9f7a7df637e47d98404533e27",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    },
+    {
+      "id": "textin-xparse",
+      "name": "TextIn xParse·智能文档解析",
+      "description": "通过命令行将文件（PDF、图片、Word、Excel、PPT、扫描件等）解析为 Markdown 或结构化 JSON，可还原文档目录结构和复杂表格结构，适用于高精度高性能要求的文档处理OCR任务，每日免费1000页。",
+      "type": "cli",
+      "mcpConfig": {
+        "url": "",
+        "type": "cli"
+      },
+      "cliConfig": {
+        "init": {
+          "darwin": "curl -fsSL https://dllf.intsig.net/download/2026/Solution/xparse-cli/install.sh | sh && \"$HOME/.local/bin/xparse-cli\" --profile workbuddy config set base_url https://api.textin.com",
+          "linux": "curl -fsSL https://dllf.intsig.net/download/2026/Solution/xparse-cli/install.sh | sh && \"$HOME/.local/bin/xparse-cli\" --profile workbuddy config set base_url https://api.textin.com",
+          "win32": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"irm https://dllf.intsig.net/download/2026/Solution/xparse-cli/install.ps1 | iex; & \\\"$env:USERPROFILE\\.xparse-cli\\bin\\xparse-cli.exe\\\" --profile workbuddy config set base_url https://api.textin.com\""
+        },
+        "auth": {
+          "darwin": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth device --open-browser=always --output=jsonl",
+          "linux": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth device --open-browser=always --output=jsonl",
+          "win32": "\"%USERPROFILE%\\.xparse-cli\\bin\\xparse-cli.exe\" --profile workbuddy auth device --open-browser=always --output=jsonl"
+        },
+        "unAuth": {
+          "darwin": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth logout --method oauth",
+          "linux": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth logout --method oauth",
+          "win32": "\"%USERPROFILE%\\.xparse-cli\\bin\\xparse-cli.exe\" --profile workbuddy auth logout --method oauth"
+        },
+        "status": {
+          "darwin": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth status --output=json",
+          "linux": "\"$HOME/.local/bin/xparse-cli\" --profile workbuddy auth status --output=json",
+          "win32": "\"%USERPROFILE%\\.xparse-cli\\bin\\xparse-cli.exe\" --profile workbuddy auth status --output=json"
+        },
+        "statusMatchJson": {
+          "logged_in": "true",
+          "method": "oauth"
+        },
+        "authUrlDomain": "api.textin.com",
+        "env": {
+          "XPARSE_OAUTH_CLIENT_ID": "cli_textin_xparse_workbuddy",
+          "XPARSE_BASE_URL": "https://api.textin.com"
+        },
+        "versionCheck": {
+          "command": {
+            "darwin": "\"$HOME/.local/bin/xparse-cli\" version",
+            "linux": "\"$HOME/.local/bin/xparse-cli\" version",
+            "win32": "\"%USERPROFILE%\\.xparse-cli\\bin\\xparse-cli.exe\" version"
+          },
+          "minVersion": "2.1.0",
+          "versionPattern": "xparse-cli version v?(\\d+\\.\\d+\\.\\d+)"
+        },
+        "authDeviceFlow": {
+          "uriPattern": "\"verification_uri_complete\"\\s*:\\s*\"(https?://[^\"]+)\"",
+          "codePattern": "\"user_code\"\\s*:\\s*\"([A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4})\"",
+          "defaultExpiresInSeconds": 240,
+          "codeEmbeddedInUri": true
+        }
+      },
+      "skills": [],
+      "visibleIn": [
+        "internal",
+        "iOA",
+        "cloudhosted",
+        "selfhosted"
+      ],
+      "examples_zh": [
+        "解析并总结这份 PDF 的核心内容：https://web-api.textin.com/image/download?filename=4249da45f6e946d2afd8380d59.pdf"
+      ],
+      "examples_en": [
+        "Parse this PDF and summarize its key points: https://web-api.textin.com/image/download?filename=4249da45f6e946d2afd8380d59.pdf"
+      ],
+      "icon": {
+        "kind": "data-uri",
+        "mime": "image/png",
+        "length": 14098,
+        "sha256": "ca1072373057c00762ad1fcabba9d86acf7b8cfbab7371634c59db4e46c6dcdd",
+        "url": null
+      },
+      "uiVisibleInObservedPersonalUi": true
+    }
+  ]
+}

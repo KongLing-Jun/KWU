@@ -1,0 +1,29 @@
+{
+  "scenarios": [
+    {
+      "id": "complete-research",
+      "description": "The catalog exposes the ecommerce capability and the opened workspace shows a completed six-task portable-blender research case with one inline generated conclusion widget beside a headerless canvas of generated research widgets.",
+      "fixture": "Static widget envelopes targeting conversation-inline and research-canvas surfaces"
+    },
+    {
+      "id": "evidence-follow-up",
+      "description": "The user cites the keyword trend anomaly into the composer, removes or keeps the reference, submits a question and receives a deterministic evidence-aware response.",
+      "fixture": "Static 2025-07-06 keyword anomaly citation and follow-up answer"
+    },
+    {
+      "id": "partial-evidence",
+      "description": "A visible partial-data notice identifies unavailable keyword evidence while the remaining market and product evidence stays reviewable.",
+      "fixture": "Static partial-evidence banner and retained market fixtures"
+    },
+    {
+      "id": "empty-input",
+      "description": "A demo option presents five centered capability cards above a blank workspace. The user selects a capability, enters a question, and submits; the cards transition into the compact launcher while the question and deterministic research-start state appear.",
+      "fixture": "Deterministic capability selection, first question, transition motion and research-start presentation"
+    },
+    {
+      "id": "collapsed-evidence",
+      "description": "The generated-component canvas collapses to a compact restore control and the research conversation expands to use the released width.",
+      "fixture": "In-memory generated-canvas visibility state"
+    }
+  ]
+}

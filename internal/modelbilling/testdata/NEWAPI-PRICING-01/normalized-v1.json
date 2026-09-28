@@ -1,0 +1,73 @@
+{
+  "fixture_version": "b0-v1",
+  "dependency_id": "NEWAPI-PRICING-01",
+  "cases": [
+    {
+      "name": "fresh_pricing",
+      "snapshot": {
+        "snapshot_id": "pricing_fixture_01",
+        "source": "newapi_pricing",
+        "source_version": "fixture-v1",
+        "source_hash": "sha256:pricing_fixture_01",
+        "currency": "CNY",
+        "exchange_rate": "7.2000",
+        "recharge_price": "1.0000",
+        "group_ratios": {"default": "1.0000"},
+        "usable_groups": ["default"],
+        "fetched_at": "2026-07-11T00:00:00Z",
+        "fresh_until": "2026-07-11T12:00:00Z",
+        "stale_until": "2026-07-12T00:00:00Z",
+        "state": "fresh",
+        "models": [
+          {
+            "model_id": "model_fixture_01",
+            "provider_model_id": "provider-model-fixture",
+            "model_name": "Fixture Model",
+            "model_type": "chat",
+            "capabilities": ["text"],
+            "quota_type": "token",
+            "model_ratio": "1.0000",
+            "completion_ratio": "2.0000",
+            "enable_groups": ["default"],
+            "billing_mode": "token_ratio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "retryable_failure",
+      "error": {"code": "pricing_unavailable", "message": "fixture source temporarily unavailable", "retryable": true}
+    },
+    {
+      "name": "non_retryable_failure",
+      "error": {"code": "pricing_unavailable", "message": "fixture pricing contract rejected"}
+    },
+    {
+      "name": "missing_price",
+      "snapshot": {
+        "snapshot_id": "pricing_fixture_missing",
+        "source": "newapi_pricing",
+        "source_hash": "sha256:pricing_fixture_missing",
+        "currency": "CNY",
+        "group_ratios": {},
+        "usable_groups": [],
+        "fetched_at": "2026-07-11T00:00:00Z",
+        "fresh_until": "2026-07-11T12:00:00Z",
+        "stale_until": "2026-07-12T00:00:00Z",
+        "state": "unavailable",
+        "models": [
+          {
+            "model_id": "model_fixture_missing",
+            "provider_model_id": "provider-model-missing",
+            "model_name": "Missing Price Fixture",
+            "model_type": "chat",
+            "capabilities": ["text"],
+            "quota_type": "token",
+            "enable_groups": [],
+            "billing_mode": "unavailable"
+          }
+        ]
+      }
+    }
+  ]
+}

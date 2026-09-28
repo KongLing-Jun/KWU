@@ -1,0 +1,412 @@
+{
+  "fixture_version": "a0-v1",
+  "metadata": {
+    "mock_only": true,
+    "l2_integrated": false,
+    "gates": ["CLOUD-01", "CLOUD-02", "CLOUD-03", "CLOUD-05", "CLOUD-07", "CLOUD-08", "CLOUD-09", "CLOUD-10"]
+  },
+  "binding": {
+    "actor_id": "local",
+    "profile_id": "default",
+    "cloud_user_id": "usr_01",
+    "binding_status": "bound",
+    "binding_generation": 1
+  },
+  "sessions": [
+    {
+      "scope": {
+        "profile_id": "default",
+        "cloud_user_id": "usr_01",
+        "binding_generation": 1
+      },
+      "state": "authenticated",
+      "access_token": "fixture_access_token",
+      "refresh_token": "fixture_refresh_token",
+      "issued_at": "2026-07-09T00:00:00Z",
+      "expires_at": "2026-07-09T01:00:00Z"
+    }
+  ],
+  "auth_cases": [
+    {
+      "name": "auth_success",
+      "fixture_only": true,
+      "login_credential": {"phone": "13800000000", "password_digest": "1df34540504be5cb097433d7894b3ca91d890d05e77c67a73869444681cdf718"},
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_01", "binding_status": "bound", "binding_generation": 1},
+      "state": "authenticated",
+      "session": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "state": "authenticated", "access_token": "fixture_auth_success", "refresh_token": "fixture_refresh_success", "issued_at": "2026-07-09T00:00:00Z", "expires_at": "2026-07-09T01:00:00Z"}
+    },
+    {
+      "name": "access_expired",
+      "fixture_only": true,
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_01", "binding_status": "bound", "binding_generation": 1},
+      "state": "expired",
+      "session": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "state": "expired", "issued_at": "2026-07-09T00:00:00Z", "expires_at": "2026-07-09T00:05:00Z"}
+    },
+    {
+      "name": "refresh_success",
+      "fixture_only": true,
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_01", "binding_status": "bound", "binding_generation": 1},
+      "state": "authenticated",
+      "session": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "state": "authenticated", "access_token": "fixture_access_rotated", "refresh_token": "fixture_refresh_rotated", "issued_at": "2026-07-09T00:05:00Z", "expires_at": "2026-07-09T01:05:00Z"}
+    },
+    {
+      "name": "refresh_failed",
+      "fixture_only": true,
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_01", "binding_status": "expired", "binding_generation": 1},
+      "state": "expired",
+      "session": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "state": "expired", "issued_at": "2026-07-09T00:00:00Z", "expires_at": "2026-07-09T00:05:00Z"},
+      "error": {"code": "AUTH_REQUIRED", "message": "fixture refresh token expired"}
+    },
+    {
+      "name": "profile_mismatch",
+      "fixture_only": true,
+      "binding": {"actor_id": "local", "profile_id": "secondary", "cloud_user_id": "usr_02", "binding_status": "mismatch", "binding_generation": 2},
+      "state": "offline",
+      "error": {"code": "PROFILE_SCOPE_MISMATCH", "message": "fixture profile is bound to another cloud account"}
+    },
+    {
+      "name": "auth_success_secondary",
+      "fixture_only": true,
+      "login_credential": {"phone": "13900000000", "password_digest": "d298ccb09a7ca12cc4ee82a05aba0df310bc665eee7601ab6449435fe9d84225"},
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_02", "binding_status": "bound", "binding_generation": 2},
+      "state": "authenticated",
+      "session": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "state": "authenticated", "access_token": "fixture_secondary_access", "refresh_token": "fixture_secondary_refresh", "issued_at": "2026-07-09T00:10:00Z", "expires_at": "2026-07-09T01:10:00Z"}
+    },
+    {
+      "name": "sms_code_invalid",
+      "fixture_only": true,
+      "binding": {"actor_id": "local", "profile_id": "default", "cloud_user_id": "usr_01", "binding_status": "bound", "binding_generation": 1},
+      "state": "offline",
+      "error": {"code": "SMS_CODE_INVALID", "message": "fixture SMS verification code is invalid"}
+    }
+  ],
+  "balance_cases": [
+    {
+      "name": "balance_split",
+      "scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1},
+      "balance": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000", "available_balance": "20700.0000", "free_available_balance": "700.0000", "subscription_available_balance": "20000.0000", "frozen_balance": "300.0000", "free_frozen_balance": "300.0000", "subscription_frozen_balance": "0.0000", "version": 13}
+    }
+  ],
+  "account_snapshots": [
+    {
+      "scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1},
+      "balance": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000", "available_balance": "20700.0000", "free_available_balance": "700.0000", "subscription_available_balance": "20000.0000", "frozen_balance": "300.0000", "free_frozen_balance": "300.0000", "subscription_frozen_balance": "0.0000", "version": 13},
+      "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T00:17:00Z"}
+    },
+    {
+      "scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2},
+      "balance": {"total_balance": "5000.0000", "free_balance": "500.0000", "subscription_balance": "4500.0000", "available_balance": "5000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "4500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 3},
+      "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "lite", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T00:10:00Z"}
+    }
+  ],
+  "freeze_cases": [
+    {
+      "name": "freeze_granted",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_01",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_a21592da760ce05a65355e980f6d5145"
+      },
+      "result": {
+        "freeze": {
+          "scope": {
+            "profile_id": "default",
+            "cloud_user_id": "usr_01",
+            "binding_generation": 1
+          },
+          "freeze_id": "frz_01",
+          "task_id": "task_01",
+          "status": "active",
+          "freeze_amount": "300.0000",
+          "free_frozen_amount": "300.0000",
+          "subscription_frozen_amount": "0.0000",
+          "low_balance_mode": false,
+          "expires_at": "2026-07-09T02:00:00Z"
+        },
+        "balance": {
+          "total_balance": "21000.0000",
+          "free_balance": "1000.0000",
+          "subscription_balance": "20000.0000",
+          "available_balance": "20700.0000",
+          "free_available_balance": "700.0000",
+          "subscription_available_balance": "20000.0000",
+          "frozen_balance": "300.0000",
+          "free_frozen_balance": "300.0000",
+          "subscription_frozen_balance": "0.0000",
+          "version": 13
+        }
+      }
+    },
+    {
+      "name": "insufficient_balance",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_insufficient",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_397de4ac700a8e9c797b5346fc7f5576"
+      },
+      "error": {
+        "code": "INSUFFICIENT_BALANCE",
+        "message": "fixture balance is below the task minimum"
+      }
+    },
+    {
+      "name": "network_failure",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_network",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_0eae804ae0f7d72cc5a9db01f7f95890"
+      },
+      "error": {
+        "code": "NETWORK_UNAVAILABLE",
+        "message": "fixture network unavailable",
+        "retryable": true
+      }
+    },
+    {
+      "name": "low_balance",
+      "request": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "task_id": "task_low_balance", "model_id": "model_deepseek_v3", "client_task_type": "chat", "client_estimated_cost": "0.0000", "idempotency_key": "kwu_86a404001e34d3217d2466fefd9cd79a"},
+      "result": {"freeze": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "freeze_id": "frz_low", "task_id": "task_low_balance", "status": "active", "freeze_amount": "50.0000", "free_frozen_amount": "50.0000", "subscription_frozen_amount": "0.0000", "low_balance_mode": true, "expires_at": "2026-07-09T02:00:00Z"}, "balance": {"total_balance": "100.0000", "free_balance": "100.0000", "subscription_balance": "0.0000", "available_balance": "50.0000", "free_available_balance": "50.0000", "subscription_available_balance": "0.0000", "frozen_balance": "50.0000", "free_frozen_balance": "50.0000", "subscription_frozen_balance": "0.0000", "version": 14}}
+    },
+    {
+      "name": "expired_released",
+      "request": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "task_id": "task_expired_released", "model_id": "model_deepseek_v3", "client_task_type": "chat", "client_estimated_cost": "0.0000", "idempotency_key": "kwu_e989ca34fc4d5b6f9a9a2bc76a824915"},
+      "result": {"freeze": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "freeze_id": "frz_released", "task_id": "task_expired_released", "status": "expired_released", "freeze_amount": "300.0000", "free_frozen_amount": "300.0000", "subscription_frozen_amount": "0.0000", "low_balance_mode": false, "expires_at": "2026-07-09T00:09:00Z"}, "balance": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000", "available_balance": "21000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "20000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 15}}
+    },
+    {
+      "name": "expired_pending_review",
+      "request": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "task_id": "task_expired_pending_review", "model_id": "model_deepseek_v3", "client_task_type": "chat", "client_estimated_cost": "0.0000", "idempotency_key": "kwu_b83a0dc0bc602b885c472119ba85770a"},
+      "result": {"freeze": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "freeze_id": "frz_review", "task_id": "task_expired_pending_review", "status": "expired_pending_review", "freeze_amount": "300.0000", "free_frozen_amount": "0.0000", "subscription_frozen_amount": "300.0000", "low_balance_mode": false, "expires_at": "2026-07-09T00:09:00Z"}, "balance": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000", "available_balance": "20700.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "19700.0000", "frozen_balance": "300.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "300.0000", "version": 16}}
+    },
+    {
+      "name": "not_found",
+      "request": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "task_id": "task_not_found", "model_id": "model_deepseek_v3", "client_task_type": "chat", "client_estimated_cost": "0.0000", "idempotency_key": "kwu_255fd62965be7287b6888e8f5fe745e7"},
+      "error": {"code": "FREEZE_NOT_FOUND", "message": "fixture freeze is not found"}
+    }
+  ],
+  "plan_cases": [
+    {"plan": "lite", "display_name": "Lite", "price_amount": "9.90", "currency": "CNY", "credit_amount": "20000.0000", "period_days": 30, "enabled": true, "sort_order": 10, "config_version": 1},
+    {"plan": "plus", "display_name": "Plus", "price_amount": "29.90", "currency": "CNY", "credit_amount": "60000.0000", "period_days": 30, "enabled": true, "sort_order": 20, "config_version": 1},
+    {"plan": "pro", "display_name": "Pro", "price_amount": "59.90", "currency": "CNY", "credit_amount": "120000.0000", "period_days": 30, "enabled": true, "sort_order": 30, "config_version": 1}
+  ],
+  "payment_cases": [
+    {"name": "created", "entry_expired": true, "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_created", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "created", "grant_status": "not_granted", "expires_at": "2026-07-09T00:05:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/created", "expires_at": "2026-07-09T00:05:00Z"}}},
+    {"name": "payment_pending", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_pending", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/pending", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "callback_received", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_callback", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "callback_received", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/callback", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "verifying", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_verifying", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/verifying", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "paid_verified", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_paid_verified", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "paid_verified", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/paid_verified", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "granting", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_granting", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granting", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/granting", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "granted", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_granted", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/granted", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "closed", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_closed", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "closed", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/closed", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "timeout", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_timeout", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "timeout", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/timeout", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "failed", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_failed", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "failed", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/failed", "expires_at": "2026-07-09T00:30:00Z"}}},
+    {"name": "verify_failed_manual_required", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_manual", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verify_failed_manual_required", "grant_status": "not_granted", "expires_at": "2026-07-09T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/manual", "expires_at": "2026-07-09T00:30:00Z"}}}
+  ],
+  "payment_creates": [
+    {"key": "purchase-lite-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_alipay", "order_type": "subscription_purchase", "plan": "lite", "amount": "9.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "purchase-lite-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_wechat", "order_type": "subscription_purchase", "plan": "lite", "amount": "990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "purchase-plus-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_alipay", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "purchase-plus-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_wechat", "order_type": "subscription_purchase", "plan": "plus", "amount": "2990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "purchase-pro-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_alipay", "order_type": "subscription_purchase", "plan": "pro", "amount": "59.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "purchase-pro-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_wechat", "order_type": "subscription_purchase", "plan": "pro", "amount": "5990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-lite-plus-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_alipay", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "20.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-lite-plus-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_wechat", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "2000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-lite-pro-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "50.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-lite-pro-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "5000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-plus-pro-alipay", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "30.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}}},
+    {"key": "upgrade-plus-pro-wechat", "result": {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "3000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}}}
+  ],
+  "payment_tapes": [
+    {"order_id": "ord_purchase_lite_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_alipay", "order_type": "subscription_purchase", "plan": "lite", "amount": "9.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_alipay", "order_type": "subscription_purchase", "plan": "lite", "amount": "9.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_alipay", "order_type": "subscription_purchase", "plan": "lite", "amount": "9.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "41000.0000", "free_balance": "1000.0000", "subscription_balance": "40000.0000", "available_balance": "41000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "40000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 101}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "lite", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T01:01:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "25000.0000", "free_balance": "500.0000", "subscription_balance": "24500.0000", "available_balance": "25000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "24500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 301}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "lite", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T03:01:00Z"}}]},
+    {"order_id": "ord_purchase_lite_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_wechat", "order_type": "subscription_purchase", "plan": "lite", "amount": "990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_wechat", "order_type": "subscription_purchase", "plan": "lite", "amount": "990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_lite_wechat", "order_type": "subscription_purchase", "plan": "lite", "amount": "990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "failed", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-lite", "expires_at": "2030-01-01T00:30:00Z"}}
+    ]},
+    {"order_id": "ord_purchase_plus_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_alipay", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_alipay", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_alipay", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 102}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T01:02:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "65000.0000", "free_balance": "500.0000", "subscription_balance": "64500.0000", "available_balance": "65000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "64500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 302}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T03:02:00Z"}}]},
+    {"order_id": "ord_purchase_plus_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_wechat", "order_type": "subscription_purchase", "plan": "plus", "amount": "2990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_wechat", "order_type": "subscription_purchase", "plan": "plus", "amount": "2990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_plus_wechat", "order_type": "subscription_purchase", "plan": "plus", "amount": "2990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-plus", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 103}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T01:03:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "65000.0000", "free_balance": "500.0000", "subscription_balance": "64500.0000", "available_balance": "65000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "64500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 303}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T03:03:00Z"}}]},
+    {"order_id": "ord_purchase_pro_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_alipay", "order_type": "subscription_purchase", "plan": "pro", "amount": "59.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_alipay", "order_type": "subscription_purchase", "plan": "pro", "amount": "59.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_alipay", "order_type": "subscription_purchase", "plan": "pro", "amount": "59.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "141000.0000", "free_balance": "1000.0000", "subscription_balance": "140000.0000", "available_balance": "141000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "140000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 104}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T01:04:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "125000.0000", "free_balance": "500.0000", "subscription_balance": "124500.0000", "available_balance": "125000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "124500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 304}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T03:04:00Z"}}]},
+    {"order_id": "ord_purchase_pro_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_wechat", "order_type": "subscription_purchase", "plan": "pro", "amount": "5990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_wechat", "order_type": "subscription_purchase", "plan": "pro", "amount": "5990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_purchase_pro_wechat", "order_type": "subscription_purchase", "plan": "pro", "amount": "5990", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=purchase-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "141000.0000", "free_balance": "1000.0000", "subscription_balance": "140000.0000", "available_balance": "141000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "140000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 105}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T01:05:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "125000.0000", "free_balance": "500.0000", "subscription_balance": "124500.0000", "available_balance": "125000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "124500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 305}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T03:05:00Z"}}]},
+    {"order_id": "ord_upgrade_lite_plus_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_alipay", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "20.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_alipay", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "20.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_alipay", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "20.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 401}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T04:01:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "45000.0000", "free_balance": "500.0000", "subscription_balance": "44500.0000", "available_balance": "45000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "44500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 201}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "plus", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T02:01:00Z"}}]},
+    {"order_id": "ord_upgrade_lite_plus_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_wechat", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "2000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_wechat", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "2000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_plus_wechat", "order_type": "subscription_upgrade", "plan": "plus", "from_plan": "lite", "amount": "2000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-plus", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 402}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T04:02:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "45000.0000", "free_balance": "500.0000", "subscription_balance": "44500.0000", "available_balance": "45000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "44500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 202}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "plus", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T02:02:00Z"}}]},
+    {"order_id": "ord_upgrade_lite_pro_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "50.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "50.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "50.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "141000.0000", "free_balance": "1000.0000", "subscription_balance": "140000.0000", "available_balance": "141000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "140000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 403}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T04:03:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "105000.0000", "free_balance": "500.0000", "subscription_balance": "104500.0000", "available_balance": "105000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "104500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 203}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T02:03:00Z"}}]},
+    {"order_id": "ord_upgrade_lite_pro_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "5000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "5000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "order_id": "ord_upgrade_lite_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "lite", "amount": "5000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-lite-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "141000.0000", "free_balance": "1000.0000", "subscription_balance": "140000.0000", "available_balance": "141000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "140000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 404}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2030-02-01T00:00:00Z", "updated_at": "2026-07-09T04:04:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "105000.0000", "free_balance": "500.0000", "subscription_balance": "104500.0000", "available_balance": "105000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "104500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 204}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T02:04:00Z"}}]},
+    {"order_id": "ord_upgrade_plus_pro_alipay", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "30.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "30.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_alipay", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "30.00", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "alipay", "entry_type": "qr_code", "qr_code": "https://qr.alipay.test/upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 106}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T01:06:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "105000.0000", "free_balance": "500.0000", "subscription_balance": "104500.0000", "available_balance": "105000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "104500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 306}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T03:06:00Z"}}]},
+    {"order_id": "ord_upgrade_plus_pro_wechat", "results": [
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "3000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "payment_pending", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "3000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "verifying", "grant_status": "not_granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}},
+      {"payment_order": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_upgrade_plus_pro_wechat", "order_type": "subscription_upgrade", "plan": "pro", "from_plan": "plus", "amount": "3000", "amount_unit": "fen", "currency": "CNY", "payment_channel": "wechat", "status": "granted", "grant_status": "granted", "expires_at": "2030-01-01T00:30:00Z"}, "payment_entry": {"channel": "wechat", "entry_type": "native_qr", "code_url": "weixin://wxpay/bizpayurl?order=upgrade-plus-pro", "expires_at": "2030-01-01T00:30:00Z"}}
+    ], "granted_account_snapshots": [{"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "balance": {"total_balance": "81000.0000", "free_balance": "1000.0000", "subscription_balance": "80000.0000", "available_balance": "81000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "80000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 107}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T01:07:00Z"}}, {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "balance": {"total_balance": "105000.0000", "free_balance": "500.0000", "subscription_balance": "104500.0000", "available_balance": "105000.0000", "free_available_balance": "500.0000", "subscription_available_balance": "104500.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 307}, "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_02", "binding_generation": 2}, "plan": "pro", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T03:07:00Z"}}]}
+  ],
+  "sync_cases": [
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "pending", "updated_at": "2026-07-09T00:00:00Z", "version": 1},
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "running", "updated_at": "2026-07-09T00:01:00Z", "version": 2},
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "succeeded", "updated_at": "2026-07-09T00:02:00Z", "version": 3},
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "failed_retryable", "updated_at": "2026-07-09T00:03:00Z", "version": 4},
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "failed_manual_required", "updated_at": "2026-07-09T00:04:00Z", "version": 5},
+    {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "status": "skipped", "updated_at": "2026-07-09T00:05:00Z", "version": 6}
+  ],
+  "events": [
+    {
+      "event_id": "evt_settlement_01",
+      "event_type": "settlement.completed",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:10:00Z",
+      "version": 13,
+      "data": {
+        "task_id": "task_01",
+        "settlement_id": "set_01"
+      }
+    },
+    {
+      "event_id": "evt_other_user",
+      "event_type": "balance.updated",
+      "cloud_user_id": "usr_other",
+      "occurred_at": "2026-07-09T00:11:00Z",
+      "version": 14,
+      "data": {
+        "total_balance": "999.0000"
+      }
+    },
+    {
+      "event_id": "evt_freeze_created",
+      "event_type": "freeze.created",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:09:00Z",
+      "version": 12,
+      "data": {"freeze_id": "frz_01", "task_id": "task_01"}
+    },
+    {
+      "event_id": "evt_balance_updated",
+      "event_type": "balance.updated",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:12:00Z",
+      "version": 14,
+      "data": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000"}
+    },
+    {
+      "event_id": "evt_freeze_expired",
+      "event_type": "freeze.expired",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:13:00Z",
+      "version": 15,
+      "data": {"freeze_id": "frz_released", "status": "expired_released"}
+    },
+    {
+      "event_id": "evt_settlement_exception",
+      "event_type": "settlement.exception",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:14:00Z",
+      "version": 16,
+      "data": {"task_id": "task_expired_pending_review", "settlement_id": "set_review"}
+    },
+    {
+      "event_id": "evt_subscription_updated",
+      "event_type": "subscription.updated",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:15:00Z",
+      "version": 17,
+      "data": {"plan": "plus", "status": "active"}
+    },
+    {
+      "event_id": "evt_payment_pending",
+      "event_type": "payment.updated",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:16:00Z",
+      "version": 18,
+      "data": {"order_id": "ord_pending", "status": "payment_pending"}
+    },
+    {
+      "event_id": "evt_payment_pending",
+      "event_type": "payment.updated",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:16:00Z",
+      "version": 18,
+      "data": {"order_id": "ord_pending", "status": "payment_pending"}
+    },
+    {
+      "event_id": "evt_sync_updated",
+      "event_type": "third_party_sync.updated",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:17:00Z",
+      "version": 19,
+      "data": {"status": "succeeded", "version": 3}
+    }
+  ],
+  "recovery_cases": [
+    {
+      "name": "disconnect_then_rest_restore",
+      "scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1},
+      "disconnected_after_event_id": "evt_payment_pending",
+      "last_event_id": "evt_sync_updated",
+      "balance": {"total_balance": "71000.0000", "free_balance": "1000.0000", "subscription_balance": "70000.0000", "available_balance": "71000.0000", "free_available_balance": "1000.0000", "subscription_available_balance": "70000.0000", "frozen_balance": "0.0000", "free_frozen_balance": "0.0000", "subscription_frozen_balance": "0.0000", "version": 19},
+      "subscription": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "plan": "plus", "status": "active", "period_end": "2026-08-08T00:00:00Z", "updated_at": "2026-07-09T00:17:00Z"},
+      "freezes": [
+        {"freeze": {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "freeze_id": "frz_01", "task_id": "task_01", "status": "active", "freeze_amount": "300.0000", "free_frozen_amount": "300.0000", "subscription_frozen_amount": "0.0000", "low_balance_mode": false, "expires_at": "2026-07-09T02:00:00Z"}, "balance": {"total_balance": "21000.0000", "free_balance": "1000.0000", "subscription_balance": "20000.0000", "available_balance": "20700.0000", "free_available_balance": "700.0000", "subscription_available_balance": "20000.0000", "frozen_balance": "300.0000", "free_frozen_balance": "300.0000", "subscription_frozen_balance": "0.0000", "version": 13}}
+      ],
+      "payment_orders": [
+        {"scope": {"profile_id": "default", "cloud_user_id": "usr_01", "binding_generation": 1}, "order_id": "ord_granted", "order_type": "subscription_purchase", "plan": "plus", "amount": "29.90", "amount_unit": "yuan", "currency": "CNY", "payment_channel": "alipay", "status": "granted", "grant_status": "granted", "expires_at": "2026-07-09T00:30:00Z"}
+      ]
+    }
+  ]
+}

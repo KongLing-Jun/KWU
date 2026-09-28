@@ -1,0 +1,44 @@
+{
+  "scenarios": [
+    {
+      "id": "complete-research",
+      "description": "The workspace renders one inline conclusion and a canvas of platform-scoped widgets from one ready DashboardDocument for a deterministic 1688 supply plus eBay US marketplace study.",
+      "fixture": "Ready document with research.summary, trend.chart, comparison.bars and source.coverage envelopes"
+    },
+    {
+      "id": "partial-evidence",
+      "description": "The eBay demand-trend and review-text capabilities remain explicitly unavailable while supported supply and active-listing evidence remains reviewable and the conclusion status is partial.",
+      "fixture": "Partial document with unavailable coverage entries and no invented keyword or review widgets"
+    },
+    {
+      "id": "loading-research",
+      "description": "The conversation and canvas present loading states from widget status without synthesizing completed business values.",
+      "fixture": "Loading DashboardDocument with queued/loading envelopes"
+    },
+    {
+      "id": "empty-input",
+      "description": "A new task has no widgets, shows the centered capability chooser, and transitions to a compact chooser after the first deterministic submission.",
+      "fixture": "Empty DashboardDocument plus existing local composer interaction"
+    },
+    {
+      "id": "action-replay",
+      "description": "A deterministic sequence applies add, update, attach-evidence, move and remove requests with monotonically increasing document revisions and idempotent operation replay.",
+      "fixture": "Fixed dashboard action sequence with stable operation IDs"
+    },
+    {
+      "id": "reload-persistence",
+      "description": "The active task document serializes to the feature-local adapter and can be restored after remount without persisting transient popover or composer state.",
+      "fixture": "Namespaced local JSON document for workspace-commerce/task-portable-blender/primary"
+    },
+    {
+      "id": "evidence-follow-up",
+      "description": "The user cites a registered widget evidence reference and receives the existing deterministic follow-up without granting the widget or model direct UI access.",
+      "fixture": "Stable eBay active-listing snapshot evidence reference and deterministic response"
+    },
+    {
+      "id": "collapsed-evidence",
+      "description": "The canvas can still collapse and restore without modifying the persisted DashboardDocument or its widget surface assignments.",
+      "fixture": "Transient in-memory canvas visibility state"
+    }
+  ]
+}

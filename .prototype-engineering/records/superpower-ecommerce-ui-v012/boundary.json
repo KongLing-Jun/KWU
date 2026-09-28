@@ -1,0 +1,26 @@
+{
+  "subject": "Card-level multi-source citation selection for generated widgets",
+  "inside": [
+    "Animated hover-selectable card treatment",
+    "Right-click contextmenu interception and citation selection",
+    "Ordered multi-card selected state synchronized with composer reference chips",
+    "Independent citation removal and right-click toggle behavior",
+    "Per-message citation snapshots for submitted follow-ups",
+    "Removal of explicit citation buttons and header action layout",
+    "Loading-state rejection and reduced-motion behavior"
+  ],
+  "outside": [
+    {
+      "system": "Touch and keyboard alternative interaction",
+      "contract": "The current prototype targets mouse hover and right-click only.",
+      "adapter": "PointerContextMenuCitationAdapter",
+      "scenarioIds": ["hover-ready", "right-click-select", "multi-source-select"]
+    },
+    {
+      "system": "Browser/native context menu",
+      "contract": "Default context menu is prevented only when a generated ready card handles citation.",
+      "adapter": "ScopedContextMenuPrevention",
+      "scenarioIds": ["right-click-select", "loading-card"]
+    }
+  ]
+}

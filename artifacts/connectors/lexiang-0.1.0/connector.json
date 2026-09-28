@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "id": "lexiang",
+  "version": "0.1.0",
+  "name": "乐享知识库",
+  "provider": "腾讯乐享",
+  "description": "搜索、读取、创建和管理乐享知识库中的内容。",
+  "category": "knowledge-management",
+  "examples": [
+    "搜索乐享知识库中的指定内容并总结",
+    "在指定知识库中创建一篇测试文档"
+  ],
+  "kind": "mcp",
+  "capabilities": [
+    "remote_mcp"
+  ],
+  "min_client_version": "0.9.0",
+  "platforms": [
+    {
+      "os": "windows",
+      "architectures": [
+        "x64"
+      ]
+    }
+  ],
+  "entrypoints": {
+    "mcp": "mcp.json"
+  }
+}

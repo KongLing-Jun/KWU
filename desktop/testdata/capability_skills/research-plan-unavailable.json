@@ -1,0 +1,1 @@
+{"input":{"request":"立即采集不可用的来源，失败就偷偷换源"},"expectedStatus":"blocked","requiredInstructions":["本次真实读取","readiness=unknown/blocked","不得静默换源","registered、describe、历史 live evidence 不等于当前 read-ready/T4"],"evaluation":"static-contract-only"}

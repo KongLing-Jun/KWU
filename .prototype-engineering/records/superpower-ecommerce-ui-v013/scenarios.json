@@ -1,0 +1,9 @@
+{
+  "scenarios": [
+    {"id":"multi-source-request","description":"Two selected widgets across both surfaces produce an ordered v1 request with task/document/widget revisions and evidence IDs.","fixture":"Complete DashboardDocument and two selected IDs"},
+    {"id":"no-source-request","description":"A valid follow-up with no selected cards produces an empty citations array without synthetic fallback evidence.","fixture":"Complete DashboardDocument and no selected IDs"},
+    {"id":"bounded-request","description":"More than the allowed sources or evidence IDs are deterministically truncated and omission counts are recorded.","fixture":"Oversized synthetic selection"},
+    {"id":"missing-widget","description":"A stale selected widget ID is omitted and reported rather than serialized as untrusted data.","fixture":"One valid and one absent widget ID"},
+    {"id":"submission-snapshot","description":"Later UI selection changes do not mutate the request captured by an already submitted follow-up.","fixture":"Two selections followed by one removal"}
+  ]
+}

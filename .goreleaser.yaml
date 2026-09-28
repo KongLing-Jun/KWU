@@ -1,0 +1,36 @@
+version: 2
+project_name: kwu
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: kwu
+    main: ./cmd/kwu
+    binary: kwu
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Tag }}
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+
+archives:
+  - id: kwu
+    ids: [kwu]
+    name_template: "kwu-{{ .Os }}-{{ .Arch }}"
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+
+checksum:
+  name_template: SHA256SUMS
+  algorithm: sha256
+
+release:
+  prerelease: auto
+  name_template: "云智企办 CLI {{ .Tag }}"

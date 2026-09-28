@@ -1,0 +1,1 @@
+{"input":{"decisionQuestion":"是否值得进一步调查","productConcept":"水杯","targetMarket":"US","timeWindow":"2026-Q3"},"expectedStatus":"ready","requiredInstructions":["ready 仅表示计划草案字段完整","humanConfirmations","canProve","cannotProve","nextStep"],"evaluation":"static-contract-only"}

@@ -1,0 +1,9 @@
+{
+  "schema_version": 2,
+  "servers": [{
+    "id": "notion",
+    "transport": "streamable-http",
+    "url": "https://mcp.notion.com/mcp",
+    "auth": {"type": "oauth", "scopes": []}
+  }]
+}

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1040" viewBox="0 0 1500 1040" role="img" aria-labelledby="title desc">
+  <title id="title">KWU turn runtime flow</title>
+  <desc id="desc">One user turn from entry surface through controller, runner, provider streaming, tool execution, and event consumers.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .lane { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; rx: 8; }
+      .lane-title { font: 700 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .box { fill: #f1f5f9; stroke: #475569; stroke-width: 1.3; rx: 8; }
+      .input { fill: #eff6ff; stroke: #2563eb; }
+      .control { fill: #ecfdf5; stroke: #059669; }
+      .agent { fill: #fefce8; stroke: #ca8a04; }
+      .tool { fill: #fff7ed; stroke: #ea580c; }
+      .event { fill: #f5f3ff; stroke: #7c3aed; }
+      .danger { fill: #fef2f2; stroke: #dc2626; }
+      .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .node-title { font: 700 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .node-text { font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .small { font: 400 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #64748b; }
+      .edge { fill: none; stroke: #64748b; stroke-width: 1.6; marker-end: url(#arrow); }
+      .edge-strong { fill: none; stroke: #0f766e; stroke-width: 2.2; marker-end: url(#arrow-strong); }
+      .edge-loop { fill: none; stroke: #ca8a04; stroke-width: 2; marker-end: url(#arrow-loop); }
+      .edge-dash { fill: none; stroke: #64748b; stroke-width: 1.4; stroke-dasharray: 6 5; marker-end: url(#arrow); }
+      .label { font: 700 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-strong" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrow-loop" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ca8a04"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1500" height="1040"/>
+  <text class="title" x="48" y="58">Turn Runtime Flow From CodeGraph</text>
+  <text class="subtitle" x="48" y="86">One submitted task across CLI, desktop, HTTP/SSE, ACP, controller, agent, providers, tools, and event consumers.</text>
+
+  <rect class="lane" x="40" y="125" width="1420" height="110"/>
+  <text class="lane-title" x="64" y="155">Entry layer</text>
+  <rect class="input" x="90" y="175" width="205" height="44" rx="8"/>
+  <text class="node-title" x="110" y="202">User prompt</text>
+  <rect class="input" x="345" y="175" width="245" height="44" rx="8"/>
+  <text class="node-title" x="365" y="202">CLI / Desktop / HTTP / ACP</text>
+  <rect class="input" x="640" y="175" width="245" height="44" rx="8"/>
+  <text class="node-title" x="660" y="202">Submit, SubmitHTTP, Run</text>
+
+  <rect class="lane" x="40" y="265" width="1420" height="185"/>
+  <text class="lane-title" x="64" y="295">Controller layer</text>
+  <rect class="control" x="90" y="325" width="245" height="82" rx="8"/>
+  <text class="node-title" x="110" y="352">control.Controller</text>
+  <text class="node-text" x="110" y="374">compose input, refs, images</text>
+  <text class="node-text" x="110" y="394">hooks and run bookkeeping</text>
+  <rect class="control" x="420" y="325" width="245" height="82" rx="8"/>
+  <text class="node-title" x="440" y="352">Managers</text>
+  <text class="node-text" x="440" y="374">approval, goals, memory</text>
+  <text class="node-text" x="440" y="394">MCP, checkpoints, jobs</text>
+  <rect class="control" x="750" y="325" width="245" height="82" rx="8"/>
+  <text class="node-title" x="770" y="352">agent.Runner</text>
+  <text class="node-text" x="770" y="374">Agent directly, or</text>
+  <text class="node-text" x="770" y="394">Coordinator planner handoff</text>
+
+  <rect class="lane" x="40" y="480" width="1420" height="300"/>
+  <text class="lane-title" x="64" y="510">Agent loop</text>
+  <rect class="agent" x="90" y="550" width="210" height="78" rx="8"/>
+  <text class="node-title" x="110" y="578">Start turn</text>
+  <text class="node-text" x="110" y="600">append user message</text>
+  <text class="node-text" x="110" y="620">inject preferences/memory</text>
+  <rect class="agent" x="350" y="550" width="210" height="78" rx="8"/>
+  <text class="node-title" x="370" y="578">Build model request</text>
+  <text class="node-text" x="370" y="600">session snapshot</text>
+  <text class="node-text" x="370" y="620">ToolRegistry schemas</text>
+  <rect class="agent" x="610" y="550" width="210" height="78" rx="8"/>
+  <text class="node-title" x="630" y="578">Provider.Stream</text>
+  <text class="node-text" x="630" y="600">OpenAI-compatible</text>
+  <text class="node-text" x="630" y="620">Anthropic-compatible</text>
+  <rect class="agent" x="870" y="550" width="210" height="78" rx="8"/>
+  <text class="node-title" x="890" y="578">Assistant turn</text>
+  <text class="node-text" x="890" y="600">text, reasoning, usage</text>
+  <text class="node-text" x="890" y="620">optional tool calls</text>
+  <rect class="tool" x="1130" y="535" width="250" height="108" rx="8"/>
+  <text class="node-title" x="1150" y="563">Tool execution path</text>
+  <text class="node-text" x="1150" y="585">permission gate and guardian</text>
+  <text class="node-text" x="1150" y="605">built-ins, MCP, LSP, task</text>
+  <text class="node-text" x="1150" y="625">append tool result messages</text>
+  <rect class="agent" x="870" y="680" width="210" height="62" rx="8"/>
+  <text class="node-title" x="890" y="707">Final readiness</text>
+  <text class="node-text" x="890" y="729">verify visible final answer</text>
+  <rect class="agent" x="610" y="680" width="210" height="62" rx="8"/>
+  <text class="node-title" x="630" y="707">Maybe compact</text>
+  <text class="node-text" x="630" y="729">bound context window</text>
+
+  <rect class="lane" x="40" y="810" width="1420" height="150"/>
+  <text class="lane-title" x="64" y="840">Event and persistence layer</text>
+  <rect class="event" x="90" y="875" width="230" height="58" rx="8"/>
+  <text class="node-title" x="110" y="900">event.Sink</text>
+  <text class="node-text" x="110" y="920">turn, text, tool, usage, notice</text>
+  <rect class="event" x="385" y="875" width="230" height="58" rx="8"/>
+  <text class="node-title" x="405" y="900">Consumers</text>
+  <text class="node-text" x="405" y="920">desktop UI, SSE, TUI, bots</text>
+  <rect class="event" x="680" y="875" width="230" height="58" rx="8"/>
+  <text class="node-title" x="700" y="900">Session persistence</text>
+  <text class="node-text" x="700" y="920">snapshot, history, metadata</text>
+  <rect class="danger" x="975" y="875" width="230" height="58" rx="8"/>
+  <text class="node-title" x="995" y="900">Cancel / approval waits</text>
+  <text class="node-text" x="995" y="920">contexts unblock running work</text>
+
+  <path class="edge-strong" d="M 295 197 L 345 197"/>
+  <path class="edge-strong" d="M 590 197 L 640 197"/>
+  <path class="edge-strong" d="M 763 219 C 700 265, 335 300, 220 325"/>
+
+  <path class="edge-strong" d="M 335 366 L 420 366"/>
+  <path class="edge-strong" d="M 665 366 L 750 366"/>
+  <path class="edge-strong" d="M 872 407 C 820 455, 285 515, 195 550"/>
+
+  <path class="edge-strong" d="M 300 589 L 350 589"/>
+  <path class="edge-strong" d="M 560 589 L 610 589"/>
+  <path class="edge-strong" d="M 820 589 L 870 589"/>
+  <path class="edge" d="M 1080 589 L 1130 589"/>
+  <path class="edge-loop" d="M 1255 643 C 1255 720, 930 770, 715 742"/>
+  <text class="label" x="1110" y="695">tool calls loop</text>
+  <path class="edge-loop" d="M 610 711 C 470 710, 310 690, 215 628"/>
+  <text class="label" x="360" y="702">next model round</text>
+  <path class="edge" d="M 975 628 L 975 680"/>
+  <path class="edge" d="M 870 711 L 820 711"/>
+
+  <path class="edge-dash" d="M 195 550 C 155 655, 150 800, 205 875"/>
+  <path class="edge-dash" d="M 715 550 C 560 650, 420 780, 320 875"/>
+  <path class="edge-dash" d="M 975 550 C 880 660, 790 780, 795 875"/>
+  <path class="edge-dash" d="M 1255 535 C 1245 700, 1160 795, 1090 875"/>
+  <path class="edge-strong" d="M 320 904 L 385 904"/>
+
+  <text class="small" x="64" y="1000">CodeGraph evidence: Controller.Run calls runner.Run; Agent.Run loops over Provider.Stream, ToolRegistry schemas, executeBatch, session messages, and compaction; serve.events streams typed events as SSE.</text>
+</svg>

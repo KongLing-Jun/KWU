@@ -1,0 +1,175 @@
+name: Desktop release doctor
+run-name: Desktop release ${{ inputs.operation }} ${{ inputs.request_id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: "Run read-only Doctor or re-encrypt the same minisign private key"
+        required: true
+        type: choice
+        options:
+          - doctor
+          - reencrypt
+        default: doctor
+      request_id:
+        description: "32 lowercase hex characters; required for reencrypt"
+        required: false
+        type: string
+      cloud_mode:
+        description: "Validate the cloud release API or explicitly skip it"
+        required: true
+        type: choice
+        options:
+          - required
+          - skip
+        default: required
+      cloud_skip_reason:
+        description: "Required when cloud_mode is skip"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-release-doctor
+  cancel-in-progress: false
+
+env:
+  RELEASE_REPOSITORY: xiaoxiaotest9527-bit/KWU-release
+  OSS_BUCKET: kwu-desktop-releases
+  OSS_PUBLIC_BASE_URL: https://kwu-desktop-releases.oss-cn-guangzhou.aliyuncs.com
+  OSS_REGION: cn-guangzhou
+  OSS_ENDPOINT: https://oss-cn-guangzhou.aliyuncs.com
+
+jobs:
+  doctor:
+    name: Read-only release credential checks
+    if: ${{ inputs.operation == 'doctor' }}
+    runs-on: ubuntu-24.04
+    environment: desktop-release
+    timeout-minutes: 15
+    steps:
+      - name: Check out the release tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version-file: desktop/go.mod
+          cache: true
+          cache-dependency-path: desktop/go.sum
+
+      - name: Require the default branch workflow definition
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -ne 'refs/heads/main-v3') {
+            throw 'Desktop release Doctor must be dispatched from main-v3'
+          }
+
+      - name: Install pinned ossutil
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/ossutil-2.3.0-linux-amd64.zip"
+          curl --fail --silent --show-error --location \
+            --output "$archive" \
+            https://gosspublic.alicdn.com/ossutil/v2/2.3.0/ossutil-2.3.0-linux-amd64.zip
+          echo "3ae4d9fc85a7a6e9f5654d1599766f1a3a42a3692870887b5ae9338d582ef65a  $archive" | sha256sum --check --strict
+          unzip -q "$archive" -d "$RUNNER_TEMP/ossutil"
+          install -m 0755 "$RUNNER_TEMP/ossutil/ossutil-2.3.0-linux-amd64/ossutil" "$RUNNER_TEMP/ossutil-bin"
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+
+      - name: Verify release credentials without remote writes
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          MINISIGN_PRIVATE_KEY: ${{ secrets.MINISIGN_PRIVATE_KEY }}
+          MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          KWU_CLOUD_RELEASE_TOKEN: ${{ secrets.KWU_CLOUD_RELEASE_TOKEN }}
+          KWU_CLOUD_BASE_URL: ${{ vars.KWU_CLOUD_BASE_URL }}
+          INPUT_CLOUD_MODE: ${{ inputs.cloud_mode }}
+          INPUT_CLOUD_SKIP_REASON: ${{ inputs.cloud_skip_reason }}
+        run: |
+          ./scripts/desktop-actions-doctor.ps1 `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -OssutilPath "$env:RUNNER_TEMP/ossutil-bin" `
+            -OssBucket $env:OSS_BUCKET `
+            -CloudMode $env:INPUT_CLOUD_MODE `
+            -CloudSkipReason $env:INPUT_CLOUD_SKIP_REASON `
+            -CloudBaseURL $env:KWU_CLOUD_BASE_URL
+
+      - name: Record doctor result
+        if: ${{ always() }}
+        shell: bash
+        env:
+          INPUT_CLOUD_MODE: ${{ inputs.cloud_mode }}
+        run: |
+          {
+            echo "## Desktop release Doctor"
+            echo
+            echo "- Cloud mode: \`$INPUT_CLOUD_MODE\`"
+            echo "- No tag, Draft Release, OSS object, or cloud release row was created."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  reencrypt:
+    name: Re-encrypt the existing minisign key
+    if: ${{ inputs.operation == 'reencrypt' }}
+    runs-on: ubuntu-24.04
+    environment: desktop-release
+    timeout-minutes: 15
+    steps:
+      - name: Check out the signing tool
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Set up Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version-file: desktop/go.mod
+          cache: true
+          cache-dependency-path: desktop/go.sum
+
+      - name: Validate migration request
+        shell: pwsh
+        env:
+          REQUEST_ID: ${{ inputs.request_id }}
+        run: |
+          if ($env:GITHUB_REF -ne 'refs/heads/main-v3') {
+            throw 'Minisign re-encryption must be dispatched from main-v3'
+          }
+          if ($env:REQUEST_ID -notmatch '^[0-9a-f]{32}$') {
+            throw 'request_id must contain exactly 32 lowercase hexadecimal characters'
+          }
+
+      - name: Re-encrypt the same private key and verify it with the embedded public key
+        working-directory: desktop
+        shell: bash
+        env:
+          MINISIGN_PRIVATE_KEY: ${{ secrets.MINISIGN_PRIVATE_KEY }}
+          MINISIGN_PASSWORD: ${{ secrets.MINISIGN_PASSWORD }}
+          MINISIGN_NEW_PASSWORD: ${{ secrets.MINISIGN_NEW_PASSWORD_TEMP }}
+        run: |
+          set -euo pipefail
+          test -n "$MINISIGN_PRIVATE_KEY"
+          test -n "$MINISIGN_PASSWORD"
+          test -n "$MINISIGN_NEW_PASSWORD"
+          go run ./cmd/sign reencrypt "$RUNNER_TEMP/suiyuan.key"
+          unset MINISIGN_PRIVATE_KEY
+          export MINISIGN_PRIVATE_KEY_FILE="$RUNNER_TEMP/suiyuan.key"
+          export MINISIGN_PASSWORD="$MINISIGN_NEW_PASSWORD"
+          go run ./cmd/sign selftest
+
+      - name: Upload the encrypted private key only
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: minisign-reencrypted-${{ inputs.request_id }}
+          path: ${{ runner.temp }}/suiyuan.key
+          if-no-files-found: error
+          retention-days: 1

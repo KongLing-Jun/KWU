@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "crossborder-commerce",
+  "version": "1.1.0",
+  "entrypoints": {
+    "instructions": "AGENTS.md"
+  },
+  "mcpServers": [
+    {
+      "id": "shopify-global-catalog",
+      "transport": "streamable-http",
+      "url": "https://catalog.shopify.com/api/ucp/mcp",
+      "readOnlyTools": ["search_catalog"]
+    }
+  ],
+  "hostActions": ["dashboard.add_widget"],
+  "skills": [
+    {"name":"crossborder-research-plan","path":"skills/crossborder-research-plan/SKILL.md","allowedTools":[]}
+  ]
+}

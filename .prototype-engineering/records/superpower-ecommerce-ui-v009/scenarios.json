@@ -1,0 +1,34 @@
+{
+  "scenarios": [
+    {
+      "id": "mock-tool-success",
+      "description": "The finite mock research tool adds one labeled 1688 MOQ comparison widget through the Host action contract.",
+      "fixture": "mock.crossborder.add_supply_comparison with deterministic MOQ distribution"
+    },
+    {
+      "id": "event-refresh",
+      "description": "After the JSON commit, a Wails capability:dashboard-changed event causes the mounted UI to reload and render the registered widget.",
+      "fixture": "Bound complete-research workspace and matching event scope"
+    },
+    {
+      "id": "mock-tool-replay",
+      "description": "Repeating the same tool uses the same operation ID and returns the existing document without adding a duplicate widget or revision.",
+      "fixture": "Persisted mock tool operation ID"
+    },
+    {
+      "id": "unsupported-tool",
+      "description": "An unknown tool name fails closed before a dashboard action is written.",
+      "fixture": "mock.unknown"
+    },
+    {
+      "id": "tool-failure",
+      "description": "Host rejection leaves the previous document visible and the prototype trigger exposes a retryable failure state.",
+      "fixture": "Binding or revision rejection"
+    },
+    {
+      "id": "reload-persistence",
+      "description": "The MCP-generated widget is restored from task JSON after workspace remount without depending on the event history.",
+      "fixture": "Committed v009 DashboardDocument"
+    }
+  ]
+}

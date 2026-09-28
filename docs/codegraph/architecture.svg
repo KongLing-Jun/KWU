@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1080" viewBox="0 0 1440 1080" role="img" aria-labelledby="title desc">
+  <title id="title">KWU CodeGraph architecture map</title>
+  <desc id="desc">High-level module topology derived from CodeGraph index, status, files, query, and explore output.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; rx: 8; }
+      .entry { fill: #eff6ff; stroke: #2563eb; }
+      .core { fill: #ecfdf5; stroke: #059669; }
+      .runtime { fill: #fefce8; stroke: #ca8a04; }
+      .support { fill: #f5f3ff; stroke: #7c3aed; }
+      .storage { fill: #fff7ed; stroke: #ea580c; }
+      .external { fill: #f1f5f9; stroke: #475569; }
+      .title { font: 700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .group-title { font: 700 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #1e293b; }
+      .node-title { font: 700 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .node-text { font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .small { font: 400 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #64748b; }
+      .edge { fill: none; stroke: #64748b; stroke-width: 1.7; marker-end: url(#arrow); }
+      .edge-strong { fill: none; stroke: #0f766e; stroke-width: 2.2; marker-end: url(#arrow-strong); }
+      .edge-dash { fill: none; stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 6 5; marker-end: url(#arrow); }
+      .badge { fill: #0f172a; }
+      .badge-text { font: 700 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: white; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-strong" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f766e"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1440" height="1080"/>
+
+  <text class="title" x="48" y="58">KWU CodeGraph Architecture</text>
+  <text class="subtitle" x="48" y="86">Generated from CodeGraph index: 951 files, 20,253 nodes, 71,755 edges. Main indexed languages: Go, TypeScript, TSX.</text>
+  <text class="small" x="48" y="108">Scope: high-level runtime topology, not every dependency edge. Source queries used codegraph status, files, query, and explore.</text>
+
+  <rect class="panel" x="40" y="135" width="1360" height="170"/>
+  <text class="group-title" x="64" y="164">Entry surfaces</text>
+
+  <rect class="entry" x="70" y="185" width="220" height="82" rx="8"/>
+  <text class="node-title" x="88" y="212">CLI</text>
+  <text class="node-text" x="88" y="234">cmd/kwu/main.go</text>
+  <text class="node-text" x="88" y="254">internal/cli.Run</text>
+
+  <rect class="entry" x="330" y="185" width="240" height="82" rx="8"/>
+  <text class="node-title" x="348" y="212">Desktop app</text>
+  <text class="node-text" x="348" y="234">desktop.App Wails binding</text>
+  <text class="node-text" x="348" y="254">desktop/frontend App.tsx</text>
+
+  <rect class="entry" x="610" y="185" width="230" height="82" rx="8"/>
+  <text class="node-title" x="628" y="212">HTTP / SSE server</text>
+  <text class="node-text" x="628" y="234">internal/serve.Server</text>
+  <text class="node-text" x="628" y="254">/submit, /events, /skills</text>
+
+  <rect class="entry" x="880" y="185" width="220" height="82" rx="8"/>
+  <text class="node-title" x="898" y="212">ACP and bots</text>
+  <text class="node-text" x="898" y="234">internal/acp/service.go</text>
+  <text class="node-text" x="898" y="254">internal/bot*</text>
+
+  <rect class="entry" x="1140" y="185" width="220" height="82" rx="8"/>
+  <text class="node-title" x="1158" y="212">Auxiliary outputs</text>
+  <text class="node-text" x="1158" y="234">workers</text>
+  <text class="node-text" x="1158" y="254">cmd/e2ebench</text>
+
+  <rect class="panel" x="40" y="335" width="1360" height="410"/>
+  <text class="group-title" x="64" y="364">Session build and execution core</text>
+
+  <rect class="core" x="105" y="410" width="260" height="98" rx="8"/>
+  <text class="node-title" x="124" y="438">internal/boot.Build</text>
+  <text class="node-text" x="124" y="460">loads config, memory, skills</text>
+  <text class="node-text" x="124" y="480">registers built-ins and MCP</text>
+  <text class="node-text" x="124" y="500">constructs control.Controller</text>
+
+  <rect class="core" x="455" y="390" width="295" height="140" rx="8"/>
+  <text class="node-title" x="476" y="420">internal/control.Controller</text>
+  <text class="node-text" x="476" y="444">SessionAPI implementation</text>
+  <text class="node-text" x="476" y="466">turn control, lifecycle, approvals</text>
+  <text class="node-text" x="476" y="488">goals, memory, checkpoints, MCP</text>
+  <text class="node-text" x="476" y="510">emits typed events to sinks</text>
+
+  <rect class="runtime" x="850" y="380" width="260" height="92" rx="8"/>
+  <text class="node-title" x="868" y="408">agent.Runner</text>
+  <text class="node-text" x="868" y="430">internal/agent.Agent</text>
+  <text class="node-text" x="868" y="450">or agent.Coordinator</text>
+
+  <rect class="runtime" x="850" y="520" width="260" height="128" rx="8"/>
+  <text class="node-title" x="868" y="548">agent.Agent.Run loop</text>
+  <text class="node-text" x="868" y="570">add user message</text>
+  <text class="node-text" x="868" y="590">stream provider chunks</text>
+  <text class="node-text" x="868" y="610">execute tool batches</text>
+  <text class="node-text" x="868" y="630">compact and finalize</text>
+
+  <rect class="external" x="1180" y="380" width="170" height="92" rx="8"/>
+  <text class="node-title" x="1198" y="408">Providers</text>
+  <text class="node-text" x="1198" y="430">openai-compatible</text>
+  <text class="node-text" x="1198" y="450">anthropic</text>
+
+  <rect class="runtime" x="1180" y="520" width="170" height="128" rx="8"/>
+  <text class="node-title" x="1198" y="548">Tool registry</text>
+  <text class="node-text" x="1198" y="570">built-in tools</text>
+  <text class="node-text" x="1198" y="590">MCP tools</text>
+  <text class="node-text" x="1198" y="610">LSP tools</text>
+  <text class="node-text" x="1198" y="630">task subagents</text>
+
+  <rect class="support" x="110" y="565" width="240" height="112" rx="8"/>
+  <text class="node-title" x="128" y="593">Policy and setup inputs</text>
+  <text class="node-text" x="128" y="615">config, sandbox, hooks</text>
+  <text class="node-text" x="128" y="635">memory docs and skill index</text>
+  <text class="node-text" x="128" y="655">permission rules</text>
+
+  <rect class="support" x="455" y="580" width="295" height="98" rx="8"/>
+  <text class="node-title" x="476" y="608">Controller managers</text>
+  <text class="node-text" x="476" y="630">mcpManager, memoryManager</text>
+  <text class="node-text" x="476" y="650">approvalManager, goalMachine</text>
+  <text class="node-text" x="476" y="670">checkpointManager, jobs.Manager</text>
+
+  <rect class="panel" x="40" y="775" width="1360" height="220"/>
+  <text class="group-title" x="64" y="804">Side systems and persistence</text>
+
+  <rect class="storage" x="90" y="840" width="215" height="100" rx="8"/>
+  <text class="node-title" x="108" y="868">Session storage</text>
+  <text class="node-text" x="108" y="890">agent.Session JSONL</text>
+  <text class="node-text" x="108" y="910">history, branch meta</text>
+
+  <rect class="storage" x="345" y="840" width="225" height="100" rx="8"/>
+  <text class="node-title" x="363" y="868">Durable context</text>
+  <text class="node-text" x="363" y="890">memory, instructions</text>
+  <text class="node-text" x="363" y="910">skills and commands</text>
+
+  <rect class="storage" x="610" y="840" width="220" height="100" rx="8"/>
+  <text class="node-title" x="628" y="868">Safety and recovery</text>
+  <text class="node-text" x="628" y="890">guardian session</text>
+  <text class="node-text" x="628" y="910">checkpoints, cleanup</text>
+
+  <rect class="external" x="870" y="840" width="225" height="100" rx="8"/>
+  <text class="node-title" x="888" y="868">Event consumers</text>
+  <text class="node-text" x="888" y="890">desktop UI events</text>
+  <text class="node-text" x="888" y="910">SSE, TUI, bot renderers</text>
+
+  <rect class="external" x="1135" y="840" width="220" height="100" rx="8"/>
+  <text class="node-title" x="1153" y="868">External processes</text>
+  <text class="node-text" x="1153" y="890">MCP servers</text>
+  <text class="node-text" x="1153" y="910">LSP servers, shell</text>
+
+  <path class="edge" d="M 180 267 C 180 318, 210 350, 235 410"/>
+  <path class="edge" d="M 450 267 C 430 330, 340 350, 260 410"/>
+  <path class="edge" d="M 725 267 C 625 330, 395 370, 300 410"/>
+  <path class="edge" d="M 990 267 C 850 330, 455 360, 345 430"/>
+  <path class="edge-strong" d="M 365 459 C 405 459, 420 459, 455 459"/>
+  <path class="edge-strong" d="M 750 440 C 790 420, 810 420, 850 420"/>
+  <path class="edge-strong" d="M 980 472 L 980 520"/>
+  <path class="edge-strong" d="M 1110 426 C 1135 426, 1150 426, 1180 426"/>
+  <path class="edge-strong" d="M 1110 586 C 1135 586, 1150 586, 1180 586"/>
+  <path class="edge-dash" d="M 350 621 C 390 621, 415 621, 455 621"/>
+  <path class="edge-dash" d="M 602 530 L 602 580"/>
+  <path class="edge-dash" d="M 980 648 C 990 730, 990 790, 982 840"/>
+  <path class="edge-dash" d="M 602 678 C 530 735, 438 790, 455 840"/>
+  <path class="edge-dash" d="M 602 678 C 610 735, 700 780, 720 840"/>
+  <path class="edge-dash" d="M 1265 648 C 1260 730, 1250 790, 1245 840"/>
+  <path class="edge" d="M 455 493 C 355 600, 260 735, 198 840"/>
+  <path class="edge" d="M 750 493 C 825 610, 900 740, 982 840"/>
+
+  <rect class="badge" x="64" y="1018" width="84" height="24" rx="12"/>
+  <text class="badge-text" x="82" y="1035">CodeGraph</text>
+  <text class="small" x="162" y="1035">Evidence highlights: boot.Build constructs Controller; Controller drives Runner; Agent loops over Provider.Stream and Tool.Registry; events fan out to UI/SSE/TUI/bots.</text>
+</svg>

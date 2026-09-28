@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "id": "weiyun",
+  "version": "0.1.0",
+  "name": "微云",
+  "provider": "腾讯微云",
+  "description": "通过普通对话查看、下载和管理微云文件。",
+  "category": "productivity",
+  "examples": [
+    "查看我的微云文件列表",
+    "确认后在微云中创建一个测试文件夹"
+  ],
+  "kind": "mcp",
+  "capabilities": [
+    "remote_mcp"
+  ],
+  "min_client_version": "0.9.0",
+  "platforms": [
+    {
+      "os": "windows",
+      "architectures": [
+        "x64"
+      ]
+    }
+  ],
+  "entrypoints": {
+    "mcp": "mcp.json"
+  }
+}

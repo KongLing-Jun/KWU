@@ -1,0 +1,9 @@
+{
+  "schema_version": 2,
+  "servers": [{
+    "id": "weiyun",
+    "transport": "streamable-http",
+    "url": "https://www.weiyun.com/api/v3/mcpserver",
+    "auth": {"type": "oauth", "scopes": ["files:read", "files:write", "files:manage"], "resource": "https://www.weiyun.com/api/v3/mcpserver"}
+  }]
+}

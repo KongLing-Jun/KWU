@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "types": ["node", "@playwright/test"]
+  },
+  "include": [
+    "e2e/**/*.ts",
+    "e2e/**/*.tsx",
+    "e2e-runtime/**/*.ts",
+    "playwright.config.ts",
+    "playwright.runtime.config.ts",
+    "vite-env.d.ts"
+  ],
+  "exclude": []
+}

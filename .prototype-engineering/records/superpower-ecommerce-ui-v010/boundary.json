@@ -1,0 +1,24 @@
+{
+  "subject": "Uniform citation capability for every registered generated widget",
+  "inside": [
+    "Shared citation control rendered by all registered widget headers",
+    "Conversation-inline and research-canvas callback parity",
+    "Loading-state disabling and missing-evidence snapshot fallback",
+    "Removal of widget-specific citable business props",
+    "Existing Host attach-evidence action and composer reference chip"
+  ],
+  "outside": [
+    {
+      "system": "Source document retrieval and evidence preview",
+      "contract": "Citation produces an evidence ID or widget revision snapshot label only.",
+      "adapter": "WidgetCitationLabelAdapter",
+      "scenarioIds": ["widget-with-evidence", "widget-without-evidence"]
+    },
+    {
+      "system": "Multi-widget citation composition",
+      "contract": "The composer holds one active reference and a new citation replaces it.",
+      "adapter": "SingleReferenceComposerAdapter",
+      "scenarioIds": ["replace-reference"]
+    }
+  ]
+}

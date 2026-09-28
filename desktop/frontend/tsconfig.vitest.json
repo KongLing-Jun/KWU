@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "src/vitest/**/*.ts",
+    "src/vitest/**/*.tsx",
+    "vite-env.d.ts",
+    "vitest.config.ts"
+  ],
+  "exclude": []
+}

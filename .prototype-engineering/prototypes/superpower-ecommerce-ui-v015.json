@@ -1,0 +1,134 @@
+{
+  "artifacts": {
+    "boundary": ".prototype-engineering/records/superpower-ecommerce-ui-v015/boundary.json",
+    "brief": ".prototype-engineering/records/superpower-ecommerce-ui-v015/brief.md",
+    "record": ".prototype-engineering/records/superpower-ecommerce-ui-v015/record.md",
+    "repositoryMap": ".prototype-engineering/records/superpower-ecommerce-ui-v015/repository-map.md",
+    "scenarios": ".prototype-engineering/records/superpower-ecommerce-ui-v015/scenarios.json"
+  },
+  "boundaryVersion": 12,
+  "checks": [
+    {
+      "at": "2026-08-21T15:42:23+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v015/verification.md",
+      "name": "frontend production build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T15:42:23+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v015/verification.md",
+      "name": "affected Desktop capability tests",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T15:42:23+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v015/verification.md",
+      "name": "browser citation loop",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T16:21:55+00:00",
+      "evidence": "l4p-docs/07-real-business-loop-validation.md",
+      "name": "capability-session-presentation-binding",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T16:21:55+00:00",
+      "evidence": "desktop/frontend/dist/index.html",
+      "name": "frontend-production-build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T16:40:43+00:00",
+      "evidence": "l4p-docs/08-live-ebay-business-loop.md",
+      "name": "ebay-live-adapter-contract",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-26T06:51:29+00:00",
+      "evidence": "l4p-docs/11-superpower-dual-scope-dashboard.md",
+      "name": "dual-scope dashboard restore",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-26T07:50:34+00:00",
+      "evidence": "l4p-docs/13-stage-final-prototype-freeze-and-handoff.md",
+      "name": "stage-final Wails production build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-26T07:50:34+00:00",
+      "evidence": "l4p-docs/13-stage-final-prototype-freeze-and-handoff.md",
+      "name": "repository code guard",
+      "status": "failed"
+    }
+  ],
+  "createdAt": "2026-08-21T15:28:07+00:00",
+  "decision": "productionize",
+  "evidence": [
+    ".prototype-engineering/evidence/superpower-ecommerce-ui-v015/verification.md",
+    "l4p-docs/07-real-business-loop-validation.md",
+    "desktop/frontend/dist/index.html",
+    "l4p-docs/08-live-ebay-business-loop.md",
+    "l4p-docs/11-superpower-dual-scope-dashboard.md",
+    "l4p-docs/13-stage-final-prototype-freeze-and-handoff.md"
+  ],
+  "git": {
+    "baseCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72",
+    "verifiedCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72"
+  },
+  "history": [
+    {
+      "at": "2026-08-21T15:28:07+00:00",
+      "from": null,
+      "to": "draft"
+    },
+    {
+      "at": "2026-08-21T15:28:43+00:00",
+      "from": "draft",
+      "to": "discovered"
+    },
+    {
+      "at": "2026-08-21T15:28:43+00:00",
+      "from": "discovered",
+      "to": "framed"
+    },
+    {
+      "at": "2026-08-21T15:28:43+00:00",
+      "from": "framed",
+      "to": "bounded"
+    },
+    {
+      "at": "2026-08-21T15:28:44+00:00",
+      "from": "bounded",
+      "to": "frozen"
+    },
+    {
+      "at": "2026-08-21T15:28:44+00:00",
+      "from": "frozen",
+      "to": "building"
+    },
+    {
+      "at": "2026-08-21T15:42:24+00:00",
+      "from": "building",
+      "to": "verified"
+    },
+    {
+      "at": "2026-08-21T15:42:24+00:00",
+      "from": "verified",
+      "to": "recorded"
+    },
+    {
+      "at": "2026-08-21T15:42:24+00:00",
+      "from": "recorded",
+      "to": "decided"
+    }
+  ],
+  "id": "superpower-ecommerce-ui-v015",
+  "name": "superpower-ecommerce-ui",
+  "parentId": "superpower-ecommerce-ui-v014",
+  "phase": "decided",
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-26T07:50:34+00:00",
+  "version": 15
+}

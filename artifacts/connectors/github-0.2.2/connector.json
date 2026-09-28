@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "id": "github",
+  "version": "0.2.2",
+  "name": "GitHub",
+  "provider": "GitHub",
+  "description": "在 GitHub 上克隆、推送代码，查看和管理仓库与 Pull Request，用自然语言完成代码协作。",
+  "category": "developer-tools",
+  "icon_url": "https://kwu-cloud.oss-cn-guangzhou.aliyuncs.com/connectors/icons/v1/github.svg",
+  "examples": ["读取指定仓库的 README 并总结", "为指定仓库创建一个 Issue"],
+  "kind": "mcp",
+  "capabilities": ["remote_mcp"],
+  "min_client_version": "0.9.0",
+  "platforms": [{"os": "windows", "architectures": ["x64"]}],
+  "entrypoints": {"mcp": "mcp.json"}
+}

@@ -1,0 +1,191 @@
+{
+  "fixture_version": "quota-contract-v1",
+  "dependency_id": "CLOUD-QUOTA-01",
+  "authenticity": "MOCK_ONLY",
+  "scope": {
+    "profile_id": "default",
+    "cloud_user_id": "usr_fixture",
+    "binding_generation": 1
+  },
+  "cases": [
+    {
+      "name": "settled",
+      "result": {
+        "settlement": {
+          "settlement_id": "set_template",
+          "task_id": "task_template",
+          "status": "settled",
+          "task_total_quota": "50",
+          "quota_policy_version": "maas-quota-config-v1",
+          "quota_per_unit": "500000",
+          "usd_exchange_rate": "7.3",
+          "credit_per_cny": "2000",
+          "charged_credits": "1.4600",
+          "consumed_frozen_amount": "1.4600",
+          "consumed_frozen_free_amount": "1.4600",
+          "consumed_frozen_subscription_amount": "0.0000",
+          "additional_charged_amount": "0.0000",
+          "additional_charged_free_amount": "0.0000",
+          "additional_charged_subscription_amount": "0.0000",
+          "released_frozen_amount": "298.5400",
+          "released_frozen_free_amount": "298.5400",
+          "released_frozen_subscription_amount": "0.0000",
+          "uncovered_amount": "0.0000",
+          "balance": "20998.5400",
+          "balance_version": 14
+        },
+        "balance": {
+          "total_balance": "20998.5400",
+          "free_balance": "998.5400",
+          "subscription_balance": "20000.0000",
+          "available_balance": "20998.5400",
+          "free_available_balance": "998.5400",
+          "subscription_available_balance": "20000.0000",
+          "frozen_balance": "0.0000",
+          "free_frozen_balance": "0.0000",
+          "subscription_frozen_balance": "0.0000",
+          "version": 14
+        }
+      }
+    },
+    {
+      "name": "settled_zero",
+      "result": {
+        "settlement": {
+          "settlement_id": "set_template",
+          "task_id": "task_template",
+          "status": "settled",
+          "task_total_quota": "0",
+          "quota_policy_version": "maas-quota-config-v1",
+          "quota_per_unit": "500000",
+          "usd_exchange_rate": "7.3",
+          "credit_per_cny": "2000",
+          "charged_credits": "0.0000",
+          "consumed_frozen_amount": "0.0000",
+          "consumed_frozen_free_amount": "0.0000",
+          "consumed_frozen_subscription_amount": "0.0000",
+          "additional_charged_amount": "0.0000",
+          "additional_charged_free_amount": "0.0000",
+          "additional_charged_subscription_amount": "0.0000",
+          "released_frozen_amount": "300.0000",
+          "released_frozen_free_amount": "300.0000",
+          "released_frozen_subscription_amount": "0.0000",
+          "uncovered_amount": "0.0000",
+          "balance": "21000.0000",
+          "balance_version": 14
+        },
+        "balance": {
+          "total_balance": "21000.0000",
+          "free_balance": "1000.0000",
+          "subscription_balance": "20000.0000",
+          "available_balance": "21000.0000",
+          "free_available_balance": "1000.0000",
+          "subscription_available_balance": "20000.0000",
+          "frozen_balance": "0.0000",
+          "free_frozen_balance": "0.0000",
+          "subscription_frozen_balance": "0.0000",
+          "version": 14
+        }
+      }
+    },
+    {
+      "name": "settlement_pending",
+      "result": {
+        "settlement": {
+          "settlement_id": "set_template",
+          "task_id": "task_template",
+          "status": "settlement_pending",
+          "task_total_quota": "50",
+          "quota_policy_version": null,
+          "quota_per_unit": null,
+          "usd_exchange_rate": null,
+          "credit_per_cny": null,
+          "charged_credits": null,
+          "consumed_frozen_amount": null,
+          "consumed_frozen_free_amount": null,
+          "consumed_frozen_subscription_amount": null,
+          "additional_charged_amount": null,
+          "additional_charged_free_amount": null,
+          "additional_charged_subscription_amount": null,
+          "released_frozen_amount": null,
+          "released_frozen_free_amount": null,
+          "released_frozen_subscription_amount": null,
+          "uncovered_amount": null,
+          "balance": null,
+          "balance_version": null
+        },
+        "balance": null
+      }
+    },
+    {
+      "name": "settled_with_uncovered_amount",
+      "result": {
+        "settlement": {
+          "settlement_id": "set_template",
+          "task_id": "task_template",
+          "status": "settled_with_uncovered_amount",
+          "task_total_quota": "12500",
+          "quota_policy_version": "maas-quota-config-v1",
+          "quota_per_unit": "500000",
+          "usd_exchange_rate": "7.3",
+          "credit_per_cny": "2000",
+          "charged_credits": "365",
+          "consumed_frozen_amount": "300",
+          "consumed_frozen_free_amount": "300",
+          "consumed_frozen_subscription_amount": "0",
+          "additional_charged_amount": "20",
+          "additional_charged_free_amount": "20",
+          "additional_charged_subscription_amount": "0",
+          "released_frozen_amount": "0",
+          "released_frozen_free_amount": "0",
+          "released_frozen_subscription_amount": "0",
+          "uncovered_amount": "45",
+          "balance": "0",
+          "balance_version": 15
+        },
+        "balance": {
+          "total_balance": "0",
+          "free_balance": "0",
+          "subscription_balance": "0",
+          "available_balance": "0",
+          "free_available_balance": "0",
+          "subscription_available_balance": "0",
+          "frozen_balance": "0",
+          "free_frozen_balance": "0",
+          "subscription_frozen_balance": "0",
+          "version": 15
+        }
+      }
+    },
+    {
+      "name": "failed_manual_required",
+      "result": {
+        "settlement": {
+          "settlement_id": "set_template",
+          "task_id": "task_template",
+          "status": "failed_manual_required",
+          "task_total_quota": null,
+          "quota_policy_version": null,
+          "quota_per_unit": null,
+          "usd_exchange_rate": null,
+          "credit_per_cny": null,
+          "charged_credits": null,
+          "consumed_frozen_amount": null,
+          "consumed_frozen_free_amount": null,
+          "consumed_frozen_subscription_amount": null,
+          "additional_charged_amount": null,
+          "additional_charged_free_amount": null,
+          "additional_charged_subscription_amount": null,
+          "released_frozen_amount": null,
+          "released_frozen_free_amount": null,
+          "released_frozen_subscription_amount": null,
+          "uncovered_amount": null,
+          "balance": null,
+          "balance_version": null,
+          "error_code": "MANUAL_REVIEW_REQUIRED"
+        },
+        "balance": null
+      }
+    }
+  ]
+}

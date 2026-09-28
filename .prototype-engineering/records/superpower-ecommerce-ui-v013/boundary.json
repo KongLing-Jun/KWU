@@ -1,0 +1,24 @@
+{
+  "subject": "Bounded multi-source research follow-up request protocol",
+  "inside": [
+    "Versioned ResearchFollowUpRequest contract",
+    "Pure DashboardDocument-to-request builder",
+    "Ordered widget and evidence provenance serialization",
+    "Deterministic source and evidence-reference limits",
+    "Submitted-message rendering from request snapshots"
+  ],
+  "outside": [
+    {
+      "system": "Model and session execution",
+      "contract": "Accept a validated ResearchFollowUpRequest and return a streamed research answer without changing the envelope semantics.",
+      "adapter": "ResearchFollowUpExecutionAdapter",
+      "scenarioIds": ["multi-source-request", "no-source-request"]
+    },
+    {
+      "system": "Evidence artifact resolver",
+      "contract": "Resolve allow-listed evidence IDs under the active capability task and return bounded text or structured facts; the request never embeds raw widget props.",
+      "adapter": "TaskEvidenceResolver",
+      "scenarioIds": ["multi-source-request", "bounded-request", "missing-widget"]
+    }
+  ]
+}

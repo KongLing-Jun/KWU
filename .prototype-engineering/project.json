@@ -1,0 +1,23 @@
+{
+  "createdAt": "2026-08-21T12:07:59+00:00",
+  "currentId": "superpower-ecommerce-ui-v015",
+  "prototypeIds": [
+    "superpower-ecommerce-ui-v001",
+    "superpower-ecommerce-ui-v002",
+    "superpower-ecommerce-ui-v003",
+    "superpower-ecommerce-ui-v004",
+    "superpower-ecommerce-ui-v005",
+    "superpower-ecommerce-ui-v006",
+    "superpower-ecommerce-ui-v007",
+    "superpower-ecommerce-ui-v008",
+    "superpower-ecommerce-ui-v009",
+    "superpower-ecommerce-ui-v010",
+    "superpower-ecommerce-ui-v011",
+    "superpower-ecommerce-ui-v012",
+    "superpower-ecommerce-ui-v013",
+    "superpower-ecommerce-ui-v014",
+    "superpower-ecommerce-ui-v015"
+  ],
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-21T15:42:24+00:00"
+}

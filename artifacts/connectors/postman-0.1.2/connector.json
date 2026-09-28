@@ -1,0 +1,30 @@
+{
+  "schema_version": 2,
+  "id": "postman",
+  "version": "0.1.2",
+  "name": "Postman",
+  "provider": "Postman",
+  "description": "管理 Postman 工作区、集合和 API。用自然语言查找请求、维护集合、整理接口文档，并在确认后创建或更新内容。",
+  "category": "developer-tools",
+  "examples": [
+    "列出我可访问的 Postman 工作区",
+    "在确认后创建或更新一个 Postman 集合"
+  ],
+  "kind": "mcp",
+  "capabilities": [
+    "remote_mcp"
+  ],
+  "min_client_version": "0.9.0",
+  "platforms": [
+    {
+      "os": "windows",
+      "architectures": [
+        "x64"
+      ]
+    }
+  ],
+  "entrypoints": {
+    "mcp": "mcp.json"
+  },
+  "icon_url": "https://kwu-cloud.oss-cn-guangzhou.aliyuncs.com/connectors/icons/v1/postman.svg"
+}

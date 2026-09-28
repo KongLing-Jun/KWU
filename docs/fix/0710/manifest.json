@@ -1,0 +1,2068 @@
+{
+  "generated_at": "2026-07-10",
+  "source_audit": "docs/fix/2026-07-10-code-guard-484-findings-audit.md",
+  "source_audit_sha256": "c3021f1bad7c3d71c7a0323c9b4605ceaca4c127d45a2bd5375f92b49c29b46f",
+  "baseline": "scripts/code_guard_baseline.json",
+  "baseline_sha256": "9cc3dc818cac3351465d77999b655df07186712083980ce5064494aed2a5b7c6",
+  "repository_commit": "99997cb549303e70f6f2b59bb5defd1466afc589",
+  "repository_branch": "codex/docs-0.9-consistency",
+  "codegraph": {
+    "project": ".",
+    "commit": "99997cb549303e70f6f2b59bb5defd1466afc589",
+    "integrity_check": "ok",
+    "status": "up to date（本次生成前已执行 codegraph sync . 并复核 codegraph status .）",
+    "files": 1169,
+    "nodes": 26131,
+    "edges": 89253,
+    "metadata": {
+      "indexed_with_version": "1.0.1",
+      "indexed_with_extraction_version": "24"
+    }
+  },
+  "grouping": {
+    "issue_count": 484,
+    "unique_issue_ids": 484,
+    "unique_baseline_keys": 484,
+    "governance_object_count": 417,
+    "governance_object_sizes": {
+      "1": 360,
+      "2": 47,
+      "3": 10
+    },
+    "rule_counts": {
+      "complexity": 394,
+      "func_lines": 51,
+      "file_lines": 18,
+      "nesting_depth": 20,
+      "package_files": 1
+    },
+    "codegraph_mapped_findings": 484,
+    "codegraph_unmapped_findings": 0,
+    "group_count": 49,
+    "expected_full_groups": 48,
+    "tail_group_size": 4,
+    "same_object_never_split": true
+  },
+  "groups": [
+    {
+      "number": 1,
+      "file": "group-01-p0-governance-batch.md",
+      "title": "启动装配与运行依赖编排",
+      "priority": "P0",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-079",
+        "FN-011",
+        "ND-005",
+        "CX-032",
+        "FN-006",
+        "ND-003",
+        "FL-004",
+        "CX-037",
+        "CX-081",
+        "CX-080"
+      ],
+      "baseline_keys": [
+        "complexity|internal/boot/boot.go|Build",
+        "func_lines|internal/boot/boot.go|Build",
+        "nesting_depth|internal/boot/boot.go|Build",
+        "complexity|internal/agent/migrate.go|migrateLegacySessions",
+        "func_lines|internal/agent/migrate.go|migrateLegacySessions",
+        "nesting_depth|internal/agent/migrate.go|migrateLegacySessions",
+        "file_lines|internal/boot/boot.go|",
+        "complexity|internal/agent/migrate.go|rehomeStrandedSessions",
+        "complexity|internal/boot/token_profile.go|*toolSourceConnector.Execute",
+        "complexity|internal/boot/boot.go|subagentEffectiveIdentity"
+      ],
+      "files": [
+        "internal/boot/boot.go",
+        "internal/agent/migrate.go",
+        "internal/boot/token_profile.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        5
+      ]
+    },
+    {
+      "number": 2,
+      "file": "group-02-p0-cli-tui.md",
+      "title": "CLI/TUI 状态更新与交互渲染",
+      "priority": "P0",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-106",
+        "FN-018",
+        "ND-007",
+        "CX-117",
+        "FN-021",
+        "FL-006",
+        "CX-116",
+        "FN-020",
+        "CX-112",
+        "FN-019"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/chat_tui.go|chatTUI.update",
+        "func_lines|internal/cli/chat_tui.go|chatTUI.update",
+        "nesting_depth|internal/cli/chat_tui.go|chatTUI.update",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.runSlashCommand",
+        "func_lines|internal/cli/chat_tui.go|*chatTUI.runSlashCommand",
+        "file_lines|internal/cli/chat_tui.go|",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.ingestEvent",
+        "func_lines|internal/cli/chat_tui.go|*chatTUI.ingestEvent",
+        "complexity|internal/cli/chat_tui.go|chatTUI.View",
+        "func_lines|internal/cli/chat_tui.go|chatTUI.View"
+      ],
+      "files": [
+        "internal/cli/chat_tui.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        15,
+        36,
+        39
+      ]
+    },
+    {
+      "number": 3,
+      "file": "group-03-p1-internal-cli-select.md",
+      "title": "internal/cli · select 治理批次",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-160",
+        "FN-028",
+        "ND-009",
+        "CX-159",
+        "FN-027",
+        "CX-146",
+        "FN-026",
+        "CX-104",
+        "FN-017",
+        "CX-147"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/select.go|selectMany",
+        "func_lines|internal/cli/select.go|selectMany",
+        "nesting_depth|internal/cli/select.go|selectMany",
+        "complexity|internal/cli/select.go|selectOne",
+        "func_lines|internal/cli/select.go|selectOne",
+        "complexity|internal/cli/mcp_manager.go|chatTUI.handleMCPManagerKey",
+        "func_lines|internal/cli/mcp_manager.go|chatTUI.handleMCPManagerKey",
+        "complexity|internal/cli/bot.go|botDoctor",
+        "func_lines|internal/cli/bot.go|botDoctor",
+        "complexity|internal/cli/mcp_manager.go|chatTUI.buildMCPSnapshot"
+      ],
+      "files": [
+        "internal/cli/select.go",
+        "internal/cli/mcp_manager.go",
+        "internal/cli/bot.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        22
+      ]
+    },
+    {
+      "number": 4,
+      "file": "group-04-p1-governance-batch.md",
+      "title": "配置渲染与差异输出",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-195",
+        "FN-030",
+        "CX-196",
+        "FN-031",
+        "CX-181",
+        "CX-180",
+        "FL-009",
+        "CX-179",
+        "FL-011",
+        "CX-197"
+      ],
+      "baseline_keys": [
+        "complexity|internal/config/render.go|RenderTOMLForScope",
+        "func_lines|internal/config/render.go|RenderTOMLForScope",
+        "complexity|internal/config/render.go|RenderTOMLProjectDelta",
+        "func_lines|internal/config/render.go|RenderTOMLProjectDelta",
+        "complexity|internal/config/effort.go|NormalizeEffort",
+        "complexity|internal/config/effort.go|EffortCapabilityForEntry",
+        "file_lines|internal/config/edit.go|",
+        "complexity|internal/config/edit.go|replaceTOMLSection",
+        "file_lines|internal/config/render.go|",
+        "complexity|internal/config/render.go|isBareTOMLKey"
+      ],
+      "files": [
+        "internal/config/render.go",
+        "internal/config/effort.go",
+        "internal/config/edit.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        43
+      ]
+    },
+    {
+      "number": 5,
+      "file": "group-05-p1-internal-agent-migrate.md",
+      "title": "internal/agent · migrate 治理批次",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-035",
+        "FN-007",
+        "ND-004",
+        "CX-040",
+        "FN-008",
+        "CX-036",
+        "CX-033",
+        "CX-034",
+        "CX-038",
+        "CX-039"
+      ],
+      "baseline_keys": [
+        "complexity|internal/agent/migrate.go|migrateSubDirectory",
+        "func_lines|internal/agent/migrate.go|migrateSubDirectory",
+        "nesting_depth|internal/agent/migrate.go|migrateSubDirectory",
+        "complexity|internal/agent/parallel_tasks.go|*ParallelTasksTool.Execute",
+        "func_lines|internal/agent/parallel_tasks.go|*ParallelTasksTool.Execute",
+        "complexity|internal/agent/migrate.go|transformAndCopyJsonl",
+        "complexity|internal/agent/migrate.go|importJsonlSessions",
+        "complexity|internal/agent/migrate.go|jsonlSessionDestDir",
+        "complexity|internal/agent/migrate.go|strandedSessionDestDir",
+        "complexity|internal/agent/migrate.go|copyFileIfExists"
+      ],
+      "files": [
+        "internal/agent/migrate.go",
+        "internal/agent/parallel_tasks.go"
+      ],
+      "prior_groups": [
+        1
+      ],
+      "next_groups": [
+        25
+      ]
+    },
+    {
+      "number": 6,
+      "file": "group-06-p1-controller.md",
+      "title": "Controller 会话控制与提交链路",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-209",
+        "FN-032",
+        "ND-011",
+        "FL-012",
+        "CX-213",
+        "CX-219",
+        "CX-215",
+        "CX-218",
+        "CX-212",
+        "CX-210"
+      ],
+      "baseline_keys": [
+        "complexity|internal/control/controller.go|*Controller.submitCommandOrTurn",
+        "func_lines|internal/control/controller.go|*Controller.submitCommandOrTurn",
+        "nesting_depth|internal/control/controller.go|*Controller.submitCommandOrTurn",
+        "file_lines|internal/control/controller.go|",
+        "complexity|internal/control/controller.go|removeSessionArtifacts",
+        "complexity|internal/control/controller.go|*Controller.requestApprovalWithReason",
+        "complexity|internal/control/controller.go|*Controller.forkNamed",
+        "complexity|internal/control/controller.go|listItem",
+        "complexity|internal/control/controller.go|*Controller.ClearSession",
+        "complexity|internal/control/controller.go|*Controller.applyPlanExec"
+      ],
+      "files": [
+        "internal/control/controller.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        31
+      ]
+    },
+    {
+      "number": 7,
+      "file": "group-07-p1-memory-compiler.md",
+      "title": "Memory Compiler 运行时图与策略",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-016",
+        "CX-305",
+        "FN-042",
+        "CX-307",
+        "CX-308",
+        "FN-043",
+        "CX-310",
+        "CX-312",
+        "CX-311",
+        "CX-315"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/memorycompiler/runtime.go|",
+        "complexity|internal/memorycompiler/runtime.go|buildIRWithPolicy",
+        "func_lines|internal/memorycompiler/runtime.go|buildIRWithPolicy",
+        "complexity|internal/memorycompiler/runtime.go|canonicalizeIR",
+        "complexity|internal/memorycompiler/runtime.go|usableSubgraphNodes",
+        "func_lines|internal/memorycompiler/runtime.go|updateGraph",
+        "complexity|internal/memorycompiler/runtime.go|controlPlaneSystemState",
+        "complexity|internal/memorycompiler/runtime.go|analyzeTrace",
+        "complexity|internal/memorycompiler/runtime.go|validateIRExecution",
+        "complexity|internal/memorycompiler/runtime.go|classifyStrategy"
+      ],
+      "files": [
+        "internal/memorycompiler/runtime.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        19
+      ]
+    },
+    {
+      "number": 8,
+      "file": "group-08-p1-internal-tool-webfetch.md",
+      "title": "internal/tool · webfetch 治理批次",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-391",
+        "FN-051",
+        "ND-020",
+        "CX-386",
+        "FN-050",
+        "CX-384",
+        "ND-019",
+        "CX-379",
+        "CX-383",
+        "CX-392"
+      ],
+      "baseline_keys": [
+        "complexity|internal/tool/builtin/webfetch.go|ssrfGuardedTransport",
+        "func_lines|internal/tool/builtin/webfetch.go|ssrfGuardedTransport",
+        "nesting_depth|internal/tool/builtin/webfetch.go|ssrfGuardedTransport",
+        "complexity|internal/tool/builtin/grep.go|grepTool.Execute",
+        "func_lines|internal/tool/builtin/grep.go|grepTool.Execute",
+        "complexity|internal/tool/builtin/delete_symbol.go|collectSymbols",
+        "nesting_depth|internal/tool/builtin/delete_symbol.go|collectSymbols",
+        "complexity|internal/tool/builtin/completestep.go|verifyStepEvidence",
+        "complexity|internal/tool/builtin/delete_symbol.go|deleteSymbol.findSymbol",
+        "complexity|internal/tool/builtin/webfetch.go|webFetch.Execute"
+      ],
+      "files": [
+        "internal/tool/builtin/webfetch.go",
+        "internal/tool/builtin/grep.go",
+        "internal/tool/builtin/delete_symbol.go",
+        "internal/tool/builtin/completestep.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        32
+      ]
+    },
+    {
+      "number": 9,
+      "file": "group-09-p1-agent.md",
+      "title": "Agent 主循环与工具执行链路",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-053",
+        "FN-009",
+        "CX-024",
+        "FN-005",
+        "CX-019",
+        "FN-002",
+        "CX-023",
+        "FN-004",
+        "CX-055",
+        "CX-054"
+      ],
+      "baseline_keys": [
+        "complexity|internal/agent/task.go|*TaskTool.Execute",
+        "func_lines|internal/agent/task.go|*TaskTool.Execute",
+        "complexity|internal/agent/agent.go|*Agent.executeOneWithRegistry",
+        "func_lines|internal/agent/agent.go|*Agent.executeOneWithRegistry",
+        "complexity|internal/agent/agent.go|*Agent.Run",
+        "func_lines|internal/agent/agent.go|*Agent.Run",
+        "complexity|internal/agent/agent.go|*Agent.executeBatchWithRegistry",
+        "func_lines|internal/agent/agent.go|*Agent.executeBatchWithRegistry",
+        "complexity|internal/agent/task.go|subSinkForContext",
+        "complexity|internal/agent/task.go|ReadOnlySubagentToolRegistry"
+      ],
+      "files": [
+        "internal/agent/task.go",
+        "internal/agent/agent.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        16
+      ]
+    },
+    {
+      "number": 10,
+      "file": "group-10-p1-internal-control-slash.md",
+      "title": "internal/control · slash 治理批次",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-234",
+        "FN-033",
+        "CX-206",
+        "CX-231",
+        "CX-204",
+        "CX-205",
+        "CX-232",
+        "CX-236",
+        "CX-233",
+        "CX-235"
+      ],
+      "baseline_keys": [
+        "complexity|internal/control/slash.go|*Controller.managementNotice",
+        "func_lines|internal/control/slash.go|*Controller.managementNotice",
+        "complexity|internal/control/auto_plan.go|isLowRiskQuestion",
+        "complexity|internal/control/slash.go|SlashArgItems",
+        "complexity|internal/control/auto_plan.go|autoPlanScore",
+        "complexity|internal/control/auto_plan.go|isContextDependentShortReply",
+        "complexity|internal/control/slash.go|mcpArgItems",
+        "complexity|internal/control/slash.go|*Controller.memoryListText",
+        "complexity|internal/control/slash.go|skillArgItems",
+        "complexity|internal/control/slash.go|*Controller.expertNotice"
+      ],
+      "files": [
+        "internal/control/slash.go",
+        "internal/control/auto_plan.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 11,
+      "file": "group-11-p1-internal-provider-anthropic.md",
+      "title": "internal/provider · anthropic 治理批次",
+      "priority": "P1",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-342",
+        "FN-048",
+        "ND-017",
+        "CX-341",
+        "FN-047",
+        "ND-016",
+        "CX-343",
+        "CX-348",
+        "CX-349",
+        "CX-344"
+      ],
+      "baseline_keys": [
+        "complexity|internal/provider/anthropic/anthropic.go|*client.readStream",
+        "func_lines|internal/provider/anthropic/anthropic.go|*client.readStream",
+        "nesting_depth|internal/provider/anthropic/anthropic.go|*client.readStream",
+        "complexity|internal/provider/anthropic/anthropic.go|*client.buildRequest",
+        "func_lines|internal/provider/anthropic/anthropic.go|*client.buildRequest",
+        "nesting_depth|internal/provider/anthropic/anthropic.go|*client.buildRequest",
+        "complexity|internal/provider/openai/openai.go|New",
+        "complexity|internal/provider/retry.go|SendWithRetry",
+        "complexity|internal/provider/schema_canonicalize.go|canonicalizeSchemaObject",
+        "complexity|internal/provider/openai/openai.go|*client.buildRequest"
+      ],
+      "files": [
+        "internal/provider/anthropic/anthropic.go",
+        "internal/provider/openai/openai.go",
+        "internal/provider/retry.go",
+        "internal/provider/schema_canonicalize.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 12,
+      "file": "group-12-p2-internal-tasktree-planner.md",
+      "title": "internal/tasktree · planner 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-366",
+        "FN-049",
+        "CX-363",
+        "CX-364",
+        "CX-361",
+        "CX-365",
+        "CX-368",
+        "CX-369",
+        "CX-367",
+        "CX-362"
+      ],
+      "baseline_keys": [
+        "complexity|internal/tasktree/planner.go|validateGeneratedNodes",
+        "func_lines|internal/tasktree/planner.go|validateGeneratedNodes",
+        "complexity|internal/tasktree/parallel.go|*Orchestrator.ExecuteBatch",
+        "complexity|internal/tasktree/planner.go|*LLMPlanner.PlanTaskTree",
+        "complexity|internal/tasktree/executor.go|*Orchestrator.ExecuteOne",
+        "complexity|internal/tasktree/planner.go|NormalizeAndValidateGeneratedTree",
+        "complexity|internal/tasktree/scheduler.go|ReadyBatchNodeIDs",
+        "complexity|internal/tasktree/status.go|CanTransition",
+        "complexity|internal/tasktree/scheduler.go|*TaskTree.OrderedNodeIDs",
+        "complexity|internal/tasktree/orchestrator.go|*Orchestrator.Run"
+      ],
+      "files": [
+        "internal/tasktree/planner.go",
+        "internal/tasktree/parallel.go",
+        "internal/tasktree/executor.go",
+        "internal/tasktree/scheduler.go",
+        "internal/tasktree/status.go",
+        "internal/tasktree/orchestrator.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 13,
+      "file": "group-13-p2-internal-plugin-lazy.md",
+      "title": "internal/plugin · lazy 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-325",
+        "FN-045",
+        "ND-015",
+        "CX-326",
+        "FN-046",
+        "CX-377",
+        "ND-018",
+        "FL-017",
+        "CX-328",
+        "CX-327"
+      ],
+      "baseline_keys": [
+        "complexity|internal/plugin/lazy.go|*lazyTool.Execute",
+        "func_lines|internal/plugin/lazy.go|*lazyTool.Execute",
+        "nesting_depth|internal/plugin/lazy.go|*lazyTool.Execute",
+        "complexity|internal/plugin/plugin.go|Start",
+        "func_lines|internal/plugin/plugin.go|Start",
+        "complexity|internal/tool/builtin/codeindex.go|codeIndex.parseGo",
+        "nesting_depth|internal/tool/builtin/codeindex.go|codeIndex.parseGo",
+        "file_lines|internal/plugin/plugin.go|",
+        "complexity|internal/plugin/transport_stdio.go|newStdioTransport",
+        "complexity|internal/plugin/transport_http.go|*httpTransport.readSSEResponse"
+      ],
+      "files": [
+        "internal/plugin/lazy.go",
+        "internal/plugin/plugin.go",
+        "internal/tool/builtin/codeindex.go",
+        "internal/plugin/transport_stdio.go",
+        "internal/plugin/transport_http.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        32
+      ]
+    },
+    {
+      "number": 14,
+      "file": "group-14-p2-internal-cli-cli.md",
+      "title": "internal/cli · cli 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "PF-001",
+        "CX-123",
+        "FN-024",
+        "CX-121",
+        "FN-022",
+        "FL-007",
+        "CX-122",
+        "FN-023",
+        "CX-120",
+        "CX-124"
+      ],
+      "baseline_keys": [
+        "package_files|internal/cli|",
+        "complexity|internal/cli/cli.go|chatREPL",
+        "func_lines|internal/cli/cli.go|chatREPL",
+        "complexity|internal/cli/cli.go|runAgent",
+        "func_lines|internal/cli/cli.go|runAgent",
+        "file_lines|internal/cli/cli.go|",
+        "complexity|internal/cli/cli.go|runServe",
+        "func_lines|internal/cli/cli.go|runServe",
+        "complexity|internal/cli/cli.go|Run",
+        "complexity|internal/cli/cli.go|selectEnabledProviders"
+      ],
+      "files": [
+        "internal/cli",
+        "internal/cli/cli.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        42
+      ]
+    },
+    {
+      "number": 15,
+      "file": "group-15-p2-cli-tui.md",
+      "title": "CLI/TUI 状态更新与交互渲染",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-170",
+        "FN-029",
+        "CX-134",
+        "FN-025",
+        "CX-102",
+        "FN-015",
+        "CX-109",
+        "ND-008",
+        "CX-114",
+        "CX-115"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/upgrade.go|upgradeCommand",
+        "func_lines|internal/cli/upgrade.go|upgradeCommand",
+        "complexity|internal/cli/effort.go|*chatTUI.runEffortCommand",
+        "func_lines|internal/cli/effort.go|*chatTUI.runEffortCommand",
+        "complexity|internal/cli/acp.go|*acpFactory.SessionConfigState",
+        "func_lines|internal/cli/acp.go|*acpFactory.SessionConfigState",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.collapseToolOutput",
+        "nesting_depth|internal/cli/chat_tui.go|*chatTUI.collapseToolOutput",
+        "complexity|internal/cli/chat_tui.go|chatTUI.computeStatusLineCount",
+        "complexity|internal/cli/chat_tui.go|chatTUI.modeTagText"
+      ],
+      "files": [
+        "internal/cli/upgrade.go",
+        "internal/cli/effort.go",
+        "internal/cli/acp.go",
+        "internal/cli/chat_tui.go"
+      ],
+      "prior_groups": [
+        2
+      ],
+      "next_groups": [
+        36,
+        39
+      ]
+    },
+    {
+      "number": 16,
+      "file": "group-16-p2-agent.md",
+      "title": "Agent 主循环与工具执行链路",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-002",
+        "CX-057",
+        "CX-022",
+        "FN-003",
+        "CX-026",
+        "CX-047",
+        "CX-027",
+        "CX-058",
+        "CX-020",
+        "CX-021"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/agent/agent.go|",
+        "complexity|internal/agent/textsink.go|*TextSink.Emit",
+        "complexity|internal/agent/agent.go|*Agent.stream",
+        "func_lines|internal/agent/agent.go|*Agent.stream",
+        "complexity|internal/agent/branch.go|saveBranchMeta",
+        "complexity|internal/agent/save.go|ListSessionOrder",
+        "complexity|internal/agent/branch.go|ListBranches",
+        "complexity|internal/agent/textsink.go|FormatUsageLine",
+        "complexity|internal/agent/agent.go|*Agent.finalReadinessCheck",
+        "complexity|internal/agent/agent.go|*Agent.rebuildTodoState"
+      ],
+      "files": [
+        "internal/agent/agent.go",
+        "internal/agent/textsink.go",
+        "internal/agent/branch.go",
+        "internal/agent/save.go"
+      ],
+      "prior_groups": [
+        9
+      ],
+      "next_groups": [
+        31
+      ]
+    },
+    {
+      "number": 17,
+      "file": "group-17-p2-internal-fileref-render.md",
+      "title": "internal/fileref · render 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-261",
+        "FN-036",
+        "CX-090",
+        "FN-014",
+        "CX-089",
+        "FN-013",
+        "CX-093",
+        "CX-092",
+        "CX-088",
+        "CX-091"
+      ],
+      "baseline_keys": [
+        "complexity|internal/fileref/search.go|Search",
+        "func_lines|internal/fileref/search.go|Search",
+        "complexity|internal/bot/render.go|*renderSink.Emit",
+        "func_lines|internal/bot/render.go|*renderSink.Emit",
+        "complexity|internal/bot/qq/gateway.go|*adapter.connectGateway",
+        "func_lines|internal/bot/qq/gateway.go|*adapter.connectGateway",
+        "complexity|internal/bot/weixin/weixin_login.go|PollLoginWithPaths",
+        "complexity|internal/bot/weixin/weixin_login.go|LoginWithPaths",
+        "complexity|internal/bot/qq/gateway.go|*adapter.getAccessToken",
+        "complexity|internal/bot/render.go|lastSemanticBoundary"
+      ],
+      "files": [
+        "internal/fileref/search.go",
+        "internal/bot/render.go",
+        "internal/bot/qq/gateway.go",
+        "internal/bot/weixin/weixin_login.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 18,
+      "file": "group-18-p2-internal-migration-refs.md",
+      "title": "internal/migration · refs 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-318",
+        "FN-044",
+        "CX-221",
+        "CX-229",
+        "CX-228",
+        "CX-225",
+        "CX-226",
+        "CX-227",
+        "CX-317",
+        "CX-316"
+      ],
+      "baseline_keys": [
+        "complexity|internal/migration/migration.go|migrateLegacySessionSources",
+        "func_lines|internal/migration/migration.go|migrateLegacySessionSources",
+        "complexity|internal/control/goal.go|*goalMachine.advance",
+        "complexity|internal/control/refs.go|readFileRefUnscoped",
+        "complexity|internal/control/refs.go|readFileRef",
+        "complexity|internal/control/refs.go|*Controller.detectRefsMode",
+        "complexity|internal/control/refs.go|visionFileImageDataURL",
+        "complexity|internal/control/refs.go|resolveBareNames",
+        "complexity|internal/migration/migration.go|migrateLegacyMemorySources",
+        "complexity|internal/migration/migration.go|Result.Summary"
+      ],
+      "files": [
+        "internal/migration/migration.go",
+        "internal/control/goal.go",
+        "internal/control/refs.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        31
+      ]
+    },
+    {
+      "number": 19,
+      "file": "group-19-p2-internal-memorycompiler-compression.md",
+      "title": "internal/memorycompiler · compression 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-015",
+        "CX-303",
+        "CX-302",
+        "CX-304",
+        "CX-301",
+        "CX-309",
+        "ND-014",
+        "CX-313",
+        "CX-306",
+        "CX-314"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/memorycompiler/compression.go|",
+        "complexity|internal/memorycompiler/compression.go|activeSemanticLayers",
+        "complexity|internal/memorycompiler/compression.go|compressMemoryGraph",
+        "complexity|internal/memorycompiler/compression.go|semanticOverlapSignals",
+        "complexity|internal/memorycompiler/compression.go|longTailCausalCandidates",
+        "complexity|internal/memorycompiler/runtime.go|selectStrategy",
+        "nesting_depth|internal/memorycompiler/runtime.go|mutationsFromLearning",
+        "complexity|internal/memorycompiler/runtime.go|evaluateMutations",
+        "complexity|internal/memorycompiler/runtime.go|memoryCitationsForIR",
+        "complexity|internal/memorycompiler/runtime.go|mutationFeedbackInCooldown"
+      ],
+      "files": [
+        "internal/memorycompiler/compression.go",
+        "internal/memorycompiler/runtime.go"
+      ],
+      "prior_groups": [
+        7
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 20,
+      "file": "group-20-p2-internal-control-attachments.md",
+      "title": "internal/control · attachments 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-201",
+        "CX-224",
+        "CX-202",
+        "CX-223",
+        "CX-237",
+        "CX-199",
+        "CX-200",
+        "CX-207",
+        "CX-208",
+        "CX-198"
+      ],
+      "baseline_keys": [
+        "complexity|internal/control/attachments.go|SaveAttachmentFile",
+        "complexity|internal/control/profile_management.go|*Controller.profileCommandText",
+        "complexity|internal/control/attachments.go|readAttachmentImage",
+        "complexity|internal/control/input.go|shouldAutoStartResearchGoal",
+        "complexity|internal/control/turn_orchestrator.go|*turnOrchestrator.runTurnWithRawDisplay",
+        "complexity|internal/control/attachments.go|SaveImageBytes",
+        "complexity|internal/control/attachments.go|SaveImageFile",
+        "complexity|internal/control/branches.go|FormatBranchTree",
+        "complexity|internal/control/branches.go|shortBranchID",
+        "complexity|internal/control/attachments.go|SaveAttachmentDataURL"
+      ],
+      "files": [
+        "internal/control/attachments.go",
+        "internal/control/profile_management.go",
+        "internal/control/input.go",
+        "internal/control/turn_orchestrator.go",
+        "internal/control/branches.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 21,
+      "file": "group-21-p2-internal-guardian-complete.md",
+      "title": "internal/guardian · complete 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-266",
+        "FN-037",
+        "CX-131",
+        "CX-137",
+        "CX-139",
+        "CX-129",
+        "CX-132",
+        "CX-130",
+        "CX-264",
+        "CX-265"
+      ],
+      "baseline_keys": [
+        "complexity|internal/guardian/transcript.go|renderTranscript",
+        "func_lines|internal/guardian/transcript.go|renderTranscript",
+        "complexity|internal/cli/complete.go|*chatTUI.fileItems",
+        "complexity|internal/cli/latex.go|convertCommand",
+        "complexity|internal/cli/latex.go|normalizeMath",
+        "complexity|internal/cli/complete.go|*chatTUI.updateCompletion",
+        "complexity|internal/cli/complete.go|chatTUI.renderCompletion",
+        "complexity|internal/cli/complete.go|*chatTUI.branchArgItems",
+        "complexity|internal/guardian/guardian.go|*Session.Review",
+        "complexity|internal/guardian/transcript.go|ExtractTranscript"
+      ],
+      "files": [
+        "internal/guardian/transcript.go",
+        "internal/cli/complete.go",
+        "internal/cli/latex.go",
+        "internal/guardian/guardian.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        30
+      ]
+    },
+    {
+      "number": 22,
+      "file": "group-22-p2-internal-cli-md.md",
+      "title": "internal/cli · md 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-152",
+        "CX-103",
+        "FN-016",
+        "CX-148",
+        "CX-149",
+        "CX-154",
+        "CX-119",
+        "CX-133",
+        "CX-151",
+        "CX-150"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/md.go|*mdRenderer.renderTable",
+        "complexity|internal/cli/bot.go|botStart",
+        "func_lines|internal/cli/bot.go|botStart",
+        "complexity|internal/cli/mcp.go|parseMCPAdd",
+        "complexity|internal/cli/md.go|fixCJKEmphasis",
+        "complexity|internal/cli/memory_view.go|renderMemory",
+        "complexity|internal/cli/chooser.go|chatTUI.handleChooserKey",
+        "complexity|internal/cli/diffview.go|diffBody",
+        "complexity|internal/cli/md.go|*mdRenderer.appendInline",
+        "complexity|internal/cli/md.go|isCJKPunct"
+      ],
+      "files": [
+        "internal/cli/md.go",
+        "internal/cli/bot.go",
+        "internal/cli/mcp.go",
+        "internal/cli/memory_view.go",
+        "internal/cli/chooser.go",
+        "internal/cli/diffview.go"
+      ],
+      "prior_groups": [
+        3
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 23,
+      "file": "group-23-p2-internal-installsource-plan.md",
+      "title": "internal/installsource · plan 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-284",
+        "FN-040",
+        "CX-274",
+        "FN-039",
+        "CX-275",
+        "CX-283",
+        "CX-281",
+        "CX-279",
+        "CX-280",
+        "CX-282"
+      ],
+      "baseline_keys": [
+        "complexity|internal/installsource/plan.go|*installSourceTool.localSkillActions",
+        "func_lines|internal/installsource/plan.go|*installSourceTool.localSkillActions",
+        "complexity|internal/installsource/install_source.go|*installSourceTool.Execute",
+        "func_lines|internal/installsource/install_source.go|*installSourceTool.Execute",
+        "complexity|internal/installsource/mcp.go|parseMCPJSON",
+        "complexity|internal/installsource/plan.go|*installSourceTool.planLocal",
+        "complexity|internal/installsource/plan.go|*installSourceTool.tryGitHubRepo",
+        "complexity|internal/installsource/plan.go|*installSourceTool.planURL",
+        "complexity|internal/installsource/plan.go|*installSourceTool.planDownloadedURL",
+        "complexity|internal/installsource/plan.go|*installSourceTool.scanGitHubSkills"
+      ],
+      "files": [
+        "internal/installsource/plan.go",
+        "internal/installsource/install_source.go",
+        "internal/installsource/mcp.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        37
+      ]
+    },
+    {
+      "number": 24,
+      "file": "group-24-p2-internal-history-search.md",
+      "title": "internal/history · search 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-270",
+        "ND-012",
+        "CX-028",
+        "CX-030",
+        "CX-029",
+        "CX-267",
+        "FN-038",
+        "CX-031",
+        "CX-268",
+        "CX-269"
+      ],
+      "baseline_keys": [
+        "complexity|internal/history/search.go|extractDocuments",
+        "nesting_depth|internal/history/search.go|extractDocuments",
+        "complexity|internal/agent/compact.go|*Agent.maybeCompact",
+        "complexity|internal/agent/compact.go|keepIndexes",
+        "complexity|internal/agent/compact.go|*Agent.compact",
+        "complexity|internal/history/search.go|*Searcher.Search",
+        "func_lines|internal/history/search.go|*Searcher.Search",
+        "complexity|internal/agent/compact.go|*Agent.summarize",
+        "complexity|internal/history/search.go|*Searcher.Around",
+        "complexity|internal/history/search.go|listJSONL"
+      ],
+      "files": [
+        "internal/history/search.go",
+        "internal/agent/compact.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 25,
+      "file": "group-25-p2-internal-agent-subagent-store.md",
+      "title": "internal/agent · subagent_store 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-042",
+        "CX-045",
+        "CX-051",
+        "CX-048",
+        "CX-044",
+        "CX-050",
+        "CX-052",
+        "CX-043",
+        "CX-049",
+        "CX-041"
+      ],
+      "baseline_keys": [
+        "complexity|internal/agent/parallel_tasks.go|*ParallelTasksTool.runAsBackgroundJobs",
+        "complexity|internal/agent/reasoning_language.go|hasLeadingInjectedBlock",
+        "complexity|internal/agent/subagent_store.go|validateMeta",
+        "complexity|internal/agent/subagent_store.go|ListSubagentsByParent",
+        "complexity|internal/agent/prune.go|*Agent.PruneStaleToolResults",
+        "complexity|internal/agent/subagent_store.go|*SubagentStore.prepareFork",
+        "complexity|internal/agent/subagent_store.go|validSubagentRef",
+        "complexity|internal/agent/parallel_tasks.go|validateParallelTaskItems",
+        "complexity|internal/agent/subagent_store.go|*SubagentStore.CleanupStaleRunning",
+        "complexity|internal/agent/parallel_tasks.go|formatParallelTasksAggregate"
+      ],
+      "files": [
+        "internal/agent/parallel_tasks.go",
+        "internal/agent/reasoning_language.go",
+        "internal/agent/subagent_store.go",
+        "internal/agent/prune.go"
+      ],
+      "prior_groups": [
+        5
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 26,
+      "file": "group-26-p2-internal-config-load.md",
+      "title": "internal/config · load 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-010",
+        "CX-188",
+        "CX-183",
+        "ND-010",
+        "CX-189",
+        "CX-191",
+        "CX-190",
+        "CX-182",
+        "CX-185",
+        "CX-184"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/config/load.go|",
+        "complexity|internal/config/migrate.go|migrateMCPToUserConfig",
+        "complexity|internal/config/load.go|mergeTOMLProviders",
+        "nesting_depth|internal/config/load.go|mergeTOMLProviders",
+        "complexity|internal/config/migrate.go|migrateLegacyCredentialsIfNeededForRoot",
+        "complexity|internal/config/migrate.go|legacyPlugins",
+        "complexity|internal/config/migrate.go|migrateLegacyTOMLIfNeeded",
+        "complexity|internal/config/load.go|LoadForRootWithPaths",
+        "complexity|internal/config/load.go|NormalizeLegacyDesktopProviderAccess",
+        "complexity|internal/config/load.go|applyLegacyMimoCatalog"
+      ],
+      "files": [
+        "internal/config/load.go",
+        "internal/config/migrate.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 27,
+      "file": "group-27-p2-internal-jobs-jobs.md",
+      "title": "internal/jobs · jobs 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-014",
+        "CX-287",
+        "FN-041",
+        "CX-002",
+        "ND-002",
+        "CX-001",
+        "CX-288",
+        "CX-291",
+        "CX-290",
+        "CX-289"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/jobs/jobs.go|",
+        "complexity|internal/jobs/jobs.go|*Manager.StartForSession",
+        "func_lines|internal/jobs/jobs.go|*Manager.StartForSession",
+        "complexity|cmd/e2ebench/diff.go|changedLineSet",
+        "nesting_depth|cmd/e2ebench/diff.go|changedLineSet",
+        "complexity|cmd/e2ebench/diff.go|renderDiff",
+        "complexity|internal/jobs/jobs.go|*Manager.SetActiveSessionPath",
+        "complexity|internal/jobs/jobs.go|waitTeardownTargets",
+        "complexity|internal/jobs/jobs.go|*Manager.loadSessionArtifacts",
+        "complexity|internal/jobs/jobs.go|*Manager.adoptUnscopedJobsLocked"
+      ],
+      "files": [
+        "internal/jobs/jobs.go",
+        "cmd/e2ebench/diff.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        41
+      ]
+    },
+    {
+      "number": 28,
+      "file": "group-28-p2-internal-automation-schedule.md",
+      "title": "internal/automation · schedule 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-069",
+        "FN-010",
+        "CX-063",
+        "CX-072",
+        "CX-073",
+        "CX-071",
+        "CX-070",
+        "CX-064",
+        "FL-003",
+        "CX-060"
+      ],
+      "baseline_keys": [
+        "complexity|internal/automation/migration.go|MigrateHeartbeatIfNeeded",
+        "func_lines|internal/automation/migration.go|MigrateHeartbeatIfNeeded",
+        "complexity|internal/automation/engine.go|*Engine.runTask",
+        "complexity|internal/automation/schedule.go|previousCalendarOccurrence",
+        "complexity|internal/automation/schedule.go|nextCalendarOccurrenceAfter",
+        "complexity|internal/automation/schedule.go|withinTimeWindow",
+        "complexity|internal/automation/runner.go|*BootRunner.Run",
+        "complexity|internal/automation/engine.go|*Engine.finishRun",
+        "file_lines|internal/automation/business.go|",
+        "complexity|internal/automation/business.go|ValidateBusinessDiagnostics"
+      ],
+      "files": [
+        "internal/automation/migration.go",
+        "internal/automation/engine.go",
+        "internal/automation/schedule.go",
+        "internal/automation/runner.go",
+        "internal/automation/business.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        46
+      ]
+    },
+    {
+      "number": 29,
+      "file": "group-29-p2-internal-bot-gateway.md",
+      "title": "internal/bot · gateway 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-086",
+        "FN-012",
+        "CX-098",
+        "CX-099",
+        "CX-082",
+        "CX-083",
+        "CX-084",
+        "CX-094",
+        "FL-005",
+        "CX-085"
+      ],
+      "baseline_keys": [
+        "complexity|internal/bot/gateway.go|*BotGateway.handleSlashCommand",
+        "func_lines|internal/bot/gateway.go|*BotGateway.handleSlashCommand",
+        "complexity|internal/botruntime/runtime.go|AdapterBindingsWithPaths",
+        "complexity|internal/botruntime/runtime.go|rememberInbound",
+        "complexity|internal/bot/feishu/feishu.go|*adapter.handleSDKMessage",
+        "complexity|internal/bot/feishu/feishu.go|*adapter.sendSDKContent",
+        "complexity|internal/bot/feishu/feishu.go|*adapter.runWebhook",
+        "complexity|internal/bot/weixin/weixin.go|*adapter.getUpdates",
+        "file_lines|internal/bot/gateway.go|",
+        "complexity|internal/bot/gateway.go|*BotGateway.handleMessage"
+      ],
+      "files": [
+        "internal/bot/gateway.go",
+        "internal/botruntime/runtime.go",
+        "internal/bot/feishu/feishu.go",
+        "internal/bot/weixin/weixin.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        36,
+        49
+      ]
+    },
+    {
+      "number": 30,
+      "file": "group-30-p2-internal-cli-skill-picker.md",
+      "title": "internal/cli · skill_picker 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-138",
+        "CX-163",
+        "CX-144",
+        "CX-158",
+        "CX-145",
+        "CX-143",
+        "CX-164",
+        "CX-166",
+        "CX-167",
+        "CX-165"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/latex.go|readAtom",
+        "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerKey",
+        "complexity|internal/cli/mcp_manager_view.go|*mcpManager.renderDetail",
+        "complexity|internal/cli/rewind.go|chatTUI.handleRewindKey",
+        "complexity|internal/cli/mcp_manager_view.go|mcpActionsFor",
+        "complexity|internal/cli/mcp_manager_view.go|*mcpManager.renderList",
+        "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSkillsKey",
+        "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSourceSkillsKey",
+        "complexity|internal/cli/skill_picker.go|skillRootLines",
+        "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSourcesKey"
+      ],
+      "files": [
+        "internal/cli/latex.go",
+        "internal/cli/skill_picker.go",
+        "internal/cli/mcp_manager_view.go",
+        "internal/cli/rewind.go"
+      ],
+      "prior_groups": [
+        21
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 31,
+      "file": "group-31-p2-controller.md",
+      "title": "Controller 会话控制与提交链路",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-220",
+        "CX-222",
+        "CX-230",
+        "CX-025",
+        "CX-046",
+        "CX-203",
+        "CX-214",
+        "CX-211",
+        "CX-216",
+        "CX-217"
+      ],
+      "baseline_keys": [
+        "complexity|internal/control/errmsg.go|explainError",
+        "complexity|internal/control/imagecompress.go|compressForVision",
+        "complexity|internal/control/refs.go|walkRootDir",
+        "complexity|internal/agent/ask.go|*AskTool.Execute",
+        "complexity|internal/agent/save.go|ListCleanupPending",
+        "complexity|internal/control/auto_plan_classifier.go|*ProviderAutoPlanClassifier.NeedsPlan",
+        "complexity|internal/control/controller.go|*Controller.Rewind",
+        "complexity|internal/control/controller.go|*Controller.DeleteUserExpert",
+        "complexity|internal/control/controller.go|resolveBranch",
+        "complexity|internal/control/controller.go|*Controller.maybeColdResumePrune"
+      ],
+      "files": [
+        "internal/control/errmsg.go",
+        "internal/control/imagecompress.go",
+        "internal/control/refs.go",
+        "internal/agent/ask.go",
+        "internal/agent/save.go",
+        "internal/control/auto_plan_classifier.go",
+        "internal/control/controller.go"
+      ],
+      "prior_groups": [
+        6,
+        16,
+        18
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 32,
+      "file": "group-32-p2-internal-doctor-report.md",
+      "title": "internal/doctor · report 治理批次",
+      "priority": "P2",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-245",
+        "FN-034",
+        "CX-376",
+        "CX-381",
+        "CX-388",
+        "CX-393",
+        "CX-380",
+        "CX-375",
+        "CX-378",
+        "CX-246"
+      ],
+      "baseline_keys": [
+        "complexity|internal/doctor/report.go|Collect",
+        "func_lines|internal/doctor/report.go|Collect",
+        "complexity|internal/tool/builtin/codeindex.go|codeIndex.collect",
+        "complexity|internal/tool/builtin/completestep.go|allCommandHints",
+        "complexity|internal/tool/builtin/movefile.go|moveFile.Execute",
+        "complexity|internal/tool/sessiontool/sessiontool.go|*readSessionTool.Execute",
+        "complexity|internal/tool/builtin/completestep.go|verifyCommandFromSession",
+        "complexity|internal/tool/builtin/codeindex.go|codeIndex.Execute",
+        "complexity|internal/tool/builtin/completestep.go|completeStep.Execute",
+        "complexity|internal/doctor/report.go|RenderText"
+      ],
+      "files": [
+        "internal/doctor/report.go",
+        "internal/tool/builtin/codeindex.go",
+        "internal/tool/builtin/completestep.go",
+        "internal/tool/builtin/movefile.go",
+        "internal/tool/sessiontool/sessiontool.go"
+      ],
+      "prior_groups": [
+        8,
+        13
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 33,
+      "file": "group-33-p3-internal-config-credentials.md",
+      "title": "internal/config · credentials 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-008",
+        "CX-172",
+        "CX-171",
+        "CX-173",
+        "CX-174",
+        "CX-187",
+        "CX-194",
+        "CX-186",
+        "CX-193",
+        "CX-192"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/config/config.go|",
+        "complexity|internal/config/credentials.go|storeCredentialsInFile",
+        "complexity|internal/config/ccswitch.go|classifyMCPImportCandidate",
+        "complexity|internal/config/credentials.go|writeCredentialFileLines",
+        "complexity|internal/config/credentials.go|isCredentialKey",
+        "complexity|internal/config/mcpjson.go|clearMCPJSONAuthentication",
+        "complexity|internal/config/paths.go|CommandDirsForRoot",
+        "complexity|internal/config/mcpjson.go|loadLegacyMCP",
+        "complexity|internal/config/paths.go|cleanEnvDir",
+        "complexity|internal/config/paths.go|cleanExplicitDir"
+      ],
+      "files": [
+        "internal/config/config.go",
+        "internal/config/credentials.go",
+        "internal/config/ccswitch.go",
+        "internal/config/mcpjson.go",
+        "internal/config/paths.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 34,
+      "file": "group-34-p3-internal-eventwire-policy.md",
+      "title": "internal/eventwire · policy 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-248",
+        "FN-035",
+        "CX-323",
+        "CX-011",
+        "FN-001",
+        "CX-324",
+        "FL-001",
+        "CX-322",
+        "CX-321",
+        "CX-249"
+      ],
+      "baseline_keys": [
+        "complexity|internal/eventwire/wire.go|ToWire",
+        "func_lines|internal/eventwire/wire.go|ToWire",
+        "complexity|internal/planmode/policy.go|unsafeSafeCommandArg",
+        "complexity|internal/acp/service.go|*service.openExistingSession",
+        "func_lines|internal/acp/service.go|*service.openExistingSession",
+        "complexity|internal/planmode/policy.go|shellFields",
+        "file_lines|internal/acp/service.go|",
+        "complexity|internal/planmode/policy.go|decideBash",
+        "complexity|internal/planmode/policy.go|Policy.Decide",
+        "complexity|internal/eventwire/wire.go|ToWireDecisionAudit"
+      ],
+      "files": [
+        "internal/eventwire/wire.go",
+        "internal/planmode/policy.go",
+        "internal/acp/service.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        41,
+        48,
+        49
+      ]
+    },
+    {
+      "number": 35,
+      "file": "group-35-p3-internal-profile-store.md",
+      "title": "internal/profile · store 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-336",
+        "CX-338",
+        "CX-330",
+        "CX-331",
+        "CX-329",
+        "CX-333",
+        "CX-340",
+        "CX-337",
+        "CX-332",
+        "CX-339"
+      ],
+      "baseline_keys": [
+        "complexity|internal/profile/selector.go|Selector.scoreItem",
+        "complexity|internal/profile/store.go|Store.ApplySuccessfulOverride",
+        "complexity|internal/profile/event.go|BuildLearningEvent",
+        "complexity|internal/profile/event.go|ProfileLearningEvent.Normalize",
+        "complexity|internal/profile/decay.go|EffectiveConfidence",
+        "complexity|internal/profile/model.go|ProfileItem.Normalize",
+        "complexity|internal/profile/worker.go|*Worker.process",
+        "complexity|internal/profile/store.go|Store.MaintainNegative",
+        "complexity|internal/profile/extractor.go|RuleExtractor.Extract",
+        "complexity|internal/profile/store.go|safeArchiveStem"
+      ],
+      "files": [
+        "internal/profile/selector.go",
+        "internal/profile/store.go",
+        "internal/profile/event.go",
+        "internal/profile/decay.go",
+        "internal/profile/model.go",
+        "internal/profile/worker.go",
+        "internal/profile/extractor.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 36,
+      "file": "group-36-p3-internal-sandbox-runtime.md",
+      "title": "internal/sandbox · runtime 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-351",
+        "ND-006",
+        "CX-105",
+        "CX-140",
+        "CX-157",
+        "CX-118",
+        "CX-096",
+        "CX-097",
+        "CX-095",
+        "CX-100"
+      ],
+      "baseline_keys": [
+        "complexity|internal/sandbox/shell.go|resolveShell",
+        "nesting_depth|internal/botruntime/runtime.go|EnabledPlatforms",
+        "complexity|internal/cli/chat_tui_paste.go|pastedImagePath",
+        "complexity|internal/cli/mathnode.go|*mathParser.Parse",
+        "complexity|internal/cli/review.go|reviewCommand",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.runMCPSubcommand",
+        "complexity|internal/botruntime/runtime.go|ChannelConfigs",
+        "complexity|internal/botruntime/runtime.go|ConnectionChannelConfigs",
+        "complexity|internal/botruntime/runtime.go|PlatformConfigured",
+        "complexity|internal/botruntime/runtime.go|rememberAllowlist"
+      ],
+      "files": [
+        "internal/sandbox/shell.go",
+        "internal/botruntime/runtime.go",
+        "internal/cli/chat_tui_paste.go",
+        "internal/cli/mathnode.go",
+        "internal/cli/review.go",
+        "internal/cli/chat_tui.go"
+      ],
+      "prior_groups": [
+        2,
+        15,
+        29
+      ],
+      "next_groups": [
+        39
+      ]
+    },
+    {
+      "number": 37,
+      "file": "group-37-p3-internal-installsource-store.md",
+      "title": "internal/installsource · store 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-285",
+        "CX-296",
+        "ND-013",
+        "CX-278",
+        "CX-273",
+        "CX-300",
+        "CX-272",
+        "CX-276",
+        "CX-277",
+        "CX-286"
+      ],
+      "baseline_keys": [
+        "complexity|internal/installsource/skill.go|scanSkillRoot",
+        "complexity|internal/memory/store.go|Store.Index",
+        "nesting_depth|internal/memory/store.go|Store.Index",
+        "complexity|internal/installsource/names.go|sanitizeName",
+        "complexity|internal/installsource/apply.go|*installSourceTool.applyInstallMCP",
+        "complexity|internal/memory/store.go|Store.ListArchived",
+        "complexity|internal/installsource/apply.go|*installSourceTool.applySkillRoot",
+        "complexity|internal/installsource/mcp.go|validateMCPEntry",
+        "complexity|internal/installsource/names.go|mcpNameFromURL",
+        "complexity|internal/installsource/skill.go|copyDir"
+      ],
+      "files": [
+        "internal/installsource/skill.go",
+        "internal/memory/store.go",
+        "internal/installsource/names.go",
+        "internal/installsource/apply.go",
+        "internal/installsource/mcp.go"
+      ],
+      "prior_groups": [
+        23
+      ],
+      "next_groups": [
+        43
+      ]
+    },
+    {
+      "number": 38,
+      "file": "group-38-p3-internal-serve-serve.md",
+      "title": "internal/serve · serve 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "FL-018",
+        "CX-356",
+        "CX-352",
+        "CX-355",
+        "CX-358",
+        "CX-360",
+        "CX-357",
+        "CX-359",
+        "CX-354",
+        "CX-353"
+      ],
+      "baseline_keys": [
+        "file_lines|internal/serve/serve.go|",
+        "complexity|internal/skill/skill.go|New",
+        "complexity|internal/serve/auth.go|safeRedirectTarget",
+        "complexity|internal/serve/serve.go|*Server.deleteSession",
+        "complexity|internal/skill/skill.go|*Store.readEntry",
+        "complexity|internal/skill/tools.go|*installSkillTool.Execute",
+        "complexity|internal/skill/skill.go|*Store.List",
+        "complexity|internal/skill/tools.go|*runSkillTool.Execute",
+        "complexity|internal/serve/serve.go|*Server.generateTitle",
+        "complexity|internal/serve/serve.go|*Server.resume"
+      ],
+      "files": [
+        "internal/serve/serve.go",
+        "internal/skill/skill.go",
+        "internal/serve/auth.go",
+        "internal/skill/tools.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 39,
+      "file": "group-39-p3-cli-tui.md",
+      "title": "CLI/TUI 状态更新与交互渲染",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-108",
+        "CX-142",
+        "CX-110",
+        "CX-135",
+        "CX-136",
+        "CX-155",
+        "CX-161",
+        "CX-113",
+        "CX-111",
+        "CX-107"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/chat_tui.go|*chatTUI.streamToolOutput",
+        "complexity|internal/cli/mcp_manager_actions.go|chatTUI.applyMCPMode",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.collapseShellSlot",
+        "complexity|internal/cli/gitstatus.go|loadGitStatus",
+        "complexity|internal/cli/language.go|*chatTUI.runLanguageSubcommand",
+        "complexity|internal/cli/provider.go|*chatTUI.switchToProvider",
+        "complexity|internal/cli/skill_hooks.go|*chatTUI.runSkillSubcommand",
+        "complexity|internal/cli/chat_tui.go|chatTUI.renderTodoPanel",
+        "complexity|internal/cli/chat_tui.go|*chatTUI.toggleShellOutput",
+        "complexity|internal/cli/chat_tui.go|chatTUI.renderTranscriptWithMainManager"
+      ],
+      "files": [
+        "internal/cli/chat_tui.go",
+        "internal/cli/mcp_manager_actions.go",
+        "internal/cli/gitstatus.go",
+        "internal/cli/language.go",
+        "internal/cli/provider.go",
+        "internal/cli/skill_hooks.go"
+      ],
+      "prior_groups": [
+        2,
+        15,
+        36
+      ],
+      "next_groups": [
+        42
+      ]
+    },
+    {
+      "number": 40,
+      "file": "group-40-p3-internal-tool-bash.md",
+      "title": "internal/tool · bash 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-372",
+        "CX-382",
+        "CX-385",
+        "CX-370",
+        "CX-374",
+        "CX-371",
+        "CX-373",
+        "CX-389",
+        "CX-390",
+        "CX-387"
+      ],
+      "baseline_keys": [
+        "complexity|internal/tool/builtin/bash.go|hasShellCommandWord",
+        "complexity|internal/tool/builtin/delete_range.go|deleteRange.preview",
+        "complexity|internal/tool/builtin/glob.go|globRecursive",
+        "complexity|internal/tool/builtin/bash.go|bash.Execute",
+        "complexity|internal/tool/builtin/bash.go|isShellAssignment",
+        "complexity|internal/tool/builtin/bash.go|hasUnquotedBackgroundOperator",
+        "complexity|internal/tool/builtin/bash.go|readShellWord",
+        "complexity|internal/tool/builtin/multiedit.go|multiEdit.Execute",
+        "complexity|internal/tool/builtin/preview.go|multiEdit.Preview",
+        "complexity|internal/tool/builtin/ls.go|listDir.listRecursive"
+      ],
+      "files": [
+        "internal/tool/builtin/bash.go",
+        "internal/tool/builtin/delete_range.go",
+        "internal/tool/builtin/glob.go",
+        "internal/tool/builtin/multiedit.go",
+        "internal/tool/builtin/preview.go",
+        "internal/tool/builtin/ls.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 41,
+      "file": "group-41-p3-cmd-e2ebench-diff.md",
+      "title": "cmd/e2ebench · diff 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "ND-001",
+        "CX-010",
+        "CX-009",
+        "CX-005",
+        "CX-006",
+        "CX-007",
+        "CX-003",
+        "CX-004",
+        "CX-013",
+        "CX-016"
+      ],
+      "baseline_keys": [
+        "nesting_depth|cmd/e2ebench/diff.go|changedLineCoverage",
+        "complexity|internal/acp/dispatch.go|toolKindFor",
+        "complexity|internal/acp/dispatch.go|*updateSink.Emit",
+        "complexity|cmd/e2ebench/main.go|main",
+        "complexity|cmd/e2ebench/main.go|render",
+        "complexity|cmd/e2ebench/mutation.go|runMutation",
+        "complexity|cmd/e2ebench/diff.go|parseNewTests",
+        "complexity|cmd/e2ebench/diff.go|splitShellFields",
+        "complexity|internal/acp/service.go|*service.rebuildSession",
+        "complexity|internal/acp/service.go|availableCommandsFor"
+      ],
+      "files": [
+        "cmd/e2ebench/diff.go",
+        "internal/acp/dispatch.go",
+        "cmd/e2ebench/main.go",
+        "cmd/e2ebench/mutation.go",
+        "internal/acp/service.go"
+      ],
+      "prior_groups": [
+        27,
+        34
+      ],
+      "next_groups": [
+        48,
+        49
+      ]
+    },
+    {
+      "number": 42,
+      "file": "group-42-p3-internal-cli-cli.md",
+      "title": "internal/cli · cli 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-162",
+        "CX-168",
+        "CX-128",
+        "CX-153",
+        "CX-156",
+        "CX-141",
+        "CX-127",
+        "CX-169",
+        "CX-126",
+        "CX-125"
+      ],
+      "baseline_keys": [
+        "complexity|internal/cli/skill_hooks.go|*chatTUI.skillSaveEnabledChanges",
+        "complexity|internal/cli/theme_osc_unix.go|queryTerminalBackground",
+        "complexity|internal/cli/cli.go|configReasoningLanguageCommand",
+        "complexity|internal/cli/memory_v5.go|*chatTUI.runMemoryV5Command",
+        "complexity|internal/cli/reasoning_language.go|*chatTUI.runReasoningLanguageCommand",
+        "complexity|internal/cli/mcp_import_picker.go|chatTUI.handleMCPImportKey",
+        "complexity|internal/cli/cli.go|configMemoryV5Command",
+        "complexity|internal/cli/theme.go|*chatTUI.themeArgItems",
+        "complexity|internal/cli/cli.go|appendEnv",
+        "complexity|internal/cli/cli.go|providersWithMissingKeys"
+      ],
+      "files": [
+        "internal/cli/skill_hooks.go",
+        "internal/cli/theme_osc_unix.go",
+        "internal/cli/cli.go",
+        "internal/cli/memory_v5.go",
+        "internal/cli/reasoning_language.go",
+        "internal/cli/mcp_import_picker.go",
+        "internal/cli/theme.go"
+      ],
+      "prior_groups": [
+        14,
+        39
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 43,
+      "file": "group-43-p3-internal-config-edit.md",
+      "title": "internal/config · edit 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-176",
+        "CX-178",
+        "CX-175",
+        "CX-177",
+        "CX-295",
+        "CX-297",
+        "CX-298",
+        "CX-334",
+        "CX-335",
+        "CX-299"
+      ],
+      "baseline_keys": [
+        "complexity|internal/config/edit.go|*Config.RemoveProvider",
+        "complexity|internal/config/edit.go|mergeTOMLDelta",
+        "complexity|internal/config/dotenv.go|loadDotEnvFileAs",
+        "complexity|internal/config/edit.go|*Config.saveProjectIncremental",
+        "complexity|internal/memory/recall.go|searchMemories",
+        "complexity|internal/memory/store.go|Store.Save",
+        "complexity|internal/memory/store.go|Store.Archive",
+        "complexity|internal/profile/policy.go|Policy.ResolveLoading",
+        "complexity|internal/profile/policy.go|Policy.DecideScope",
+        "complexity|internal/memory/store.go|Store.List"
+      ],
+      "files": [
+        "internal/config/edit.go",
+        "internal/config/dotenv.go",
+        "internal/memory/recall.go",
+        "internal/memory/store.go",
+        "internal/profile/policy.go"
+      ],
+      "prior_groups": [
+        4,
+        37
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 44,
+      "file": "group-44-p3-internal-controlplane-evidence.md",
+      "title": "internal/controlplane · evidence 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-241",
+        "CX-252",
+        "CX-256",
+        "CX-056",
+        "CX-238",
+        "FL-013",
+        "CX-253",
+        "CX-239",
+        "CX-240",
+        "CX-255"
+      ],
+      "baseline_keys": [
+        "complexity|internal/controlplane/policy_nodes/weighting.go|dynamicNodeWeight",
+        "complexity|internal/evidence/evidence.go|hasFailedCompleteStepRecoveryForTodo",
+        "complexity|internal/evidence/evidence.go|matchTodoStep",
+        "complexity|internal/agent/testutil/mock_provider.go|*MockProvider.Stream",
+        "complexity|internal/controlplane/arbitration/conflict_resolver.go|resolveConflicts",
+        "file_lines|internal/evidence/evidence.go|",
+        "complexity|internal/evidence/evidence.go|PathsProvenInSession",
+        "complexity|internal/controlplane/consensus/consensus.go|Aggregate",
+        "complexity|internal/controlplane/policy_nodes/weighting.go|LearnControlGraph",
+        "complexity|internal/evidence/evidence.go|hasSuccessfulCompleteStepForTodo"
+      ],
+      "files": [
+        "internal/controlplane/policy_nodes/weighting.go",
+        "internal/evidence/evidence.go",
+        "internal/agent/testutil/mock_provider.go",
+        "internal/controlplane/arbitration/conflict_resolver.go",
+        "internal/controlplane/consensus/consensus.go"
+      ],
+      "prior_groups": [],
+      "next_groups": [
+        47
+      ]
+    },
+    {
+      "number": 45,
+      "file": "group-45-p3-internal-fileutil-diff.md",
+      "title": "internal/fileutil · diff 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-262",
+        "CX-008",
+        "CX-242",
+        "CX-259",
+        "CX-244",
+        "CX-258",
+        "CX-260",
+        "CX-263",
+        "CX-243",
+        "CX-257"
+      ],
+      "baseline_keys": [
+        "complexity|internal/fileutil/encoding/encoding.go|Detect",
+        "complexity|cmd/suiyuan-plugin-example/main.go|handleLine",
+        "complexity|internal/diff/diff.go|myers",
+        "complexity|internal/expert/store.go|listDefinitions",
+        "complexity|internal/diff/diff.go|unified",
+        "complexity|internal/expert/store.go|migrateFirstPrompt",
+        "complexity|internal/expert/store.go|filterDefinitions",
+        "complexity|internal/fileutil/encoding/encoding.go|DetectQuick",
+        "complexity|internal/diff/diff.go|backtrack",
+        "complexity|internal/expert/definition_catalog.go|definitionSystemPrompt"
+      ],
+      "files": [
+        "internal/fileutil/encoding/encoding.go",
+        "cmd/suiyuan-plugin-example/main.go",
+        "internal/diff/diff.go",
+        "internal/expert/store.go",
+        "internal/expert/definition_catalog.go"
+      ],
+      "prior_groups": [],
+      "next_groups": []
+    },
+    {
+      "number": 46,
+      "file": "group-46-p3-internal-automation-lease.md",
+      "title": "internal/automation · lease 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-066",
+        "CX-067",
+        "CX-062",
+        "CX-065",
+        "CX-068",
+        "CX-059",
+        "CX-078",
+        "CX-077",
+        "CX-061",
+        "CX-074"
+      ],
+      "baseline_keys": [
+        "complexity|internal/automation/lease.go|*Store.AcquireLease",
+        "complexity|internal/automation/lease.go|*Store.ReleaseLease",
+        "complexity|internal/automation/condition.go|Checker.Check",
+        "complexity|internal/automation/export.go|parseMarkdownExportBlocks",
+        "complexity|internal/automation/migration_heartbeat.go|legacyHeartbeatCalendarSchedule",
+        "complexity|internal/automation/archive.go|pathID",
+        "complexity|internal/automation/templates.go|taskTemplateInterval",
+        "complexity|internal/automation/store.go|*Store.migrateLegacyTaskTemplates",
+        "complexity|internal/automation/business.go|readBusinessHTTP",
+        "complexity|internal/automation/service.go|readRunEventSummaries"
+      ],
+      "files": [
+        "internal/automation/lease.go",
+        "internal/automation/condition.go",
+        "internal/automation/export.go",
+        "internal/automation/migration_heartbeat.go",
+        "internal/automation/archive.go",
+        "internal/automation/templates.go",
+        "internal/automation/store.go",
+        "internal/automation/business.go",
+        "internal/automation/service.go"
+      ],
+      "prior_groups": [
+        28
+      ],
+      "next_groups": [
+        49
+      ]
+    },
+    {
+      "number": 47,
+      "file": "group-47-p3-internal-mcpdiag-provider.md",
+      "title": "internal/mcpdiag · provider 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-294",
+        "CX-320",
+        "CX-345",
+        "CX-394",
+        "CX-101",
+        "CX-251",
+        "CX-254",
+        "CX-346",
+        "CX-250",
+        "CX-347"
+      ],
+      "baseline_keys": [
+        "complexity|internal/mcpdiag/auth.go|HasAuthConfig",
+        "complexity|internal/permission/permission.go|*Gate.Check",
+        "complexity|internal/provider/provider.go|closeTruncatedJSON",
+        "complexity|internal/userctx/context.go|ValidateProfileID",
+        "complexity|internal/checkpoint/checkpoint.go|*Store.RestoreCode",
+        "complexity|internal/evidence/evidence.go|*Ledger.UnverifiedCompletedTodos",
+        "complexity|internal/evidence/evidence.go|completeStepHasProof",
+        "complexity|internal/provider/provider.go|backfillToolCallNames",
+        "complexity|internal/evidence/evidence.go|*Ledger.TouchedPaths",
+        "complexity|internal/provider/provider.go|currencySymbol"
+      ],
+      "files": [
+        "internal/mcpdiag/auth.go",
+        "internal/permission/permission.go",
+        "internal/provider/provider.go",
+        "internal/userctx/context.go",
+        "internal/checkpoint/checkpoint.go",
+        "internal/evidence/evidence.go"
+      ],
+      "prior_groups": [
+        44
+      ],
+      "next_groups": []
+    },
+    {
+      "number": 48,
+      "file": "group-48-p3-internal-netclient-service.md",
+      "title": "internal/netclient · service 治理批次",
+      "priority": "P3",
+      "issue_count": 10,
+      "issue_ids": [
+        "CX-319",
+        "CX-247",
+        "CX-293",
+        "CX-271",
+        "CX-350",
+        "CX-292",
+        "CX-017",
+        "CX-012",
+        "CX-014",
+        "CX-015"
+      ],
+      "baseline_keys": [
+        "complexity|internal/netclient/netclient.go|customProxyURL",
+        "complexity|internal/equilibrium/convergence/global_equilibrium.go|applyPolicyWeights",
+        "complexity|internal/lsp/results.go|parseLocations",
+        "complexity|internal/i18n/i18n.go|normalize",
+        "complexity|internal/retrieval/bm25.go|snippetAround",
+        "complexity|internal/lsp/jsonrpc.go|*conn.readLoop",
+        "complexity|internal/acp/service.go|listACPMetas",
+        "complexity|internal/acp/service.go|*service.sessionPrompt",
+        "complexity|internal/acp/service.go|*service.sessionList",
+        "complexity|internal/acp/service.go|*service.sessionDelete"
+      ],
+      "files": [
+        "internal/netclient/netclient.go",
+        "internal/equilibrium/convergence/global_equilibrium.go",
+        "internal/lsp/results.go",
+        "internal/i18n/i18n.go",
+        "internal/retrieval/bm25.go",
+        "internal/lsp/jsonrpc.go",
+        "internal/acp/service.go"
+      ],
+      "prior_groups": [
+        34,
+        41
+      ],
+      "next_groups": [
+        49
+      ]
+    },
+    {
+      "number": 49,
+      "file": "group-49-p3-internal-acp-store.md",
+      "title": "internal/acp · store 治理批次",
+      "priority": "P3",
+      "issue_count": 4,
+      "issue_ids": [
+        "CX-075",
+        "CX-076",
+        "CX-087",
+        "CX-018"
+      ],
+      "baseline_keys": [
+        "complexity|internal/automation/store.go|*Store.DeleteTaskTemplate",
+        "complexity|internal/automation/store.go|*Store.RestoreTaskTemplate",
+        "complexity|internal/bot/gateway.go|*BotGateway.sessionOptionsForMessage",
+        "complexity|internal/acp/service.go|isSafeSessionID"
+      ],
+      "files": [
+        "internal/automation/store.go",
+        "internal/bot/gateway.go",
+        "internal/acp/service.go"
+      ],
+      "prior_groups": [
+        29,
+        34,
+        41,
+        46,
+        48
+      ],
+      "next_groups": []
+    }
+  ]
+}

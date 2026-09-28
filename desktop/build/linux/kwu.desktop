@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Clouvia
+Name[zh_CN]=云智企办
+Comment=Clouvia desktop app
+Comment[zh_CN]=云智企办桌面端
+Exec=kwu-desktop
+Icon=kwu-desktop
+Categories=Development;Utility;
+Terminal=false
+StartupWMClass=kwu-desktop

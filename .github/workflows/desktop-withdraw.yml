@@ -1,0 +1,160 @@
+name: Desktop withdraw
+
+on:
+  workflow_dispatch:
+    inputs:
+      bad_tag:
+        description: "Published bad desktop-vX.Y.Z tag"
+        required: true
+        type: string
+      recovery_tag:
+        description: "Older known-good desktop-vX.Y.Z tag to restore"
+        required: true
+        type: string
+      reason:
+        description: "Single-line withdrawal reason"
+        required: true
+        type: string
+      target:
+        description: "Desktop target pointer to restore"
+        required: true
+        type: choice
+        options:
+          - windows-amd64
+          - windows-arm64
+          - macos-universal
+      confirmation:
+        description: "Type WITHDRAW <bad_tag> RESTORE <recovery_tag> TARGET <target>"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-stable-release
+  cancel-in-progress: false
+
+env:
+  RELEASE_REPOSITORY: xiaoxiaotest9527-bit/KWU-release
+  OSS_BUCKET: kwu-desktop-releases
+  OSS_PUBLIC_BASE_URL: https://kwu-desktop-releases.oss-cn-guangzhou.aliyuncs.com
+
+jobs:
+  withdraw:
+    name: Preflight and restore known-good stable release
+    runs-on: ubuntu-24.04
+    environment: desktop-release
+    timeout-minutes: 20
+    steps:
+      - name: Check out trusted withdrawal tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Install pinned ossutil
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/ossutil-2.3.0-linux-amd64.zip"
+          curl --fail --silent --show-error --location \
+            --output "$archive" \
+            https://gosspublic.alicdn.com/ossutil/v2/2.3.0/ossutil-2.3.0-linux-amd64.zip
+          echo "3ae4d9fc85a7a6e9f5654d1599766f1a3a42a3692870887b5ae9338d582ef65a  $archive" | sha256sum --check --strict
+          unzip -q "$archive" -d "$RUNNER_TEMP/ossutil"
+          install -m 0755 "$RUNNER_TEMP/ossutil/ossutil-2.3.0-linux-amd64/ossutil" "$RUNNER_TEMP/ossutil-bin"
+
+      - name: Complete zero-write preflight
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          INPUT_BAD_TAG: ${{ inputs.bad_tag }}
+          INPUT_RECOVERY_TAG: ${{ inputs.recovery_tag }}
+          INPUT_REASON: ${{ inputs.reason }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_TARGET: ${{ inputs.target }}
+        run: |
+          if ($env:GITHUB_REF -cne 'refs/heads/main-v3') {
+            throw 'Desktop withdraw must be dispatched from main-v3'
+          }
+          ./scripts/desktop-actions-withdraw.ps1 `
+            -Action Preflight `
+            -BadTag $env:INPUT_BAD_TAG `
+            -RecoveryTag $env:INPUT_RECOVERY_TAG `
+            -Reason $env:INPUT_REASON `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Target $env:INPUT_TARGET `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -OssutilPath "$env:RUNNER_TEMP/ossutil-bin" `
+            -OssBucket $env:OSS_BUCKET `
+            -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+            -WorkDirectory "$env:RUNNER_TEMP/desktop-withdraw"
+
+      - name: Restore and verify OSS stable first
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          INPUT_BAD_TAG: ${{ inputs.bad_tag }}
+          INPUT_RECOVERY_TAG: ${{ inputs.recovery_tag }}
+          INPUT_REASON: ${{ inputs.reason }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_TARGET: ${{ inputs.target }}
+        run: |
+          ./scripts/desktop-actions-withdraw.ps1 `
+            -Action RestoreOss `
+            -BadTag $env:INPUT_BAD_TAG `
+            -RecoveryTag $env:INPUT_RECOVERY_TAG `
+            -Reason $env:INPUT_REASON `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Target $env:INPUT_TARGET `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -OssutilPath "$env:RUNNER_TEMP/ossutil-bin" `
+            -OssBucket $env:OSS_BUCKET `
+            -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+            -WorkDirectory "$env:RUNNER_TEMP/desktop-withdraw"
+
+      - name: Verify final remote state
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+          INPUT_BAD_TAG: ${{ inputs.bad_tag }}
+          INPUT_RECOVERY_TAG: ${{ inputs.recovery_tag }}
+          INPUT_REASON: ${{ inputs.reason }}
+          INPUT_CONFIRMATION: ${{ inputs.confirmation }}
+          INPUT_TARGET: ${{ inputs.target }}
+        run: |
+          ./scripts/desktop-actions-withdraw.ps1 `
+            -Action Verify `
+            -BadTag $env:INPUT_BAD_TAG `
+            -RecoveryTag $env:INPUT_RECOVERY_TAG `
+            -Reason $env:INPUT_REASON `
+            -Confirmation $env:INPUT_CONFIRMATION `
+            -Target $env:INPUT_TARGET `
+            -ReleaseRepository $env:RELEASE_REPOSITORY `
+            -OssPublicBaseURL $env:OSS_PUBLIC_BASE_URL `
+            -WorkDirectory "$env:RUNNER_TEMP/desktop-withdraw"
+
+      - name: Record withdrawal request
+        if: ${{ always() }}
+        shell: bash
+        env:
+          INPUT_BAD_TAG: ${{ inputs.bad_tag }}
+          INPUT_RECOVERY_TAG: ${{ inputs.recovery_tag }}
+          INPUT_REASON: ${{ inputs.reason }}
+          INPUT_TARGET: ${{ inputs.target }}
+        run: |
+          {
+            echo "## Desktop withdrawal"
+            echo
+            echo "- Bad release: \`$INPUT_BAD_TAG\`"
+            echo "- Recovery release: \`$INPUT_RECOVERY_TAG\`"
+            echo "- Reason: $INPUT_REASON"
+            echo "- Target: \`$INPUT_TARGET\`"
+            echo "- Order: zero-write preflight -> target OSS stable -> public read-back verify"
+            echo "- Shared GitHub Releases, other pointers, the frozen global pointer, immutable objects and cloud rows were not modified."
+          } >> "$GITHUB_STEP_SUMMARY"

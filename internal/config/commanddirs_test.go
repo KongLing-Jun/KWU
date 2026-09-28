@@ -1,0 +1,33 @@
+package config
+
+import (
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// TestCommandDirsIncludeConventions verifies command discovery covers the
+// cross-tool convention dirs (so .claude/commands etc. migrate in) and that the
+// canonical .clouvia project dir is highest priority (last, since command.Load
+// lets a later dir win on a name clash).
+func TestCommandDirsIncludeConventions(t *testing.T) {
+	dirs := CommandDirs()
+	joined := strings.Join(dirs, "\n")
+	for _, want := range []string{
+		filepath.Join(".claude", "commands"),
+		filepath.Join(".agents", "commands"),
+		filepath.Join(".agent", "commands"),
+		filepath.Join(".reasonix", "commands"),
+		filepath.Join(".suiyuan", "commands"),
+		filepath.Join(".kwu", "commands"),
+		filepath.Join(".clouvia", "commands"),
+	} {
+		if !strings.Contains(joined, want) {
+			t.Errorf("CommandDirs missing %q\ngot:\n%s", want, joined)
+		}
+	}
+	// The project's .clouvia/commands must be the highest-priority (last) entry.
+	if last := dirs[len(dirs)-1]; last != filepath.Join(".clouvia", "commands") {
+		t.Errorf("project .clouvia/commands should be highest priority (last), got %q", last)
+	}
+}

@@ -1,0 +1,105 @@
+{
+  "artifacts": {
+    "boundary": ".prototype-engineering/records/superpower-ecommerce-ui-v008/boundary.json",
+    "brief": ".prototype-engineering/records/superpower-ecommerce-ui-v008/brief.md",
+    "record": ".prototype-engineering/records/superpower-ecommerce-ui-v008/record.md",
+    "repositoryMap": ".prototype-engineering/records/superpower-ecommerce-ui-v008/repository-map.md",
+    "scenarios": ".prototype-engineering/records/superpower-ecommerce-ui-v008/scenarios.json"
+  },
+  "boundaryVersion": 5,
+  "checks": [
+    {
+      "at": "2026-08-21T14:41:54+00:00",
+      "evidence": ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md",
+      "name": "desktop-capability-dashboard-targeted",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T14:41:54+00:00",
+      "evidence": ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md",
+      "name": "desktop-module-go",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T14:41:55+00:00",
+      "evidence": ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md",
+      "name": "frontend-production-build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T14:41:55+00:00",
+      "evidence": ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md",
+      "name": "vite-runtime-source",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T14:41:55+00:00",
+      "evidence": ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md",
+      "name": "diff-whitespace",
+      "status": "passed"
+    }
+  ],
+  "createdAt": "2026-08-21T14:27:56+00:00",
+  "decision": "continue",
+  "evidence": [
+    ".prototype-engineering/records/superpower-ecommerce-ui-v008/verification.md"
+  ],
+  "git": {
+    "baseCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72",
+    "verifiedCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72"
+  },
+  "history": [
+    {
+      "at": "2026-08-21T14:27:56+00:00",
+      "from": null,
+      "to": "draft"
+    },
+    {
+      "at": "2026-08-21T14:32:21+00:00",
+      "from": "draft",
+      "to": "discovered"
+    },
+    {
+      "at": "2026-08-21T14:32:21+00:00",
+      "from": "discovered",
+      "to": "framed"
+    },
+    {
+      "at": "2026-08-21T14:32:21+00:00",
+      "from": "framed",
+      "to": "bounded"
+    },
+    {
+      "at": "2026-08-21T14:32:21+00:00",
+      "from": "bounded",
+      "to": "frozen"
+    },
+    {
+      "at": "2026-08-21T14:32:21+00:00",
+      "from": "frozen",
+      "to": "building"
+    },
+    {
+      "at": "2026-08-21T14:41:55+00:00",
+      "from": "building",
+      "to": "verified"
+    },
+    {
+      "at": "2026-08-21T14:42:20+00:00",
+      "from": "verified",
+      "to": "recorded"
+    },
+    {
+      "at": "2026-08-21T14:42:20+00:00",
+      "from": "recorded",
+      "to": "decided"
+    }
+  ],
+  "id": "superpower-ecommerce-ui-v008",
+  "name": "superpower-ecommerce-ui",
+  "parentId": "superpower-ecommerce-ui-v007",
+  "phase": "decided",
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-21T14:42:20+00:00",
+  "version": 8
+}

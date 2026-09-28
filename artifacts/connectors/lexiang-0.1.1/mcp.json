@@ -1,0 +1,18 @@
+{
+  "schema_version": 2,
+  "servers": [
+    {
+      "id": "lexiang",
+      "transport": "streamable-http",
+      "url": "https://mcp.lexiang-app.com/mcp",
+      "auth": {
+        "type": "oauth",
+        "scopes": [
+          "mcp",
+          "api"
+        ],
+        "resource": "https://mcp.lexiang-app.com/mcp"
+      }
+    }
+  ]
+}

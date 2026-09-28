@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "kwu-desktop",
+  "outputfilename": "kwu-desktop",
+  "frontend:install": "pnpm install",
+  "frontend:build": "pnpm build",
+  "frontend:dev:watcher": "pnpm run dev:wails",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Clouvia Contributors"
+  },
+  "info": {
+    "companyName": "Clouvia",
+    "productName": "云智企办",
+    "productVersion": "0.0.0",
+    "copyright": "Copyright © 2026 Clouvia Contributors",
+    "comments": "云智企办 (Clouvia) desktop app."
+  }
+}

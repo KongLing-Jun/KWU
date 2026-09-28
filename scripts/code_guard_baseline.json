@@ -1,0 +1,3858 @@
+{
+  "version": 1,
+  "entries": {
+    "complexity|cmd/e2ebench/diff.go|changedLineSet": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "changedLineSet",
+      "line": 418,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/diff.go|parseNewTests": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "parseNewTests",
+      "line": 477,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/diff.go|renderDiff": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "renderDiff",
+      "line": 198,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/diff.go|splitShellFields": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "splitShellFields",
+      "line": 562,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/main.go|main": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/main.go",
+      "func": "main",
+      "line": 48,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/main.go|render": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/main.go",
+      "func": "render",
+      "line": 240,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|cmd/e2ebench/mutation.go|runMutation": {
+      "kind": "complexity",
+      "file": "cmd/e2ebench/mutation.go",
+      "func": "runMutation",
+      "line": 28,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|cmd/suiyuan-plugin-example/main.go|handleLine": {
+      "kind": "complexity",
+      "file": "cmd/suiyuan-plugin-example/main.go",
+      "func": "handleLine",
+      "line": 102,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/acp/dispatch.go|*updateSink.Emit": {
+      "kind": "complexity",
+      "file": "internal/acp/dispatch.go",
+      "func": "*updateSink.Emit",
+      "line": 99,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/acp/dispatch.go|toolKindFor": {
+      "kind": "complexity",
+      "file": "internal/acp/dispatch.go",
+      "func": "toolKindFor",
+      "line": 380,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|*service.openExistingSession": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "*service.openExistingSession",
+      "line": 398,
+      "got": 22,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|*service.rebuildSession": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "*service.rebuildSession",
+      "line": 667,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|*service.sessionDelete": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "*service.sessionDelete",
+      "line": 862,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|*service.sessionList": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "*service.sessionList",
+      "line": 810,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|*service.sessionPrompt": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "*service.sessionPrompt",
+      "line": 525,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|availableCommandsFor": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "availableCommandsFor",
+      "line": 1165,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|isSafeSessionID": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "isSafeSessionID",
+      "line": 1456,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/acp/service.go|listACPMetas": {
+      "kind": "complexity",
+      "file": "internal/acp/service.go",
+      "func": "listACPMetas",
+      "line": 1362,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.Run": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.Run",
+      "line": 668,
+      "got": 38,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.executeBatchWithRegistry": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.executeBatchWithRegistry",
+      "line": 1497,
+      "got": 30,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.executeOneWithRegistry": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.executeOneWithRegistry",
+      "line": 1819,
+      "got": 38,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.finalReadinessCheck": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.finalReadinessCheck",
+      "line": 925,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.rebuildTodoState": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.rebuildTodoState",
+      "line": 1112,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/agent.go|*Agent.stream": {
+      "kind": "complexity",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.stream",
+      "line": 1356,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/agent/ask.go|*AskTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/agent/ask.go",
+      "func": "*AskTool.Execute",
+      "line": 71,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/branch.go|ListBranches": {
+      "kind": "complexity",
+      "file": "internal/agent/branch.go",
+      "func": "ListBranches",
+      "line": 193,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/branch.go|saveBranchMeta": {
+      "kind": "complexity",
+      "file": "internal/agent/branch.go",
+      "func": "saveBranchMeta",
+      "line": 121,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/compact.go|*Agent.compact": {
+      "kind": "complexity",
+      "file": "internal/agent/compact.go",
+      "func": "*Agent.compact",
+      "line": 189,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/compact.go|*Agent.maybeCompact": {
+      "kind": "complexity",
+      "file": "internal/agent/compact.go",
+      "func": "*Agent.maybeCompact",
+      "line": 84,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/agent/compact.go|*Agent.summarize": {
+      "kind": "complexity",
+      "file": "internal/agent/compact.go",
+      "func": "*Agent.summarize",
+      "line": 601,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/compact.go|keepIndexes": {
+      "kind": "complexity",
+      "file": "internal/agent/compact.go",
+      "func": "keepIndexes",
+      "line": 400,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|copyFileIfExists": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "copyFileIfExists",
+      "line": 830,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|importJsonlSessions": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "importJsonlSessions",
+      "line": 271,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|jsonlSessionDestDir": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "jsonlSessionDestDir",
+      "line": 323,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|migrateLegacySessions": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateLegacySessions",
+      "line": 82,
+      "got": 54,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|migrateSubDirectory": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateSubDirectory",
+      "line": 352,
+      "got": 29,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|rehomeStrandedSessions": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "rehomeStrandedSessions",
+      "line": 685,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|strandedSessionDestDir": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "strandedSessionDestDir",
+      "line": 756,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/migrate.go|transformAndCopyJsonl": {
+      "kind": "complexity",
+      "file": "internal/agent/migrate.go",
+      "func": "transformAndCopyJsonl",
+      "line": 482,
+      "got": 23,
+      "limit": 10
+    },
+    "complexity|internal/agent/parallel_tasks.go|*ParallelTasksTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/agent/parallel_tasks.go",
+      "func": "*ParallelTasksTool.Execute",
+      "line": 111,
+      "got": 48,
+      "limit": 10
+    },
+    "complexity|internal/agent/parallel_tasks.go|*ParallelTasksTool.runAsBackgroundJobs": {
+      "kind": "complexity",
+      "file": "internal/agent/parallel_tasks.go",
+      "func": "*ParallelTasksTool.runAsBackgroundJobs",
+      "line": 409,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/agent/parallel_tasks.go|formatParallelTasksAggregate": {
+      "kind": "complexity",
+      "file": "internal/agent/parallel_tasks.go",
+      "func": "formatParallelTasksAggregate",
+      "line": 368,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/parallel_tasks.go|validateParallelTaskItems": {
+      "kind": "complexity",
+      "file": "internal/agent/parallel_tasks.go",
+      "func": "validateParallelTaskItems",
+      "line": 497,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/prune.go|*Agent.PruneStaleToolResults": {
+      "kind": "complexity",
+      "file": "internal/agent/prune.go",
+      "func": "*Agent.PruneStaleToolResults",
+      "line": 29,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/agent/reasoning_language.go|hasLeadingInjectedBlock": {
+      "kind": "complexity",
+      "file": "internal/agent/reasoning_language.go",
+      "func": "hasLeadingInjectedBlock",
+      "line": 87,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/agent/save.go|ListCleanupPending": {
+      "kind": "complexity",
+      "file": "internal/agent/save.go",
+      "func": "ListCleanupPending",
+      "line": 273,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/save.go|ListSessionOrder": {
+      "kind": "complexity",
+      "file": "internal/agent/save.go",
+      "func": "ListSessionOrder",
+      "line": 339,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/subagent_store.go|*SubagentStore.CleanupStaleRunning": {
+      "kind": "complexity",
+      "file": "internal/agent/subagent_store.go",
+      "func": "*SubagentStore.CleanupStaleRunning",
+      "line": 210,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/subagent_store.go|*SubagentStore.prepareFork": {
+      "kind": "complexity",
+      "file": "internal/agent/subagent_store.go",
+      "func": "*SubagentStore.prepareFork",
+      "line": 471,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/subagent_store.go|ListSubagentsByParent": {
+      "kind": "complexity",
+      "file": "internal/agent/subagent_store.go",
+      "func": "ListSubagentsByParent",
+      "line": 146,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/agent/subagent_store.go|validSubagentRef": {
+      "kind": "complexity",
+      "file": "internal/agent/subagent_store.go",
+      "func": "validSubagentRef",
+      "line": 834,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/subagent_store.go|validateMeta": {
+      "kind": "complexity",
+      "file": "internal/agent/subagent_store.go",
+      "func": "validateMeta",
+      "line": 629,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/task.go|*TaskTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/agent/task.go",
+      "func": "*TaskTool.Execute",
+      "line": 443,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/agent/task.go|ReadOnlySubagentToolRegistry": {
+      "kind": "complexity",
+      "file": "internal/agent/task.go",
+      "func": "ReadOnlySubagentToolRegistry",
+      "line": 681,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/agent/task.go|subSinkForContext": {
+      "kind": "complexity",
+      "file": "internal/agent/task.go",
+      "func": "subSinkForContext",
+      "line": 879,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/agent/testutil/mock_provider.go|*MockProvider.Stream": {
+      "kind": "complexity",
+      "file": "internal/agent/testutil/mock_provider.go",
+      "func": "*MockProvider.Stream",
+      "line": 71,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/agent/textsink.go|*TextSink.Emit": {
+      "kind": "complexity",
+      "file": "internal/agent/textsink.go",
+      "func": "*TextSink.Emit",
+      "line": 51,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/agent/textsink.go|FormatUsageLine": {
+      "kind": "complexity",
+      "file": "internal/agent/textsink.go",
+      "func": "FormatUsageLine",
+      "line": 185,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/automation/archive.go|pathID": {
+      "kind": "complexity",
+      "file": "internal/automation/archive.go",
+      "func": "pathID",
+      "line": 291,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/automation/business.go|ValidateBusinessDiagnostics": {
+      "kind": "complexity",
+      "file": "internal/automation/business.go",
+      "func": "ValidateBusinessDiagnostics",
+      "line": 284,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/automation/business.go|readBusinessHTTP": {
+      "kind": "complexity",
+      "file": "internal/automation/business.go",
+      "func": "readBusinessHTTP",
+      "line": 456,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/automation/condition.go|Checker.Check": {
+      "kind": "complexity",
+      "file": "internal/automation/condition.go",
+      "func": "Checker.Check",
+      "line": 26,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/automation/engine.go|*Engine.finishRun": {
+      "kind": "complexity",
+      "file": "internal/automation/engine.go",
+      "func": "*Engine.finishRun",
+      "line": 254,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/automation/engine.go|*Engine.runTask": {
+      "kind": "complexity",
+      "file": "internal/automation/engine.go",
+      "func": "*Engine.runTask",
+      "line": 161,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/automation/export.go|parseMarkdownExportBlocks": {
+      "kind": "complexity",
+      "file": "internal/automation/export.go",
+      "func": "parseMarkdownExportBlocks",
+      "line": 142,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/automation/lease.go|*Store.AcquireLease": {
+      "kind": "complexity",
+      "file": "internal/automation/lease.go",
+      "func": "*Store.AcquireLease",
+      "line": 35,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/automation/lease.go|*Store.ReleaseLease": {
+      "kind": "complexity",
+      "file": "internal/automation/lease.go",
+      "func": "*Store.ReleaseLease",
+      "line": 103,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/automation/migration.go|MigrateHeartbeatIfNeeded": {
+      "kind": "complexity",
+      "file": "internal/automation/migration.go",
+      "func": "MigrateHeartbeatIfNeeded",
+      "line": 55,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/automation/migration_heartbeat.go|legacyHeartbeatCalendarSchedule": {
+      "kind": "complexity",
+      "file": "internal/automation/migration_heartbeat.go",
+      "func": "legacyHeartbeatCalendarSchedule",
+      "line": 170,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/automation/runner.go|*BootRunner.Run": {
+      "kind": "complexity",
+      "file": "internal/automation/runner.go",
+      "func": "*BootRunner.Run",
+      "line": 69,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/automation/schedule.go|nextCalendarOccurrenceAfter": {
+      "kind": "complexity",
+      "file": "internal/automation/schedule.go",
+      "func": "nextCalendarOccurrenceAfter",
+      "line": 203,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/automation/schedule.go|previousCalendarOccurrence": {
+      "kind": "complexity",
+      "file": "internal/automation/schedule.go",
+      "func": "previousCalendarOccurrence",
+      "line": 157,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/automation/schedule.go|withinTimeWindow": {
+      "kind": "complexity",
+      "file": "internal/automation/schedule.go",
+      "func": "withinTimeWindow",
+      "line": 117,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/automation/service.go|readRunEventSummaries": {
+      "kind": "complexity",
+      "file": "internal/automation/service.go",
+      "func": "readRunEventSummaries",
+      "line": 402,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/automation/store.go|*Store.DeleteTaskTemplate": {
+      "kind": "complexity",
+      "file": "internal/automation/store.go",
+      "func": "*Store.DeleteTaskTemplate",
+      "line": 158,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/automation/store.go|*Store.RestoreTaskTemplate": {
+      "kind": "complexity",
+      "file": "internal/automation/store.go",
+      "func": "*Store.RestoreTaskTemplate",
+      "line": 212,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/automation/store.go|*Store.migrateLegacyTaskTemplates": {
+      "kind": "complexity",
+      "file": "internal/automation/store.go",
+      "func": "*Store.migrateLegacyTaskTemplates",
+      "line": 346,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/automation/templates.go|taskTemplateInterval": {
+      "kind": "complexity",
+      "file": "internal/automation/templates.go",
+      "func": "taskTemplateInterval",
+      "line": 192,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/boot/boot.go|Build": {
+      "kind": "complexity",
+      "file": "internal/boot/boot.go",
+      "func": "Build",
+      "line": 151,
+      "got": 176,
+      "limit": 10
+    },
+    "complexity|internal/boot/boot.go|subagentEffectiveIdentity": {
+      "kind": "complexity",
+      "file": "internal/boot/boot.go",
+      "func": "subagentEffectiveIdentity",
+      "line": 1440,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/boot/token_profile.go|*toolSourceConnector.Execute": {
+      "kind": "complexity",
+      "file": "internal/boot/token_profile.go",
+      "func": "*toolSourceConnector.Execute",
+      "line": 108,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/bot/feishu/feishu.go|*adapter.handleSDKMessage": {
+      "kind": "complexity",
+      "file": "internal/bot/feishu/feishu.go",
+      "func": "*adapter.handleSDKMessage",
+      "line": 229,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/bot/feishu/feishu.go|*adapter.runWebhook": {
+      "kind": "complexity",
+      "file": "internal/bot/feishu/feishu.go",
+      "func": "*adapter.runWebhook",
+      "line": 661,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/bot/feishu/feishu.go|*adapter.sendSDKContent": {
+      "kind": "complexity",
+      "file": "internal/bot/feishu/feishu.go",
+      "func": "*adapter.sendSDKContent",
+      "line": 523,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/bot/gateway.go|*BotGateway.handleMessage": {
+      "kind": "complexity",
+      "file": "internal/bot/gateway.go",
+      "func": "*BotGateway.handleMessage",
+      "line": 279,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/bot/gateway.go|*BotGateway.handleSlashCommand": {
+      "kind": "complexity",
+      "file": "internal/bot/gateway.go",
+      "func": "*BotGateway.handleSlashCommand",
+      "line": 509,
+      "got": 31,
+      "limit": 10
+    },
+    "complexity|internal/bot/gateway.go|*BotGateway.sessionOptionsForMessage": {
+      "kind": "complexity",
+      "file": "internal/bot/gateway.go",
+      "func": "*BotGateway.sessionOptionsForMessage",
+      "line": 988,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/bot/qq/gateway.go|*adapter.connectGateway": {
+      "kind": "complexity",
+      "file": "internal/bot/qq/gateway.go",
+      "func": "*adapter.connectGateway",
+      "line": 214,
+      "got": 24,
+      "limit": 10
+    },
+    "complexity|internal/bot/qq/gateway.go|*adapter.getAccessToken": {
+      "kind": "complexity",
+      "file": "internal/bot/qq/gateway.go",
+      "func": "*adapter.getAccessToken",
+      "line": 121,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/bot/render.go|*renderSink.Emit": {
+      "kind": "complexity",
+      "file": "internal/bot/render.go",
+      "func": "*renderSink.Emit",
+      "line": 65,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/bot/render.go|lastSemanticBoundary": {
+      "kind": "complexity",
+      "file": "internal/bot/render.go",
+      "func": "lastSemanticBoundary",
+      "line": 286,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/bot/weixin/weixin.go|*adapter.getUpdates": {
+      "kind": "complexity",
+      "file": "internal/bot/weixin/weixin.go",
+      "func": "*adapter.getUpdates",
+      "line": 357,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/bot/weixin/weixin_login.go|LoginWithPaths": {
+      "kind": "complexity",
+      "file": "internal/bot/weixin/weixin_login.go",
+      "func": "LoginWithPaths",
+      "line": 149,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/bot/weixin/weixin_login.go|PollLoginWithPaths": {
+      "kind": "complexity",
+      "file": "internal/bot/weixin/weixin_login.go",
+      "func": "PollLoginWithPaths",
+      "line": 223,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|AdapterBindingsWithPaths": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "AdapterBindingsWithPaths",
+      "line": 195,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|ChannelConfigs": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "ChannelConfigs",
+      "line": 110,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|ConnectionChannelConfigs": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "ConnectionChannelConfigs",
+      "line": 145,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|PlatformConfigured": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "PlatformConfigured",
+      "line": 84,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|rememberAllowlist": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "rememberAllowlist",
+      "line": 496,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/botruntime/runtime.go|rememberInbound": {
+      "kind": "complexity",
+      "file": "internal/botruntime/runtime.go",
+      "func": "rememberInbound",
+      "line": 358,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/checkpoint/checkpoint.go|*Store.RestoreCode": {
+      "kind": "complexity",
+      "file": "internal/checkpoint/checkpoint.go",
+      "func": "*Store.RestoreCode",
+      "line": 239,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/cli/acp.go|*acpFactory.SessionConfigState": {
+      "kind": "complexity",
+      "file": "internal/cli/acp.go",
+      "func": "*acpFactory.SessionConfigState",
+      "line": 96,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/cli/bot.go|botDoctor": {
+      "kind": "complexity",
+      "file": "internal/cli/bot.go",
+      "func": "botDoctor",
+      "line": 164,
+      "got": 31,
+      "limit": 10
+    },
+    "complexity|internal/cli/bot.go|botStart": {
+      "kind": "complexity",
+      "file": "internal/cli/bot.go",
+      "func": "botStart",
+      "line": 47,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.collapseShellSlot": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.collapseShellSlot",
+      "line": 1826,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.collapseToolOutput": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.collapseToolOutput",
+      "line": 1765,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.ingestEvent": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.ingestEvent",
+      "line": 3004,
+      "got": 47,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.runMCPSubcommand": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.runMCPSubcommand",
+      "line": 3492,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.runSlashCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.runSlashCommand",
+      "line": 3226,
+      "got": 50,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.streamToolOutput": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.streamToolOutput",
+      "line": 1672,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|*chatTUI.toggleShellOutput": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.toggleShellOutput",
+      "line": 1890,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.View": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.View",
+      "line": 2210,
+      "got": 47,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.computeStatusLineCount": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.computeStatusLineCount",
+      "line": 2717,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.modeTagText": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.modeTagText",
+      "line": 2872,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.renderTodoPanel": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.renderTodoPanel",
+      "line": 2620,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.renderTranscriptWithMainManager": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.renderTranscriptWithMainManager",
+      "line": 1568,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui.go|chatTUI.update": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.update",
+      "line": 713,
+      "got": 176,
+      "limit": 10
+    },
+    "complexity|internal/cli/chat_tui_paste.go|pastedImagePath": {
+      "kind": "complexity",
+      "file": "internal/cli/chat_tui_paste.go",
+      "func": "pastedImagePath",
+      "line": 235,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/cli/chooser.go|chatTUI.handleChooserKey": {
+      "kind": "complexity",
+      "file": "internal/cli/chooser.go",
+      "func": "chatTUI.handleChooserKey",
+      "line": 89,
+      "got": 22,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|Run": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "Run",
+      "line": 51,
+      "got": 27,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|appendEnv": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "appendEnv",
+      "line": 1800,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|chatREPL": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "chatREPL",
+      "line": 652,
+      "got": 37,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|configMemoryV5Command": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "configMemoryV5Command",
+      "line": 1927,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|configReasoningLanguageCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "configReasoningLanguageCommand",
+      "line": 1974,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|providersWithMissingKeys": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "providersWithMissingKeys",
+      "line": 1688,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|runAgent": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "runAgent",
+      "line": 387,
+      "got": 26,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|runServe": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "runServe",
+      "line": 508,
+      "got": 24,
+      "limit": 10
+    },
+    "complexity|internal/cli/cli.go|selectEnabledProviders": {
+      "kind": "complexity",
+      "file": "internal/cli/cli.go",
+      "func": "selectEnabledProviders",
+      "line": 1120,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/cli/complete.go|*chatTUI.branchArgItems": {
+      "kind": "complexity",
+      "file": "internal/cli/complete.go",
+      "func": "*chatTUI.branchArgItems",
+      "line": 277,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/complete.go|*chatTUI.fileItems": {
+      "kind": "complexity",
+      "file": "internal/cli/complete.go",
+      "func": "*chatTUI.fileItems",
+      "line": 410,
+      "got": 21,
+      "limit": 10
+    },
+    "complexity|internal/cli/complete.go|*chatTUI.updateCompletion": {
+      "kind": "complexity",
+      "file": "internal/cli/complete.go",
+      "func": "*chatTUI.updateCompletion",
+      "line": 119,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/complete.go|chatTUI.renderCompletion": {
+      "kind": "complexity",
+      "file": "internal/cli/complete.go",
+      "func": "chatTUI.renderCompletion",
+      "line": 652,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/diffview.go|diffBody": {
+      "kind": "complexity",
+      "file": "internal/cli/diffview.go",
+      "func": "diffBody",
+      "line": 77,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/cli/effort.go|*chatTUI.runEffortCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/effort.go",
+      "func": "*chatTUI.runEffortCommand",
+      "line": 12,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/cli/gitstatus.go|loadGitStatus": {
+      "kind": "complexity",
+      "file": "internal/cli/gitstatus.go",
+      "func": "loadGitStatus",
+      "line": 41,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/language.go|*chatTUI.runLanguageSubcommand": {
+      "kind": "complexity",
+      "file": "internal/cli/language.go",
+      "func": "*chatTUI.runLanguageSubcommand",
+      "line": 13,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/latex.go|convertCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/latex.go",
+      "func": "convertCommand",
+      "line": 49,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/cli/latex.go|normalizeMath": {
+      "kind": "complexity",
+      "file": "internal/cli/latex.go",
+      "func": "normalizeMath",
+      "line": 255,
+      "got": 22,
+      "limit": 10
+    },
+    "complexity|internal/cli/latex.go|readAtom": {
+      "kind": "complexity",
+      "file": "internal/cli/latex.go",
+      "func": "readAtom",
+      "line": 117,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/cli/mathnode.go|*mathParser.Parse": {
+      "kind": "complexity",
+      "file": "internal/cli/mathnode.go",
+      "func": "*mathParser.Parse",
+      "line": 26,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp.go|parseMCPAdd": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp.go",
+      "func": "parseMCPAdd",
+      "line": 26,
+      "got": 27,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_import_picker.go|chatTUI.handleMCPImportKey": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_import_picker.go",
+      "func": "chatTUI.handleMCPImportKey",
+      "line": 40,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager.go|chatTUI.buildMCPSnapshot": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager.go",
+      "func": "chatTUI.buildMCPSnapshot",
+      "line": 298,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager.go|chatTUI.handleMCPManagerKey": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager.go",
+      "func": "chatTUI.handleMCPManagerKey",
+      "line": 115,
+      "got": 45,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager_actions.go|chatTUI.applyMCPMode": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager_actions.go",
+      "func": "chatTUI.applyMCPMode",
+      "line": 134,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager_view.go|*mcpManager.renderDetail": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager_view.go",
+      "func": "*mcpManager.renderDetail",
+      "line": 121,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager_view.go|*mcpManager.renderList": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager_view.go",
+      "func": "*mcpManager.renderList",
+      "line": 53,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/mcp_manager_view.go|mcpActionsFor": {
+      "kind": "complexity",
+      "file": "internal/cli/mcp_manager_view.go",
+      "func": "mcpActionsFor",
+      "line": 235,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/md.go|*mdRenderer.appendInline": {
+      "kind": "complexity",
+      "file": "internal/cli/md.go",
+      "func": "*mdRenderer.appendInline",
+      "line": 316,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/md.go|*mdRenderer.renderTable": {
+      "kind": "complexity",
+      "file": "internal/cli/md.go",
+      "func": "*mdRenderer.renderTable",
+      "line": 365,
+      "got": 23,
+      "limit": 10
+    },
+    "complexity|internal/cli/md.go|fixCJKEmphasis": {
+      "kind": "complexity",
+      "file": "internal/cli/md.go",
+      "func": "fixCJKEmphasis",
+      "line": 80,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/cli/md.go|isCJKPunct": {
+      "kind": "complexity",
+      "file": "internal/cli/md.go",
+      "func": "isCJKPunct",
+      "line": 140,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/memory_v5.go|*chatTUI.runMemoryV5Command": {
+      "kind": "complexity",
+      "file": "internal/cli/memory_v5.go",
+      "func": "*chatTUI.runMemoryV5Command",
+      "line": 10,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/memory_view.go|renderMemory": {
+      "kind": "complexity",
+      "file": "internal/cli/memory_view.go",
+      "func": "renderMemory",
+      "line": 11,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/cli/provider.go|*chatTUI.switchToProvider": {
+      "kind": "complexity",
+      "file": "internal/cli/provider.go",
+      "func": "*chatTUI.switchToProvider",
+      "line": 73,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/cli/reasoning_language.go|*chatTUI.runReasoningLanguageCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/reasoning_language.go",
+      "func": "*chatTUI.runReasoningLanguageCommand",
+      "line": 10,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/review.go|reviewCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/review.go",
+      "func": "reviewCommand",
+      "line": 19,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/rewind.go|chatTUI.handleRewindKey": {
+      "kind": "complexity",
+      "file": "internal/cli/rewind.go",
+      "func": "chatTUI.handleRewindKey",
+      "line": 50,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/cli/select.go|selectMany": {
+      "kind": "complexity",
+      "file": "internal/cli/select.go",
+      "func": "selectMany",
+      "line": 267,
+      "got": 73,
+      "limit": 10
+    },
+    "complexity|internal/cli/select.go|selectOne": {
+      "kind": "complexity",
+      "file": "internal/cli/select.go",
+      "func": "selectOne",
+      "line": 81,
+      "got": 49,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_hooks.go|*chatTUI.runSkillSubcommand": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_hooks.go",
+      "func": "*chatTUI.runSkillSubcommand",
+      "line": 17,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_hooks.go|*chatTUI.skillSaveEnabledChanges": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_hooks.go",
+      "func": "*chatTUI.skillSaveEnabledChanges",
+      "line": 105,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerKey": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_picker.go",
+      "func": "chatTUI.handleSkillPickerKey",
+      "line": 89,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSkillsKey": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_picker.go",
+      "func": "chatTUI.handleSkillPickerSkillsKey",
+      "line": 145,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSourceSkillsKey": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_picker.go",
+      "func": "chatTUI.handleSkillPickerSourceSkillsKey",
+      "line": 211,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_picker.go|chatTUI.handleSkillPickerSourcesKey": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_picker.go",
+      "func": "chatTUI.handleSkillPickerSourcesKey",
+      "line": 179,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/skill_picker.go|skillRootLines": {
+      "kind": "complexity",
+      "file": "internal/cli/skill_picker.go",
+      "func": "skillRootLines",
+      "line": 524,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/cli/theme.go|*chatTUI.themeArgItems": {
+      "kind": "complexity",
+      "file": "internal/cli/theme.go",
+      "func": "*chatTUI.themeArgItems",
+      "line": 501,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/cli/theme_osc_unix.go|queryTerminalBackground": {
+      "kind": "complexity",
+      "file": "internal/cli/theme_osc_unix.go",
+      "func": "queryTerminalBackground",
+      "line": 19,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/cli/upgrade.go|upgradeCommand": {
+      "kind": "complexity",
+      "file": "internal/cli/upgrade.go",
+      "func": "upgradeCommand",
+      "line": 50,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/config/ccswitch.go|classifyMCPImportCandidate": {
+      "kind": "complexity",
+      "file": "internal/config/ccswitch.go",
+      "func": "classifyMCPImportCandidate",
+      "line": 223,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/config/credentials.go|isCredentialKey": {
+      "kind": "complexity",
+      "file": "internal/config/credentials.go",
+      "func": "isCredentialKey",
+      "line": 864,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/credentials.go|storeCredentialsInFile": {
+      "kind": "complexity",
+      "file": "internal/config/credentials.go",
+      "func": "storeCredentialsInFile",
+      "line": 730,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/credentials.go|writeCredentialFileLines": {
+      "kind": "complexity",
+      "file": "internal/config/credentials.go",
+      "func": "writeCredentialFileLines",
+      "line": 806,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/dotenv.go|loadDotEnvFileAs": {
+      "kind": "complexity",
+      "file": "internal/config/dotenv.go",
+      "func": "loadDotEnvFileAs",
+      "line": 90,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/edit.go|*Config.RemoveProvider": {
+      "kind": "complexity",
+      "file": "internal/config/edit.go",
+      "func": "*Config.RemoveProvider",
+      "line": 402,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/config/edit.go|*Config.saveProjectIncremental": {
+      "kind": "complexity",
+      "file": "internal/config/edit.go",
+      "func": "*Config.saveProjectIncremental",
+      "line": 844,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/edit.go|mergeTOMLDelta": {
+      "kind": "complexity",
+      "file": "internal/config/edit.go",
+      "func": "mergeTOMLDelta",
+      "line": 887,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/edit.go|replaceTOMLSection": {
+      "kind": "complexity",
+      "file": "internal/config/edit.go",
+      "func": "replaceTOMLSection",
+      "line": 1020,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/config/effort.go|EffortCapabilityForEntry": {
+      "kind": "complexity",
+      "file": "internal/config/effort.go",
+      "func": "EffortCapabilityForEntry",
+      "line": 39,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/config/effort.go|NormalizeEffort": {
+      "kind": "complexity",
+      "file": "internal/config/effort.go",
+      "func": "NormalizeEffort",
+      "line": 86,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/config/load.go|LoadForRootWithPaths": {
+      "kind": "complexity",
+      "file": "internal/config/load.go",
+      "func": "LoadForRootWithPaths",
+      "line": 42,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/load.go|NormalizeLegacyDesktopProviderAccess": {
+      "kind": "complexity",
+      "file": "internal/config/load.go",
+      "func": "NormalizeLegacyDesktopProviderAccess",
+      "line": 927,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/config/load.go|applyLegacyMimoCatalog": {
+      "kind": "complexity",
+      "file": "internal/config/load.go",
+      "func": "applyLegacyMimoCatalog",
+      "line": 640,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/config/load.go|mergeTOMLProviders": {
+      "kind": "complexity",
+      "file": "internal/config/load.go",
+      "func": "mergeTOMLProviders",
+      "line": 303,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/mcpjson.go|clearMCPJSONAuthentication": {
+      "kind": "complexity",
+      "file": "internal/config/mcpjson.go",
+      "func": "clearMCPJSONAuthentication",
+      "line": 329,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/config/mcpjson.go|loadLegacyMCP": {
+      "kind": "complexity",
+      "file": "internal/config/mcpjson.go",
+      "func": "loadLegacyMCP",
+      "line": 105,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/migrate.go|legacyPlugins": {
+      "kind": "complexity",
+      "file": "internal/config/migrate.go",
+      "func": "legacyPlugins",
+      "line": 398,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/migrate.go|migrateLegacyCredentialsIfNeededForRoot": {
+      "kind": "complexity",
+      "file": "internal/config/migrate.go",
+      "func": "migrateLegacyCredentialsIfNeededForRoot",
+      "line": 238,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/migrate.go|migrateLegacyTOMLIfNeeded": {
+      "kind": "complexity",
+      "file": "internal/config/migrate.go",
+      "func": "migrateLegacyTOMLIfNeeded",
+      "line": 323,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/migrate.go|migrateMCPToUserConfig": {
+      "kind": "complexity",
+      "file": "internal/config/migrate.go",
+      "func": "migrateMCPToUserConfig",
+      "line": 105,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/config/paths.go|CommandDirsForRoot": {
+      "kind": "complexity",
+      "file": "internal/config/paths.go",
+      "func": "CommandDirsForRoot",
+      "line": 548,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/config/paths.go|cleanEnvDir": {
+      "kind": "complexity",
+      "file": "internal/config/paths.go",
+      "func": "cleanEnvDir",
+      "line": 322,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/paths.go|cleanExplicitDir": {
+      "kind": "complexity",
+      "file": "internal/config/paths.go",
+      "func": "cleanExplicitDir",
+      "line": 136,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/config/render.go|RenderTOMLForScope": {
+      "kind": "complexity",
+      "file": "internal/config/render.go",
+      "func": "RenderTOMLForScope",
+      "line": 32,
+      "got": 95,
+      "limit": 10
+    },
+    "complexity|internal/config/render.go|RenderTOMLProjectDelta": {
+      "kind": "complexity",
+      "file": "internal/config/render.go",
+      "func": "RenderTOMLProjectDelta",
+      "line": 562,
+      "got": 118,
+      "limit": 10
+    },
+    "complexity|internal/config/render.go|isBareTOMLKey": {
+      "kind": "complexity",
+      "file": "internal/config/render.go",
+      "func": "isBareTOMLKey",
+      "line": 1096,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/attachments.go|SaveAttachmentDataURL": {
+      "kind": "complexity",
+      "file": "internal/control/attachments.go",
+      "func": "SaveAttachmentDataURL",
+      "line": 32,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/attachments.go|SaveAttachmentFile": {
+      "kind": "complexity",
+      "file": "internal/control/attachments.go",
+      "func": "SaveAttachmentFile",
+      "line": 159,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/control/attachments.go|SaveImageBytes": {
+      "kind": "complexity",
+      "file": "internal/control/attachments.go",
+      "func": "SaveImageBytes",
+      "line": 86,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/attachments.go|SaveImageFile": {
+      "kind": "complexity",
+      "file": "internal/control/attachments.go",
+      "func": "SaveImageFile",
+      "line": 121,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/control/attachments.go|readAttachmentImage": {
+      "kind": "complexity",
+      "file": "internal/control/attachments.go",
+      "func": "readAttachmentImage",
+      "line": 290,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/control/auto_plan.go|autoPlanScore": {
+      "kind": "complexity",
+      "file": "internal/control/auto_plan.go",
+      "func": "autoPlanScore",
+      "line": 96,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/control/auto_plan.go|isContextDependentShortReply": {
+      "kind": "complexity",
+      "file": "internal/control/auto_plan.go",
+      "func": "isContextDependentShortReply",
+      "line": 139,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/auto_plan.go|isLowRiskQuestion": {
+      "kind": "complexity",
+      "file": "internal/control/auto_plan.go",
+      "func": "isLowRiskQuestion",
+      "line": 207,
+      "got": 50,
+      "limit": 10
+    },
+    "complexity|internal/control/auto_plan_classifier.go|*ProviderAutoPlanClassifier.NeedsPlan": {
+      "kind": "complexity",
+      "file": "internal/control/auto_plan_classifier.go",
+      "func": "*ProviderAutoPlanClassifier.NeedsPlan",
+      "line": 42,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/control/branches.go|FormatBranchTree": {
+      "kind": "complexity",
+      "file": "internal/control/branches.go",
+      "func": "FormatBranchTree",
+      "line": 39,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/branches.go|shortBranchID": {
+      "kind": "complexity",
+      "file": "internal/control/branches.go",
+      "func": "shortBranchID",
+      "line": 143,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.ClearSession": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.ClearSession",
+      "line": 1977,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.DeleteUserExpert": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.DeleteUserExpert",
+      "line": 1706,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.Rewind": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.Rewind",
+      "line": 2111,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.applyPlanExec": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.applyPlanExec",
+      "line": 934,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.forkNamed": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.forkNamed",
+      "line": 2172,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.maybeColdResumePrune": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.maybeColdResumePrune",
+      "line": 2538,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.requestApprovalWithReason": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.requestApprovalWithReason",
+      "line": 3863,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|*Controller.submitCommandOrTurn": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.submitCommandOrTurn",
+      "line": 698,
+      "got": 35,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|listItem": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "listItem",
+      "line": 3764,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|removeSessionArtifacts": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "removeSessionArtifacts",
+      "line": 2046,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/controller.go|resolveBranch": {
+      "kind": "complexity",
+      "file": "internal/control/controller.go",
+      "func": "resolveBranch",
+      "line": 2362,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/errmsg.go|explainError": {
+      "kind": "complexity",
+      "file": "internal/control/errmsg.go",
+      "func": "explainError",
+      "line": 15,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/goal.go|*goalMachine.advance": {
+      "kind": "complexity",
+      "file": "internal/control/goal.go",
+      "func": "*goalMachine.advance",
+      "line": 186,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/control/imagecompress.go|compressForVision": {
+      "kind": "complexity",
+      "file": "internal/control/imagecompress.go",
+      "func": "compressForVision",
+      "line": 28,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/input.go|shouldAutoStartResearchGoal": {
+      "kind": "complexity",
+      "file": "internal/control/input.go",
+      "func": "shouldAutoStartResearchGoal",
+      "line": 281,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/control/profile_management.go|*Controller.profileCommandText": {
+      "kind": "complexity",
+      "file": "internal/control/profile_management.go",
+      "func": "*Controller.profileCommandText",
+      "line": 79,
+      "got": 21,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|*Controller.detectRefsMode": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "*Controller.detectRefsMode",
+      "line": 112,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|readFileRef": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "readFileRef",
+      "line": 481,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|readFileRefUnscoped": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "readFileRefUnscoped",
+      "line": 550,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|resolveBareNames": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "resolveBareNames",
+      "line": 242,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|visionFileImageDataURL": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "visionFileImageDataURL",
+      "line": 177,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/control/refs.go|walkRootDir": {
+      "kind": "complexity",
+      "file": "internal/control/refs.go",
+      "func": "walkRootDir",
+      "line": 635,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|*Controller.expertNotice": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "*Controller.expertNotice",
+      "line": 517,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|*Controller.managementNotice": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "*Controller.managementNotice",
+      "line": 420,
+      "got": 31,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|*Controller.memoryListText": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "*Controller.memoryListText",
+      "line": 739,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|SlashArgItems": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "SlashArgItems",
+      "line": 57,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|mcpArgItems": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "mcpArgItems",
+      "line": 253,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/control/slash.go|skillArgItems": {
+      "kind": "complexity",
+      "file": "internal/control/slash.go",
+      "func": "skillArgItems",
+      "line": 350,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/control/turn_orchestrator.go|*turnOrchestrator.runTurnWithRawDisplay": {
+      "kind": "complexity",
+      "file": "internal/control/turn_orchestrator.go",
+      "func": "*turnOrchestrator.runTurnWithRawDisplay",
+      "line": 22,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/controlplane/arbitration/conflict_resolver.go|resolveConflicts": {
+      "kind": "complexity",
+      "file": "internal/controlplane/arbitration/conflict_resolver.go",
+      "func": "resolveConflicts",
+      "line": 10,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/controlplane/consensus/consensus.go|Aggregate": {
+      "kind": "complexity",
+      "file": "internal/controlplane/consensus/consensus.go",
+      "func": "Aggregate",
+      "line": 24,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/controlplane/policy_nodes/weighting.go|LearnControlGraph": {
+      "kind": "complexity",
+      "file": "internal/controlplane/policy_nodes/weighting.go",
+      "func": "LearnControlGraph",
+      "line": 36,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/controlplane/policy_nodes/weighting.go|dynamicNodeWeight": {
+      "kind": "complexity",
+      "file": "internal/controlplane/policy_nodes/weighting.go",
+      "func": "dynamicNodeWeight",
+      "line": 53,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/diff/diff.go|backtrack": {
+      "kind": "complexity",
+      "file": "internal/diff/diff.go",
+      "func": "backtrack",
+      "line": 215,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/diff/diff.go|myers": {
+      "kind": "complexity",
+      "file": "internal/diff/diff.go",
+      "func": "myers",
+      "line": 175,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/diff/diff.go|unified": {
+      "kind": "complexity",
+      "file": "internal/diff/diff.go",
+      "func": "unified",
+      "line": 266,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/doctor/report.go|Collect": {
+      "kind": "complexity",
+      "file": "internal/doctor/report.go",
+      "func": "Collect",
+      "line": 101,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/doctor/report.go|RenderText": {
+      "kind": "complexity",
+      "file": "internal/doctor/report.go",
+      "func": "RenderText",
+      "line": 192,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/equilibrium/convergence/global_equilibrium.go|applyPolicyWeights": {
+      "kind": "complexity",
+      "file": "internal/equilibrium/convergence/global_equilibrium.go",
+      "func": "applyPolicyWeights",
+      "line": 79,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/eventwire/wire.go|ToWire": {
+      "kind": "complexity",
+      "file": "internal/eventwire/wire.go",
+      "func": "ToWire",
+      "line": 32,
+      "got": 21,
+      "limit": 10
+    },
+    "complexity|internal/eventwire/wire.go|ToWireDecisionAudit": {
+      "kind": "complexity",
+      "file": "internal/eventwire/wire.go",
+      "func": "ToWireDecisionAudit",
+      "line": 335,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|*Ledger.TouchedPaths": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "*Ledger.TouchedPaths",
+      "line": 146,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|*Ledger.UnverifiedCompletedTodos": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "*Ledger.UnverifiedCompletedTodos",
+      "line": 416,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|PathsProvenInSession": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "PathsProvenInSession",
+      "line": 568,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|completeStepHasProof": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "completeStepHasProof",
+      "line": 718,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|hasFailedCompleteStepRecoveryForTodo": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "hasFailedCompleteStepRecoveryForTodo",
+      "line": 467,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|hasSuccessfulCompleteStepForTodo": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "hasSuccessfulCompleteStepForTodo",
+      "line": 796,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/evidence/evidence.go|matchTodoStep": {
+      "kind": "complexity",
+      "file": "internal/evidence/evidence.go",
+      "func": "matchTodoStep",
+      "line": 848,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/expert/definition_catalog.go|definitionSystemPrompt": {
+      "kind": "complexity",
+      "file": "internal/expert/definition_catalog.go",
+      "func": "definitionSystemPrompt",
+      "line": 75,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/expert/store.go|filterDefinitions": {
+      "kind": "complexity",
+      "file": "internal/expert/store.go",
+      "func": "filterDefinitions",
+      "line": 655,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/expert/store.go|listDefinitions": {
+      "kind": "complexity",
+      "file": "internal/expert/store.go",
+      "func": "listDefinitions",
+      "line": 518,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/expert/store.go|migrateFirstPrompt": {
+      "kind": "complexity",
+      "file": "internal/expert/store.go",
+      "func": "migrateFirstPrompt",
+      "line": 247,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/fileref/search.go|Search": {
+      "kind": "complexity",
+      "file": "internal/fileref/search.go",
+      "func": "Search",
+      "line": 53,
+      "got": 30,
+      "limit": 10
+    },
+    "complexity|internal/fileutil/encoding/encoding.go|Detect": {
+      "kind": "complexity",
+      "file": "internal/fileutil/encoding/encoding.go",
+      "func": "Detect",
+      "line": 45,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/fileutil/encoding/encoding.go|DetectQuick": {
+      "kind": "complexity",
+      "file": "internal/fileutil/encoding/encoding.go",
+      "func": "DetectQuick",
+      "line": 77,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/guardian/guardian.go|*Session.Review": {
+      "kind": "complexity",
+      "file": "internal/guardian/guardian.go",
+      "func": "*Session.Review",
+      "line": 114,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/guardian/transcript.go|ExtractTranscript": {
+      "kind": "complexity",
+      "file": "internal/guardian/transcript.go",
+      "func": "ExtractTranscript",
+      "line": 34,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/guardian/transcript.go|renderTranscript": {
+      "kind": "complexity",
+      "file": "internal/guardian/transcript.go",
+      "func": "renderTranscript",
+      "line": 77,
+      "got": 29,
+      "limit": 10
+    },
+    "complexity|internal/history/search.go|*Searcher.Around": {
+      "kind": "complexity",
+      "file": "internal/history/search.go",
+      "func": "*Searcher.Around",
+      "line": 222,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/history/search.go|*Searcher.Search": {
+      "kind": "complexity",
+      "file": "internal/history/search.go",
+      "func": "*Searcher.Search",
+      "line": 129,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/history/search.go|extractDocuments": {
+      "kind": "complexity",
+      "file": "internal/history/search.go",
+      "func": "extractDocuments",
+      "line": 381,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/history/search.go|listJSONL": {
+      "kind": "complexity",
+      "file": "internal/history/search.go",
+      "func": "listJSONL",
+      "line": 336,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/i18n/i18n.go|normalize": {
+      "kind": "complexity",
+      "file": "internal/i18n/i18n.go",
+      "func": "normalize",
+      "line": 479,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/apply.go|*installSourceTool.applyInstallMCP": {
+      "kind": "complexity",
+      "file": "internal/installsource/apply.go",
+      "func": "*installSourceTool.applyInstallMCP",
+      "line": 195,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/installsource/apply.go|*installSourceTool.applySkillRoot": {
+      "kind": "complexity",
+      "file": "internal/installsource/apply.go",
+      "func": "*installSourceTool.applySkillRoot",
+      "line": 51,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/install_source.go|*installSourceTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/installsource/install_source.go",
+      "func": "*installSourceTool.Execute",
+      "line": 152,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/installsource/mcp.go|parseMCPJSON": {
+      "kind": "complexity",
+      "file": "internal/installsource/mcp.go",
+      "func": "parseMCPJSON",
+      "line": 165,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/installsource/mcp.go|validateMCPEntry": {
+      "kind": "complexity",
+      "file": "internal/installsource/mcp.go",
+      "func": "validateMCPEntry",
+      "line": 243,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/names.go|mcpNameFromURL": {
+      "kind": "complexity",
+      "file": "internal/installsource/names.go",
+      "func": "mcpNameFromURL",
+      "line": 119,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/names.go|sanitizeName": {
+      "kind": "complexity",
+      "file": "internal/installsource/names.go",
+      "func": "sanitizeName",
+      "line": 158,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.localSkillActions": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.localSkillActions",
+      "line": 344,
+      "got": 23,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.planDownloadedURL": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.planDownloadedURL",
+      "line": 62,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.planLocal": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.planLocal",
+      "line": 299,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.planURL": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.planURL",
+      "line": 36,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.scanGitHubSkills": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.scanGitHubSkills",
+      "line": 181,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/plan.go|*installSourceTool.tryGitHubRepo": {
+      "kind": "complexity",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.tryGitHubRepo",
+      "line": 91,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/installsource/skill.go|copyDir": {
+      "kind": "complexity",
+      "file": "internal/installsource/skill.go",
+      "func": "copyDir",
+      "line": 301,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/installsource/skill.go|scanSkillRoot": {
+      "kind": "complexity",
+      "file": "internal/installsource/skill.go",
+      "func": "scanSkillRoot",
+      "line": 216,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/jobs/jobs.go|*Manager.SetActiveSessionPath": {
+      "kind": "complexity",
+      "file": "internal/jobs/jobs.go",
+      "func": "*Manager.SetActiveSessionPath",
+      "line": 875,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/jobs/jobs.go|*Manager.StartForSession": {
+      "kind": "complexity",
+      "file": "internal/jobs/jobs.go",
+      "func": "*Manager.StartForSession",
+      "line": 242,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/jobs/jobs.go|*Manager.adoptUnscopedJobsLocked": {
+      "kind": "complexity",
+      "file": "internal/jobs/jobs.go",
+      "func": "*Manager.adoptUnscopedJobsLocked",
+      "line": 929,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/jobs/jobs.go|*Manager.loadSessionArtifacts": {
+      "kind": "complexity",
+      "file": "internal/jobs/jobs.go",
+      "func": "*Manager.loadSessionArtifacts",
+      "line": 1142,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/jobs/jobs.go|waitTeardownTargets": {
+      "kind": "complexity",
+      "file": "internal/jobs/jobs.go",
+      "func": "waitTeardownTargets",
+      "line": 1341,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/lsp/jsonrpc.go|*conn.readLoop": {
+      "kind": "complexity",
+      "file": "internal/lsp/jsonrpc.go",
+      "func": "*conn.readLoop",
+      "line": 128,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/lsp/results.go|parseLocations": {
+      "kind": "complexity",
+      "file": "internal/lsp/results.go",
+      "func": "parseLocations",
+      "line": 11,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/mcpdiag/auth.go|HasAuthConfig": {
+      "kind": "complexity",
+      "file": "internal/mcpdiag/auth.go",
+      "func": "HasAuthConfig",
+      "line": 55,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/memory/recall.go|searchMemories": {
+      "kind": "complexity",
+      "file": "internal/memory/recall.go",
+      "func": "searchMemories",
+      "line": 106,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memory/store.go|Store.Archive": {
+      "kind": "complexity",
+      "file": "internal/memory/store.go",
+      "func": "Store.Archive",
+      "line": 271,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memory/store.go|Store.Index": {
+      "kind": "complexity",
+      "file": "internal/memory/store.go",
+      "func": "Store.Index",
+      "line": 147,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/memory/store.go|Store.List": {
+      "kind": "complexity",
+      "file": "internal/memory/store.go",
+      "func": "Store.List",
+      "line": 564,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/memory/store.go|Store.ListArchived": {
+      "kind": "complexity",
+      "file": "internal/memory/store.go",
+      "func": "Store.ListArchived",
+      "line": 601,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/memory/store.go|Store.Save": {
+      "kind": "complexity",
+      "file": "internal/memory/store.go",
+      "func": "Store.Save",
+      "line": 229,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/compression.go|activeSemanticLayers": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/compression.go",
+      "func": "activeSemanticLayers",
+      "line": 1365,
+      "got": 25,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/compression.go|compressMemoryGraph": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/compression.go",
+      "func": "compressMemoryGraph",
+      "line": 456,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/compression.go|longTailCausalCandidates": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/compression.go",
+      "func": "longTailCausalCandidates",
+      "line": 364,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/compression.go|semanticOverlapSignals": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/compression.go",
+      "func": "semanticOverlapSignals",
+      "line": 1400,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|analyzeTrace": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "analyzeTrace",
+      "line": 1960,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|buildIRWithPolicy": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "buildIRWithPolicy",
+      "line": 544,
+      "got": 32,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|canonicalizeIR": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "canonicalizeIR",
+      "line": 789,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|classifyStrategy": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "classifyStrategy",
+      "line": 2796,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|controlPlaneSystemState": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "controlPlaneSystemState",
+      "line": 1354,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|evaluateMutations": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "evaluateMutations",
+      "line": 2057,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|memoryCitationsForIR": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "memoryCitationsForIR",
+      "line": 726,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|mutationFeedbackInCooldown": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "mutationFeedbackInCooldown",
+      "line": 2197,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|selectStrategy": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "selectStrategy",
+      "line": 1181,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|usableSubgraphNodes": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "usableSubgraphNodes",
+      "line": 1039,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/memorycompiler/runtime.go|validateIRExecution": {
+      "kind": "complexity",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "validateIRExecution",
+      "line": 1636,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/migration/migration.go|Result.Summary": {
+      "kind": "complexity",
+      "file": "internal/migration/migration.go",
+      "func": "Result.Summary",
+      "line": 41,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/migration/migration.go|migrateLegacyMemorySources": {
+      "kind": "complexity",
+      "file": "internal/migration/migration.go",
+      "func": "migrateLegacyMemorySources",
+      "line": 132,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/migration/migration.go|migrateLegacySessionSources": {
+      "kind": "complexity",
+      "file": "internal/migration/migration.go",
+      "func": "migrateLegacySessionSources",
+      "line": 294,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/netclient/netclient.go|customProxyURL": {
+      "kind": "complexity",
+      "file": "internal/netclient/netclient.go",
+      "func": "customProxyURL",
+      "line": 228,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/permission/permission.go|*Gate.Check": {
+      "kind": "complexity",
+      "file": "internal/permission/permission.go",
+      "func": "*Gate.Check",
+      "line": 369,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/planmode/policy.go|Policy.Decide": {
+      "kind": "complexity",
+      "file": "internal/planmode/policy.go",
+      "func": "Policy.Decide",
+      "line": 151,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/planmode/policy.go|decideBash": {
+      "kind": "complexity",
+      "file": "internal/planmode/policy.go",
+      "func": "decideBash",
+      "line": 292,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/planmode/policy.go|shellFields": {
+      "kind": "complexity",
+      "file": "internal/planmode/policy.go",
+      "func": "shellFields",
+      "line": 410,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/planmode/policy.go|unsafeSafeCommandArg": {
+      "kind": "complexity",
+      "file": "internal/planmode/policy.go",
+      "func": "unsafeSafeCommandArg",
+      "line": 365,
+      "got": 24,
+      "limit": 10
+    },
+    "complexity|internal/plugin/lazy.go|*lazyTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/plugin/lazy.go",
+      "func": "*lazyTool.Execute",
+      "line": 203,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/plugin/plugin.go|Start": {
+      "kind": "complexity",
+      "file": "internal/plugin/plugin.go",
+      "func": "Start",
+      "line": 241,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/plugin/transport_http.go|*httpTransport.readSSEResponse": {
+      "kind": "complexity",
+      "file": "internal/plugin/transport_http.go",
+      "func": "*httpTransport.readSSEResponse",
+      "line": 170,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/plugin/transport_stdio.go|newStdioTransport": {
+      "kind": "complexity",
+      "file": "internal/plugin/transport_stdio.go",
+      "func": "newStdioTransport",
+      "line": 57,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/profile/decay.go|EffectiveConfidence": {
+      "kind": "complexity",
+      "file": "internal/profile/decay.go",
+      "func": "EffectiveConfidence",
+      "line": 15,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/profile/event.go|BuildLearningEvent": {
+      "kind": "complexity",
+      "file": "internal/profile/event.go",
+      "func": "BuildLearningEvent",
+      "line": 123,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/profile/event.go|ProfileLearningEvent.Normalize": {
+      "kind": "complexity",
+      "file": "internal/profile/event.go",
+      "func": "ProfileLearningEvent.Normalize",
+      "line": 192,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/profile/extractor.go|RuleExtractor.Extract": {
+      "kind": "complexity",
+      "file": "internal/profile/extractor.go",
+      "func": "RuleExtractor.Extract",
+      "line": 37,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/profile/model.go|ProfileItem.Normalize": {
+      "kind": "complexity",
+      "file": "internal/profile/model.go",
+      "func": "ProfileItem.Normalize",
+      "line": 78,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/profile/policy.go|Policy.DecideScope": {
+      "kind": "complexity",
+      "file": "internal/profile/policy.go",
+      "func": "Policy.DecideScope",
+      "line": 132,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/profile/policy.go|Policy.ResolveLoading": {
+      "kind": "complexity",
+      "file": "internal/profile/policy.go",
+      "func": "Policy.ResolveLoading",
+      "line": 58,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/profile/selector.go|Selector.scoreItem": {
+      "kind": "complexity",
+      "file": "internal/profile/selector.go",
+      "func": "Selector.scoreItem",
+      "line": 155,
+      "got": 27,
+      "limit": 10
+    },
+    "complexity|internal/profile/store.go|Store.ApplySuccessfulOverride": {
+      "kind": "complexity",
+      "file": "internal/profile/store.go",
+      "func": "Store.ApplySuccessfulOverride",
+      "line": 228,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/profile/store.go|Store.MaintainNegative": {
+      "kind": "complexity",
+      "file": "internal/profile/store.go",
+      "func": "Store.MaintainNegative",
+      "line": 191,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/profile/store.go|safeArchiveStem": {
+      "kind": "complexity",
+      "file": "internal/profile/store.go",
+      "func": "safeArchiveStem",
+      "line": 474,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/profile/worker.go|*Worker.process": {
+      "kind": "complexity",
+      "file": "internal/profile/worker.go",
+      "func": "*Worker.process",
+      "line": 101,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/provider/anthropic/anthropic.go|*client.buildRequest": {
+      "kind": "complexity",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.buildRequest",
+      "line": 191,
+      "got": 30,
+      "limit": 10
+    },
+    "complexity|internal/provider/anthropic/anthropic.go|*client.readStream": {
+      "kind": "complexity",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.readStream",
+      "line": 308,
+      "got": 50,
+      "limit": 10
+    },
+    "complexity|internal/provider/openai/openai.go|*client.buildRequest": {
+      "kind": "complexity",
+      "file": "internal/provider/openai/openai.go",
+      "func": "*client.buildRequest",
+      "line": 275,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/provider/openai/openai.go|New": {
+      "kind": "complexity",
+      "file": "internal/provider/openai/openai.go",
+      "func": "New",
+      "line": 45,
+      "got": 21,
+      "limit": 10
+    },
+    "complexity|internal/provider/provider.go|backfillToolCallNames": {
+      "kind": "complexity",
+      "file": "internal/provider/provider.go",
+      "func": "backfillToolCallNames",
+      "line": 387,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/provider/provider.go|closeTruncatedJSON": {
+      "kind": "complexity",
+      "file": "internal/provider/provider.go",
+      "func": "closeTruncatedJSON",
+      "line": 270,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/provider/provider.go|currencySymbol": {
+      "kind": "complexity",
+      "file": "internal/provider/provider.go",
+      "func": "currencySymbol",
+      "line": 505,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/provider/retry.go|SendWithRetry": {
+      "kind": "complexity",
+      "file": "internal/provider/retry.go",
+      "func": "SendWithRetry",
+      "line": 156,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/provider/schema_canonicalize.go|canonicalizeSchemaObject": {
+      "kind": "complexity",
+      "file": "internal/provider/schema_canonicalize.go",
+      "func": "canonicalizeSchemaObject",
+      "line": 34,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/retrieval/bm25.go|snippetAround": {
+      "kind": "complexity",
+      "file": "internal/retrieval/bm25.go",
+      "func": "snippetAround",
+      "line": 169,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/sandbox/shell.go|resolveShell": {
+      "kind": "complexity",
+      "file": "internal/sandbox/shell.go",
+      "func": "resolveShell",
+      "line": 59,
+      "got": 28,
+      "limit": 10
+    },
+    "complexity|internal/serve/auth.go|safeRedirectTarget": {
+      "kind": "complexity",
+      "file": "internal/serve/auth.go",
+      "func": "safeRedirectTarget",
+      "line": 471,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/serve/serve.go|*Server.deleteSession": {
+      "kind": "complexity",
+      "file": "internal/serve/serve.go",
+      "func": "*Server.deleteSession",
+      "line": 1052,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/serve/serve.go|*Server.generateTitle": {
+      "kind": "complexity",
+      "file": "internal/serve/serve.go",
+      "func": "*Server.generateTitle",
+      "line": 963,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/serve/serve.go|*Server.resume": {
+      "kind": "complexity",
+      "file": "internal/serve/serve.go",
+      "func": "*Server.resume",
+      "line": 798,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/skill/skill.go|*Store.List": {
+      "kind": "complexity",
+      "file": "internal/skill/skill.go",
+      "func": "*Store.List",
+      "line": 289,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/skill/skill.go|*Store.readEntry": {
+      "kind": "complexity",
+      "file": "internal/skill/skill.go",
+      "func": "*Store.readEntry",
+      "line": 409,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/skill/skill.go|New": {
+      "kind": "complexity",
+      "file": "internal/skill/skill.go",
+      "func": "New",
+      "line": 107,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/skill/tools.go|*installSkillTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/skill/tools.go",
+      "func": "*installSkillTool.Execute",
+      "line": 445,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/skill/tools.go|*runSkillTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/skill/tools.go",
+      "func": "*runSkillTool.Execute",
+      "line": 76,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/executor.go|*Orchestrator.ExecuteOne": {
+      "kind": "complexity",
+      "file": "internal/tasktree/executor.go",
+      "func": "*Orchestrator.ExecuteOne",
+      "line": 81,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/orchestrator.go|*Orchestrator.Run": {
+      "kind": "complexity",
+      "file": "internal/tasktree/orchestrator.go",
+      "func": "*Orchestrator.Run",
+      "line": 171,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/parallel.go|*Orchestrator.ExecuteBatch": {
+      "kind": "complexity",
+      "file": "internal/tasktree/parallel.go",
+      "func": "*Orchestrator.ExecuteBatch",
+      "line": 70,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/planner.go|*LLMPlanner.PlanTaskTree": {
+      "kind": "complexity",
+      "file": "internal/tasktree/planner.go",
+      "func": "*LLMPlanner.PlanTaskTree",
+      "line": 62,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/planner.go|NormalizeAndValidateGeneratedTree": {
+      "kind": "complexity",
+      "file": "internal/tasktree/planner.go",
+      "func": "NormalizeAndValidateGeneratedTree",
+      "line": 160,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/planner.go|validateGeneratedNodes": {
+      "kind": "complexity",
+      "file": "internal/tasktree/planner.go",
+      "func": "validateGeneratedNodes",
+      "line": 205,
+      "got": 33,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/scheduler.go|*TaskTree.OrderedNodeIDs": {
+      "kind": "complexity",
+      "file": "internal/tasktree/scheduler.go",
+      "func": "*TaskTree.OrderedNodeIDs",
+      "line": 9,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/scheduler.go|ReadyBatchNodeIDs": {
+      "kind": "complexity",
+      "file": "internal/tasktree/scheduler.go",
+      "func": "ReadyBatchNodeIDs",
+      "line": 131,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/tasktree/status.go|CanTransition": {
+      "kind": "complexity",
+      "file": "internal/tasktree/status.go",
+      "func": "CanTransition",
+      "line": 45,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/bash.go|bash.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/bash.go",
+      "func": "bash.Execute",
+      "line": 124,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/bash.go|hasShellCommandWord": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/bash.go",
+      "func": "hasShellCommandWord",
+      "line": 321,
+      "got": 15,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/bash.go|hasUnquotedBackgroundOperator": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/bash.go",
+      "func": "hasUnquotedBackgroundOperator",
+      "line": 278,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/bash.go|isShellAssignment": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/bash.go",
+      "func": "isShellAssignment",
+      "line": 438,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/bash.go|readShellWord": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/bash.go",
+      "func": "readShellWord",
+      "line": 373,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/codeindex.go|codeIndex.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/codeindex.go",
+      "func": "codeIndex.Execute",
+      "line": 73,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/codeindex.go|codeIndex.collect": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/codeindex.go",
+      "func": "codeIndex.collect",
+      "line": 112,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/codeindex.go|codeIndex.parseGo": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/codeindex.go",
+      "func": "codeIndex.parseGo",
+      "line": 191,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/completestep.go|allCommandHints": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/completestep.go",
+      "func": "allCommandHints",
+      "line": 351,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/completestep.go|completeStep.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/completestep.go",
+      "func": "completeStep.Execute",
+      "line": 86,
+      "got": 14,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/completestep.go|verifyCommandFromSession": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/completestep.go",
+      "func": "verifyCommandFromSession",
+      "line": 281,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/completestep.go|verifyStepEvidence": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/completestep.go",
+      "func": "verifyStepEvidence",
+      "line": 144,
+      "got": 18,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/delete_range.go|deleteRange.preview": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/delete_range.go",
+      "func": "deleteRange.preview",
+      "line": 62,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/delete_symbol.go|collectSymbols": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/delete_symbol.go",
+      "func": "collectSymbols",
+      "line": 209,
+      "got": 19,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/delete_symbol.go|deleteSymbol.findSymbol": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/delete_symbol.go",
+      "func": "deleteSymbol.findSymbol",
+      "line": 144,
+      "got": 17,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/glob.go|globRecursive": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/glob.go",
+      "func": "globRecursive",
+      "line": 90,
+      "got": 16,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/grep.go|grepTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/grep.go",
+      "func": "grepTool.Execute",
+      "line": 87,
+      "got": 27,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/ls.go|listDir.listRecursive": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/ls.go",
+      "func": "listDir.listRecursive",
+      "line": 80,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/movefile.go|moveFile.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/movefile.go",
+      "func": "moveFile.Execute",
+      "line": 39,
+      "got": 20,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/multiedit.go|multiEdit.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/multiedit.go",
+      "func": "multiEdit.Execute",
+      "line": 64,
+      "got": 13,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/preview.go|multiEdit.Preview": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/preview.go",
+      "func": "multiEdit.Preview",
+      "line": 91,
+      "got": 11,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/webfetch.go|ssrfGuardedTransport": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/webfetch.go",
+      "func": "ssrfGuardedTransport",
+      "line": 58,
+      "got": 24,
+      "limit": 10
+    },
+    "complexity|internal/tool/builtin/webfetch.go|webFetch.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/builtin/webfetch.go",
+      "func": "webFetch.Execute",
+      "line": 238,
+      "got": 12,
+      "limit": 10
+    },
+    "complexity|internal/tool/sessiontool/sessiontool.go|*readSessionTool.Execute": {
+      "kind": "complexity",
+      "file": "internal/tool/sessiontool/sessiontool.go",
+      "func": "*readSessionTool.Execute",
+      "line": 104,
+      "got": 22,
+      "limit": 10
+    },
+    "complexity|internal/userctx/context.go|ValidateProfileID": {
+      "kind": "complexity",
+      "file": "internal/userctx/context.go",
+      "func": "ValidateProfileID",
+      "line": 72,
+      "got": 16,
+      "limit": 10
+    },
+    "file_lines|internal/acp/service.go|": {
+      "kind": "file_lines",
+      "file": "internal/acp/service.go",
+      "line": 1,
+      "got": 1390,
+      "limit": 800
+    },
+    "file_lines|internal/agent/agent.go|": {
+      "kind": "file_lines",
+      "file": "internal/agent/agent.go",
+      "line": 1,
+      "got": 1632,
+      "limit": 800
+    },
+    "file_lines|internal/automation/business.go|": {
+      "kind": "file_lines",
+      "file": "internal/automation/business.go",
+      "line": 1,
+      "got": 1055,
+      "limit": 800
+    },
+    "file_lines|internal/boot/boot.go|": {
+      "kind": "file_lines",
+      "file": "internal/boot/boot.go",
+      "line": 1,
+      "got": 1480,
+      "limit": 800
+    },
+    "file_lines|internal/bot/gateway.go|": {
+      "kind": "file_lines",
+      "file": "internal/bot/gateway.go",
+      "line": 1,
+      "got": 962,
+      "limit": 800
+    },
+    "file_lines|internal/cli/chat_tui.go|": {
+      "kind": "file_lines",
+      "file": "internal/cli/chat_tui.go",
+      "line": 1,
+      "got": 2809,
+      "limit": 800
+    },
+    "file_lines|internal/cli/cli.go|": {
+      "kind": "file_lines",
+      "file": "internal/cli/cli.go",
+      "line": 1,
+      "got": 1638,
+      "limit": 800
+    },
+    "file_lines|internal/config/config.go|": {
+      "kind": "file_lines",
+      "file": "internal/config/config.go",
+      "line": 1,
+      "got": 1020,
+      "limit": 800
+    },
+    "file_lines|internal/config/edit.go|": {
+      "kind": "file_lines",
+      "file": "internal/config/edit.go",
+      "line": 1,
+      "got": 1018,
+      "limit": 800
+    },
+    "file_lines|internal/config/load.go|": {
+      "kind": "file_lines",
+      "file": "internal/config/load.go",
+      "line": 1,
+      "got": 1005,
+      "limit": 800
+    },
+    "file_lines|internal/config/render.go|": {
+      "kind": "file_lines",
+      "file": "internal/config/render.go",
+      "line": 1,
+      "got": 1129,
+      "limit": 800
+    },
+    "file_lines|internal/control/controller.go|": {
+      "kind": "file_lines",
+      "file": "internal/control/controller.go",
+      "line": 1,
+      "got": 3081,
+      "limit": 800
+    },
+    "file_lines|internal/evidence/evidence.go|": {
+      "kind": "file_lines",
+      "file": "internal/evidence/evidence.go",
+      "line": 1,
+      "got": 815,
+      "limit": 800
+    },
+    "file_lines|internal/jobs/jobs.go|": {
+      "kind": "file_lines",
+      "file": "internal/jobs/jobs.go",
+      "line": 1,
+      "got": 1275,
+      "limit": 800
+    },
+    "file_lines|internal/memorycompiler/compression.go|": {
+      "kind": "file_lines",
+      "file": "internal/memorycompiler/compression.go",
+      "line": 1,
+      "got": 1545,
+      "limit": 800
+    },
+    "file_lines|internal/memorycompiler/runtime.go|": {
+      "kind": "file_lines",
+      "file": "internal/memorycompiler/runtime.go",
+      "line": 1,
+      "got": 2677,
+      "limit": 800
+    },
+    "file_lines|internal/plugin/plugin.go|": {
+      "kind": "file_lines",
+      "file": "internal/plugin/plugin.go",
+      "line": 1,
+      "got": 859,
+      "limit": 800
+    },
+    "file_lines|internal/serve/serve.go|": {
+      "kind": "file_lines",
+      "file": "internal/serve/serve.go",
+      "line": 1,
+      "got": 1245,
+      "limit": 800
+    },
+    "func_lines|internal/acp/service.go|*service.openExistingSession": {
+      "kind": "func_lines",
+      "file": "internal/acp/service.go",
+      "func": "*service.openExistingSession",
+      "line": 398,
+      "got": 107,
+      "limit": 80
+    },
+    "func_lines|internal/agent/agent.go|*Agent.Run": {
+      "kind": "func_lines",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.Run",
+      "line": 668,
+      "got": 172,
+      "limit": 80
+    },
+    "func_lines|internal/agent/agent.go|*Agent.executeBatchWithRegistry": {
+      "kind": "func_lines",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.executeBatchWithRegistry",
+      "line": 1497,
+      "got": 110,
+      "limit": 80
+    },
+    "func_lines|internal/agent/agent.go|*Agent.executeOneWithRegistry": {
+      "kind": "func_lines",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.executeOneWithRegistry",
+      "line": 1819,
+      "got": 135,
+      "limit": 80
+    },
+    "func_lines|internal/agent/agent.go|*Agent.stream": {
+      "kind": "func_lines",
+      "file": "internal/agent/agent.go",
+      "func": "*Agent.stream",
+      "line": 1356,
+      "got": 92,
+      "limit": 80
+    },
+    "func_lines|internal/agent/migrate.go|migrateLegacySessions": {
+      "kind": "func_lines",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateLegacySessions",
+      "line": 82,
+      "got": 146,
+      "limit": 80
+    },
+    "func_lines|internal/agent/migrate.go|migrateSubDirectory": {
+      "kind": "func_lines",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateSubDirectory",
+      "line": 352,
+      "got": 84,
+      "limit": 80
+    },
+    "func_lines|internal/agent/parallel_tasks.go|*ParallelTasksTool.Execute": {
+      "kind": "func_lines",
+      "file": "internal/agent/parallel_tasks.go",
+      "func": "*ParallelTasksTool.Execute",
+      "line": 111,
+      "got": 229,
+      "limit": 80
+    },
+    "func_lines|internal/agent/task.go|*TaskTool.Execute": {
+      "kind": "func_lines",
+      "file": "internal/agent/task.go",
+      "func": "*TaskTool.Execute",
+      "line": 443,
+      "got": 93,
+      "limit": 80
+    },
+    "func_lines|internal/automation/migration.go|MigrateHeartbeatIfNeeded": {
+      "kind": "func_lines",
+      "file": "internal/automation/migration.go",
+      "func": "MigrateHeartbeatIfNeeded",
+      "line": 55,
+      "got": 118,
+      "limit": 80
+    },
+    "func_lines|internal/boot/boot.go|Build": {
+      "kind": "func_lines",
+      "file": "internal/boot/boot.go",
+      "func": "Build",
+      "line": 151,
+      "got": 924,
+      "limit": 80
+    },
+    "func_lines|internal/bot/gateway.go|*BotGateway.handleSlashCommand": {
+      "kind": "func_lines",
+      "file": "internal/bot/gateway.go",
+      "func": "*BotGateway.handleSlashCommand",
+      "line": 509,
+      "got": 124,
+      "limit": 80
+    },
+    "func_lines|internal/bot/qq/gateway.go|*adapter.connectGateway": {
+      "kind": "func_lines",
+      "file": "internal/bot/qq/gateway.go",
+      "func": "*adapter.connectGateway",
+      "line": 214,
+      "got": 119,
+      "limit": 80
+    },
+    "func_lines|internal/bot/render.go|*renderSink.Emit": {
+      "kind": "func_lines",
+      "file": "internal/bot/render.go",
+      "func": "*renderSink.Emit",
+      "line": 65,
+      "got": 105,
+      "limit": 80
+    },
+    "func_lines|internal/cli/acp.go|*acpFactory.SessionConfigState": {
+      "kind": "func_lines",
+      "file": "internal/cli/acp.go",
+      "func": "*acpFactory.SessionConfigState",
+      "line": 96,
+      "got": 97,
+      "limit": 80
+    },
+    "func_lines|internal/cli/bot.go|botDoctor": {
+      "kind": "func_lines",
+      "file": "internal/cli/bot.go",
+      "func": "botDoctor",
+      "line": 164,
+      "got": 133,
+      "limit": 80
+    },
+    "func_lines|internal/cli/bot.go|botStart": {
+      "kind": "func_lines",
+      "file": "internal/cli/bot.go",
+      "func": "botStart",
+      "line": 47,
+      "got": 88,
+      "limit": 80
+    },
+    "func_lines|internal/cli/chat_tui.go|*chatTUI.ingestEvent": {
+      "kind": "func_lines",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.ingestEvent",
+      "line": 3004,
+      "got": 147,
+      "limit": 80
+    },
+    "func_lines|internal/cli/chat_tui.go|*chatTUI.runSlashCommand": {
+      "kind": "func_lines",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.runSlashCommand",
+      "line": 3226,
+      "got": 162,
+      "limit": 80
+    },
+    "func_lines|internal/cli/chat_tui.go|chatTUI.View": {
+      "kind": "func_lines",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.View",
+      "line": 2210,
+      "got": 174,
+      "limit": 80
+    },
+    "func_lines|internal/cli/chat_tui.go|chatTUI.update": {
+      "kind": "func_lines",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.update",
+      "line": 713,
+      "got": 532,
+      "limit": 80
+    },
+    "func_lines|internal/cli/cli.go|chatREPL": {
+      "kind": "func_lines",
+      "file": "internal/cli/cli.go",
+      "func": "chatREPL",
+      "line": 652,
+      "got": 148,
+      "limit": 80
+    },
+    "func_lines|internal/cli/cli.go|runAgent": {
+      "kind": "func_lines",
+      "file": "internal/cli/cli.go",
+      "func": "runAgent",
+      "line": 387,
+      "got": 101,
+      "limit": 80
+    },
+    "func_lines|internal/cli/cli.go|runServe": {
+      "kind": "func_lines",
+      "file": "internal/cli/cli.go",
+      "func": "runServe",
+      "line": 508,
+      "got": 110,
+      "limit": 80
+    },
+    "func_lines|internal/cli/effort.go|*chatTUI.runEffortCommand": {
+      "kind": "func_lines",
+      "file": "internal/cli/effort.go",
+      "func": "*chatTUI.runEffortCommand",
+      "line": 12,
+      "got": 91,
+      "limit": 80
+    },
+    "func_lines|internal/cli/mcp_manager.go|chatTUI.handleMCPManagerKey": {
+      "kind": "func_lines",
+      "file": "internal/cli/mcp_manager.go",
+      "func": "chatTUI.handleMCPManagerKey",
+      "line": 115,
+      "got": 130,
+      "limit": 80
+    },
+    "func_lines|internal/cli/select.go|selectMany": {
+      "kind": "func_lines",
+      "file": "internal/cli/select.go",
+      "func": "selectMany",
+      "line": 267,
+      "got": 205,
+      "limit": 80
+    },
+    "func_lines|internal/cli/select.go|selectOne": {
+      "kind": "func_lines",
+      "file": "internal/cli/select.go",
+      "func": "selectOne",
+      "line": 81,
+      "got": 156,
+      "limit": 80
+    },
+    "func_lines|internal/cli/upgrade.go|upgradeCommand": {
+      "kind": "func_lines",
+      "file": "internal/cli/upgrade.go",
+      "func": "upgradeCommand",
+      "line": 50,
+      "got": 92,
+      "limit": 80
+    },
+    "func_lines|internal/config/render.go|RenderTOMLForScope": {
+      "kind": "func_lines",
+      "file": "internal/config/render.go",
+      "func": "RenderTOMLForScope",
+      "line": 32,
+      "got": 503,
+      "limit": 80
+    },
+    "func_lines|internal/config/render.go|RenderTOMLProjectDelta": {
+      "kind": "func_lines",
+      "file": "internal/config/render.go",
+      "func": "RenderTOMLProjectDelta",
+      "line": 562,
+      "got": 329,
+      "limit": 80
+    },
+    "func_lines|internal/control/controller.go|*Controller.submitCommandOrTurn": {
+      "kind": "func_lines",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.submitCommandOrTurn",
+      "line": 698,
+      "got": 127,
+      "limit": 80
+    },
+    "func_lines|internal/control/slash.go|*Controller.managementNotice": {
+      "kind": "func_lines",
+      "file": "internal/control/slash.go",
+      "func": "*Controller.managementNotice",
+      "line": 420,
+      "got": 94,
+      "limit": 80
+    },
+    "func_lines|internal/doctor/report.go|Collect": {
+      "kind": "func_lines",
+      "file": "internal/doctor/report.go",
+      "func": "Collect",
+      "line": 101,
+      "got": 88,
+      "limit": 80
+    },
+    "func_lines|internal/eventwire/wire.go|ToWire": {
+      "kind": "func_lines",
+      "file": "internal/eventwire/wire.go",
+      "func": "ToWire",
+      "line": 32,
+      "got": 87,
+      "limit": 80
+    },
+    "func_lines|internal/fileref/search.go|Search": {
+      "kind": "func_lines",
+      "file": "internal/fileref/search.go",
+      "func": "Search",
+      "line": 53,
+      "got": 86,
+      "limit": 80
+    },
+    "func_lines|internal/guardian/transcript.go|renderTranscript": {
+      "kind": "func_lines",
+      "file": "internal/guardian/transcript.go",
+      "func": "renderTranscript",
+      "line": 77,
+      "got": 88,
+      "limit": 80
+    },
+    "func_lines|internal/history/search.go|*Searcher.Search": {
+      "kind": "func_lines",
+      "file": "internal/history/search.go",
+      "func": "*Searcher.Search",
+      "line": 129,
+      "got": 86,
+      "limit": 80
+    },
+    "func_lines|internal/installsource/install_source.go|*installSourceTool.Execute": {
+      "kind": "func_lines",
+      "file": "internal/installsource/install_source.go",
+      "func": "*installSourceTool.Execute",
+      "line": 152,
+      "got": 93,
+      "limit": 80
+    },
+    "func_lines|internal/installsource/plan.go|*installSourceTool.localSkillActions": {
+      "kind": "func_lines",
+      "file": "internal/installsource/plan.go",
+      "func": "*installSourceTool.localSkillActions",
+      "line": 344,
+      "got": 86,
+      "limit": 80
+    },
+    "func_lines|internal/jobs/jobs.go|*Manager.StartForSession": {
+      "kind": "func_lines",
+      "file": "internal/jobs/jobs.go",
+      "func": "*Manager.StartForSession",
+      "line": 242,
+      "got": 99,
+      "limit": 80
+    },
+    "func_lines|internal/memorycompiler/runtime.go|buildIRWithPolicy": {
+      "kind": "func_lines",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "buildIRWithPolicy",
+      "line": 544,
+      "got": 94,
+      "limit": 80
+    },
+    "func_lines|internal/memorycompiler/runtime.go|updateGraph": {
+      "kind": "func_lines",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "updateGraph",
+      "line": 2440,
+      "got": 99,
+      "limit": 80
+    },
+    "func_lines|internal/migration/migration.go|migrateLegacySessionSources": {
+      "kind": "func_lines",
+      "file": "internal/migration/migration.go",
+      "func": "migrateLegacySessionSources",
+      "line": 294,
+      "got": 90,
+      "limit": 80
+    },
+    "func_lines|internal/plugin/lazy.go|*lazyTool.Execute": {
+      "kind": "func_lines",
+      "file": "internal/plugin/lazy.go",
+      "func": "*lazyTool.Execute",
+      "line": 203,
+      "got": 93,
+      "limit": 80
+    },
+    "func_lines|internal/plugin/plugin.go|Start": {
+      "kind": "func_lines",
+      "file": "internal/plugin/plugin.go",
+      "func": "Start",
+      "line": 241,
+      "got": 100,
+      "limit": 80
+    },
+    "func_lines|internal/provider/anthropic/anthropic.go|*client.buildRequest": {
+      "kind": "func_lines",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.buildRequest",
+      "line": 191,
+      "got": 90,
+      "limit": 80
+    },
+    "func_lines|internal/provider/anthropic/anthropic.go|*client.readStream": {
+      "kind": "func_lines",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.readStream",
+      "line": 308,
+      "got": 155,
+      "limit": 80
+    },
+    "func_lines|internal/tasktree/planner.go|validateGeneratedNodes": {
+      "kind": "func_lines",
+      "file": "internal/tasktree/planner.go",
+      "func": "validateGeneratedNodes",
+      "line": 205,
+      "got": 97,
+      "limit": 80
+    },
+    "func_lines|internal/tool/builtin/grep.go|grepTool.Execute": {
+      "kind": "func_lines",
+      "file": "internal/tool/builtin/grep.go",
+      "func": "grepTool.Execute",
+      "line": 87,
+      "got": 118,
+      "limit": 80
+    },
+    "func_lines|internal/tool/builtin/webfetch.go|ssrfGuardedTransport": {
+      "kind": "func_lines",
+      "file": "internal/tool/builtin/webfetch.go",
+      "func": "ssrfGuardedTransport",
+      "line": 58,
+      "got": 95,
+      "limit": 80
+    },
+    "nesting_depth|cmd/e2ebench/diff.go|changedLineCoverage": {
+      "kind": "nesting_depth",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "changedLineCoverage",
+      "line": 345,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|cmd/e2ebench/diff.go|changedLineSet": {
+      "kind": "nesting_depth",
+      "file": "cmd/e2ebench/diff.go",
+      "func": "changedLineSet",
+      "line": 418,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/agent/migrate.go|migrateLegacySessions": {
+      "kind": "nesting_depth",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateLegacySessions",
+      "line": 82,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/agent/migrate.go|migrateSubDirectory": {
+      "kind": "nesting_depth",
+      "file": "internal/agent/migrate.go",
+      "func": "migrateSubDirectory",
+      "line": 352,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/boot/boot.go|Build": {
+      "kind": "nesting_depth",
+      "file": "internal/boot/boot.go",
+      "func": "Build",
+      "line": 151,
+      "got": 7,
+      "limit": 4
+    },
+    "nesting_depth|internal/botruntime/runtime.go|EnabledPlatforms": {
+      "kind": "nesting_depth",
+      "file": "internal/botruntime/runtime.go",
+      "func": "EnabledPlatforms",
+      "line": 21,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/cli/chat_tui.go|*chatTUI.collapseToolOutput": {
+      "kind": "nesting_depth",
+      "file": "internal/cli/chat_tui.go",
+      "func": "*chatTUI.collapseToolOutput",
+      "line": 1765,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/cli/chat_tui.go|chatTUI.update": {
+      "kind": "nesting_depth",
+      "file": "internal/cli/chat_tui.go",
+      "func": "chatTUI.update",
+      "line": 713,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/cli/select.go|selectMany": {
+      "kind": "nesting_depth",
+      "file": "internal/cli/select.go",
+      "func": "selectMany",
+      "line": 267,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/config/load.go|mergeTOMLProviders": {
+      "kind": "nesting_depth",
+      "file": "internal/config/load.go",
+      "func": "mergeTOMLProviders",
+      "line": 303,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/control/controller.go|*Controller.submitCommandOrTurn": {
+      "kind": "nesting_depth",
+      "file": "internal/control/controller.go",
+      "func": "*Controller.submitCommandOrTurn",
+      "line": 698,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/history/search.go|extractDocuments": {
+      "kind": "nesting_depth",
+      "file": "internal/history/search.go",
+      "func": "extractDocuments",
+      "line": 381,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/memory/store.go|Store.Index": {
+      "kind": "nesting_depth",
+      "file": "internal/memory/store.go",
+      "func": "Store.Index",
+      "line": 147,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/memorycompiler/runtime.go|mutationsFromLearning": {
+      "kind": "nesting_depth",
+      "file": "internal/memorycompiler/runtime.go",
+      "func": "mutationsFromLearning",
+      "line": 2012,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/plugin/lazy.go|*lazyTool.Execute": {
+      "kind": "nesting_depth",
+      "file": "internal/plugin/lazy.go",
+      "func": "*lazyTool.Execute",
+      "line": 203,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/provider/anthropic/anthropic.go|*client.buildRequest": {
+      "kind": "nesting_depth",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.buildRequest",
+      "line": 191,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/provider/anthropic/anthropic.go|*client.readStream": {
+      "kind": "nesting_depth",
+      "file": "internal/provider/anthropic/anthropic.go",
+      "func": "*client.readStream",
+      "line": 308,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/tool/builtin/codeindex.go|codeIndex.parseGo": {
+      "kind": "nesting_depth",
+      "file": "internal/tool/builtin/codeindex.go",
+      "func": "codeIndex.parseGo",
+      "line": 191,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/tool/builtin/delete_symbol.go|collectSymbols": {
+      "kind": "nesting_depth",
+      "file": "internal/tool/builtin/delete_symbol.go",
+      "func": "collectSymbols",
+      "line": 209,
+      "got": 5,
+      "limit": 4
+    },
+    "nesting_depth|internal/tool/builtin/webfetch.go|ssrfGuardedTransport": {
+      "kind": "nesting_depth",
+      "file": "internal/tool/builtin/webfetch.go",
+      "func": "ssrfGuardedTransport",
+      "line": 58,
+      "got": 6,
+      "limit": 4
+    },
+    "package_files|internal/cli|": {
+      "kind": "package_files",
+      "file": "internal/cli",
+      "line": 1,
+      "got": 56,
+      "limit": 30
+    }
+  }
+}

@@ -1,0 +1,4197 @@
+/* ===================================================================
+ * heartbeat 模块 — 定时任务配置面板
+ *
+ * 所有选择器以 .heartbeat- 为前缀，不与上游样式冲突。
+ * 区域注释格式：/* ── <模块名> ── *／ 方便合并时定位。
+ * ================================================================ */
+
+/* ── backdrop ─────────────────────────────────────────────────── */
+
+.heartbeat-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+}
+
+.heartbeat-backdrop--embedded {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  width: 100%;
+  min-height: 100%;
+  align-items: stretch;
+  justify-content: stretch;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* ── modal ────────────────────────────────────────────────────── */
+
+.heartbeat-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(760px, 92vw);
+  max-height: min(780px, 92vh);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.heartbeat-modal--embedded {
+  width: 100%;
+  max-height: none;
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: var(--chat-bg);
+  box-shadow: none;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__header {
+  padding: 18px clamp(20px, 5vw, 56px);
+  background: color-mix(in srgb, var(--bg-elev) 72%, var(--chat-bg));
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  padding: clamp(22px, 4vw, 42px) clamp(20px, 5vw, 56px) 64px;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__header--workspace {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 38px clamp(24px, 4vw, 56px) 24px;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace {
+  width: min(100%, 1440px);
+  padding: 0 clamp(24px, 4vw, 56px) 64px;
+}
+
+.heartbeat-page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+
+.heartbeat-page-heading__copy {
+  min-width: 0;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__copy h1,
+.heartbeat-page-heading__copy p {
+  margin: 0;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__copy h1 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.heartbeat-page-heading__copy p {
+  margin-top: 8px;
+  color: var(--fg-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__add {
+  height: 38px;
+  padding-inline: 15px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.heartbeat-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+  flex-shrink: 0;
+}
+
+.heartbeat-modal__header h1 {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  text-wrap: balance;
+}
+
+.heartbeat-modal__back,
+.heartbeat-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.heartbeat-modal__back:hover,
+.heartbeat-modal__close:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.heartbeat-modal__close {
+  margin-left: auto;
+}
+
+.heartbeat-modal__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.heartbeat-btn--mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fg-dim);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s;
+}
+.heartbeat-btn--mini:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+.heartbeat-btn--mini-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.heartbeat-btn--mini-primary:hover {
+  opacity: 0.88;
+}
+
+.heartbeat-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heartbeat-modal__body--templates {
+  gap: 14px;
+}
+
+/* ── toolbar ──────────────────────────────────────────────────── */
+
+.heartbeat-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.heartbeat-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+/* All toolbar children share height: 28px for visual consistency */
+.heartbeat-toolbar__btn,
+.heartbeat-toolbar__search,
+.heartbeat-toolbar__status-btn {
+  height: 28px;
+  box-sizing: border-box;
+}
+
+.heartbeat-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  font-family: inherit;
+}
+/* Icon-only buttons in toolbar: minimal width */
+.heartbeat-toolbar__btn--icon {
+  width: 28px;
+  padding: 0;
+  justify-content: center;
+}
+.heartbeat-toolbar__btn:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+.heartbeat-toolbar__btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.heartbeat-toolbar__btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.heartbeat-toolbar__btn--primary:hover {
+  opacity: 0.88;
+}
+
+.heartbeat-toolbar__btn--select {
+  min-width: 76px;
+  max-width: 130px;
+  padding: 0 8px 0 10px;
+}
+.heartbeat-toolbar__btn--select > span {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-toolbar__search {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg-muted);
+  transition: border-color 0.15s;
+}
+.heartbeat-toolbar__search:focus-within {
+  border-color: var(--accent);
+}
+
+.heartbeat-toolbar__search-icon {
+  flex-shrink: 0;
+}
+
+.heartbeat-toolbar__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  height: 100%;
+}
+.heartbeat-toolbar__search-input::placeholder {
+  color: var(--fg-faint);
+}
+
+/* ── templates ────────────────────────────────────────────────── */
+
+.heartbeat-template-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.heartbeat-embedded-templates {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 34px;
+}
+
+.heartbeat-embedded-templates__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.heartbeat-embedded-templates__head h2,
+.heartbeat-embedded-templates__head p {
+  margin: 0;
+}
+
+.heartbeat-embedded-templates__head h2 {
+  color: var(--fg);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.heartbeat-embedded-templates__head p {
+  margin-top: 4px;
+  color: var(--fg-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.heartbeat-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.heartbeat-modal--embedded .heartbeat-template-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card-wrap,
+.heartbeat-embedded-templates .heartbeat-template-card {
+  min-height: 84px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card {
+  grid-template-columns: 38px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 2px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elev) 86%, var(--chat-bg));
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__title {
+  align-self: end;
+  font-size: 14px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__desc {
+  align-self: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-task-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.heartbeat-task-section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heartbeat-task-section__head h2 {
+  margin: 0;
+  color: var(--fg);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.heartbeat-task-section__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  color: var(--fg-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.heartbeat-task-section__toolbar {
+  padding: 0;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search {
+  width: min(100%, 320px);
+  max-width: 320px;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search,
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn {
+  height: 34px;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search {
+  padding-inline: 10px;
+  border-radius: 8px;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn {
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+@media screen and (max-width: 1180px) {
+  .heartbeat-modal--embedded .heartbeat-template-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .heartbeat-modal--embedded .heartbeat-modal__header--workspace {
+    padding: 28px 20px 20px;
+  }
+
+  .heartbeat-modal--embedded .heartbeat-modal__body--workspace {
+    padding: 0 20px 48px;
+  }
+
+  .heartbeat-embedded-templates__head {
+    align-items: flex-start;
+  }
+
+  .heartbeat-modal--embedded .heartbeat-template-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .heartbeat-page-heading {
+    align-items: stretch;
+  }
+
+  .heartbeat-modal__header .heartbeat-page-heading__copy h1 {
+    font-size: 24px;
+  }
+
+  .heartbeat-task-section__toolbar {
+    align-items: stretch;
+  }
+
+  .heartbeat-modal__body--workspace .heartbeat-toolbar__search {
+    width: 100%;
+    max-width: none;
+    flex-basis: 100%;
+  }
+}
+
+.heartbeat-template-card-wrap {
+  position: relative;
+  min-height: 92px;
+}
+
+.heartbeat-template-card {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: auto auto;
+  gap: 4px 9px;
+  min-height: 92px;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-2, var(--bg));
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.heartbeat-template-card:hover {
+  border-color: var(--accent);
+  background: var(--hover-bg);
+}
+
+.heartbeat-template-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.heartbeat-template-card-wrap--confirming .heartbeat-template-card {
+  border-color: color-mix(in srgb, var(--err) 28%, var(--border));
+  background: color-mix(in srgb, var(--err) 6%, var(--surface-2, var(--bg)));
+}
+
+.heartbeat-template-card--deletable {
+  padding-right: 38px;
+}
+
+.heartbeat-template-card__delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.heartbeat-template-card__delete:hover {
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+}
+
+.heartbeat-template-card__confirm {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 2px 4px 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--err) 24%, var(--border));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--err) 8%, var(--bg));
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+  color: var(--fg-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.heartbeat-template-card__confirm-label {
+  color: color-mix(in srgb, var(--err) 82%, var(--fg-muted));
+}
+
+.heartbeat-template-card__confirm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0 7px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-muted);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.heartbeat-template-card__confirm-btn:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.heartbeat-template-card__confirm-btn--danger {
+  border-color: color-mix(in srgb, var(--err) 52%, transparent);
+  background: color-mix(in srgb, var(--err) 82%, var(--bg));
+  color: var(--danger-fg, #fff);
+}
+
+.heartbeat-template-card__confirm-btn--danger:hover {
+  background: color-mix(in srgb, var(--err) 90%, var(--bg));
+  color: var(--danger-fg, #fff);
+}
+
+.heartbeat-template-card__icon {
+  grid-row: 1 / span 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+
+.heartbeat-template-card__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.heartbeat-template-card__desc {
+  min-width: 0;
+  color: var(--fg-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.heartbeat-toolbar__search-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fg-faint);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+.heartbeat-toolbar__search-clear:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.heartbeat-toolbar__status {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.heartbeat-toolbar__status-btn {
+  padding: 0 8px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background 0.1s, border-color 0.1s, color 0.1s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.heartbeat-toolbar__status-btn:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+.heartbeat-toolbar__status-btn--active {
+  background: rgba(128, 128, 128, 0.08);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.heartbeat-scope-filter {
+  position: relative;
+}
+
+/* ── generic button (used in editor) ─────────────────────────── */
+
+.heartbeat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--card-bg);
+  color: var(--fg);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.heartbeat-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-focus);
+}
+.heartbeat-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.heartbeat-btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.heartbeat-btn--primary:hover {
+  opacity: 0.88;
+  background: var(--accent);
+}
+.heartbeat-btn--danger {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--err);
+}
+.heartbeat-btn--danger:hover {
+  background: color-mix(in srgb, var(--err) 10%, transparent);
+  border-color: var(--err);
+}
+
+.heartbeat-editor__confirm-del {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.heartbeat-editor__validation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(183, 121, 31, 0.3);
+  border-radius: 7px;
+  background: rgba(183, 121, 31, 0.08);
+  color: #b7791f;
+  font-size: 12px;
+}
+
+/* ── empty / loading ──────────────────────────────────────────── */
+
+.heartbeat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 0;
+  color: var(--fg-muted);
+  font-size: 13px;
+}
+
+.heartbeat-empty--tasks {
+  flex-direction: row;
+  justify-content: center;
+  gap: 14px;
+  min-height: 112px;
+  padding: 20px 24px;
+  border: 1px dashed color-mix(in srgb, var(--fg-faint) 28%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-elev) 72%, transparent);
+}
+
+.heartbeat-empty__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 11%, transparent);
+  color: var(--accent);
+}
+
+.heartbeat-empty__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  margin-right: 8px;
+}
+
+.heartbeat-empty__copy strong {
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.heartbeat-empty__copy span {
+  color: var(--fg-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 620px) {
+  .heartbeat-page-heading {
+    flex-direction: column;
+  }
+
+  .heartbeat-modal__header .heartbeat-page-heading__add {
+    align-self: flex-start;
+  }
+
+  .heartbeat-empty--tasks {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .heartbeat-empty__copy {
+    margin-right: 0;
+  }
+}
+
+@keyframes heartbeat-keyframe-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+.heartbeat-pulse {
+  animation: heartbeat-keyframe-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes heartbeat-keyframe-spin {
+  to { transform: rotate(360deg); }
+}
+.heartbeat-spin {
+  animation: heartbeat-keyframe-spin 0.8s linear infinite;
+}
+
+/* ── run detail ──────────────────────────────────────────────── */
+
+.heartbeat-run-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.heartbeat-run-detail__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.heartbeat-run-detail__summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.heartbeat-run-detail__summary-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heartbeat-run-detail__summary-main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.heartbeat-run-detail__summary-main span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.heartbeat-run-detail__summary-main .heartbeat-run-detail__eyebrow {
+  overflow: visible;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.heartbeat-run-detail__summary-main svg {
+  flex: 0 0 auto;
+}
+
+.heartbeat-run-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.heartbeat-run-fact {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 7px;
+  background: var(--bg);
+}
+
+.heartbeat-run-fact--wide {
+  grid-column: 1 / -1;
+}
+
+.heartbeat-run-fact span {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 10.5px;
+  font-weight: 650;
+  color: var(--fg-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.heartbeat-run-fact strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.heartbeat-run-fact__mono {
+  font-family: var(--mono);
+  font-size: 11px !important;
+}
+
+.heartbeat-run-detail__block {
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.heartbeat-run-detail__block--error {
+  border-color: rgba(217, 72, 15, 0.35);
+}
+
+.heartbeat-run-detail__block--blocked {
+  border-color: rgba(183, 121, 31, 0.35);
+}
+
+.heartbeat-run-detail__block--result {
+  min-height: 120px;
+}
+
+.heartbeat-run-detail__block--technical-error {
+  background: var(--bg);
+}
+
+.heartbeat-run-detail__block-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.heartbeat-run-detail__block h3 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.heartbeat-run-detail__block-head h3 {
+  margin: 4px 0 0;
+  flex: 0 0 auto;
+}
+
+.heartbeat-run-detail__block p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.heartbeat-run-detail__block pre {
+  max-height: 220px;
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+.heartbeat-run-detail__result-markdown {
+  display: flow-root;
+  overflow: visible;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+.heartbeat-run-detail__result-markdown .md {
+  font-size: inherit;
+}
+
+.heartbeat-run-detail__result-markdown .md > :first-child {
+  margin-top: 0;
+}
+
+.heartbeat-run-detail__result-markdown .md > :last-child {
+  margin-bottom: 0;
+}
+
+.heartbeat-run-detail__empty-result {
+  color: var(--fg-faint) !important;
+}
+
+.heartbeat-run-detail__note {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.heartbeat-run-detail__note--error {
+  color: #d9480f;
+}
+
+.heartbeat-run-detail__export {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 0;
+}
+
+.heartbeat-run-detail__export button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 7px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg-muted);
+  font-size: 10.5px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.heartbeat-run-detail__export button:hover:not(:disabled) {
+  border-color: var(--border);
+  color: var(--fg);
+}
+
+.heartbeat-run-detail__export button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.heartbeat-run-detail__technical {
+  margin-top: 4px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.heartbeat-run-detail__technical--result {
+  margin-top: 0;
+}
+
+.heartbeat-run-detail__technical summary {
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--fg-muted);
+}
+
+.heartbeat-run-detail__technical[open] summary {
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.heartbeat-run-detail__technical .heartbeat-run-detail__grid {
+  padding: 10px 12px;
+}
+
+.heartbeat-run-detail__result-panel {
+  padding: 10px 12px 12px;
+}
+
+.heartbeat-run-detail__technical--result .heartbeat-run-detail__block-head {
+	justify-content: space-between;
+}
+
+.heartbeat-run-detail__artifacts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.heartbeat-run-detail__empty-section {
+  margin: 0;
+  padding: 12px;
+  color: var(--fg-faint);
+  font-size: 12px;
+}
+
+.heartbeat-run-detail__technical > .heartbeat-run-detail__block {
+  margin: 0 12px 10px;
+}
+
+.heartbeat-run-events {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.heartbeat-run-events li {
+  display: grid;
+  grid-template-columns: 58px 92px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  min-width: 0;
+  font-size: 11.5px;
+}
+
+.heartbeat-run-events span {
+  color: var(--fg-faint);
+  white-space: nowrap;
+}
+
+.heartbeat-run-events strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 650;
+  color: var(--fg-muted);
+}
+
+.heartbeat-run-events em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  font-style: normal;
+  color: var(--fg);
+}
+
+.heartbeat-run-timeline {
+  margin: 0;
+  padding: 12px;
+  list-style: none;
+}
+
+.heartbeat-run-timeline li {
+  display: grid;
+  grid-template-columns: 70px 10px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  min-width: 0;
+}
+
+.heartbeat-run-timeline li + li {
+  margin-top: 10px;
+}
+
+.heartbeat-run-timeline time {
+  padding-top: 1px;
+  color: var(--fg-faint);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.heartbeat-run-timeline__dot {
+  width: 7px;
+  height: 7px;
+  margin-top: 4px;
+  border: 2px solid var(--card-bg);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.heartbeat-run-timeline div {
+  min-width: 0;
+}
+
+.heartbeat-run-timeline strong,
+.heartbeat-run-timeline p {
+  overflow-wrap: anywhere;
+}
+
+.heartbeat-run-timeline strong {
+  display: block;
+  font-size: 11.5px;
+  color: var(--fg-muted);
+}
+
+.heartbeat-run-timeline p {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--fg);
+}
+
+.heartbeat-run-deliveries {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 4px 12px 8px;
+  list-style: none;
+}
+
+.heartbeat-run-deliveries li {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.8fr) auto minmax(120px, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 0;
+}
+
+.heartbeat-run-deliveries li + li {
+  border-top: 1px solid var(--border-soft);
+}
+
+.heartbeat-run-deliveries__target {
+  min-width: 0;
+}
+
+.heartbeat-run-deliveries__target strong,
+.heartbeat-run-deliveries__target span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-run-deliveries__target strong {
+  color: var(--fg);
+  font-size: 11.5px;
+}
+
+.heartbeat-run-deliveries__target span {
+  margin-top: 2px;
+  color: var(--fg-faint);
+  font-family: var(--mono);
+  font-size: 10.5px;
+}
+
+.heartbeat-run-deliveries__status {
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--border-soft);
+  color: var(--fg-muted);
+  font-size: 10.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.heartbeat-run-deliveries__status--succeeded {
+  color: #2f9e44;
+  background: rgba(47, 158, 68, 0.14);
+}
+
+.heartbeat-run-deliveries__status--failed,
+.heartbeat-run-deliveries__status--canceled {
+  color: #d9480f;
+  background: rgba(217, 72, 15, 0.14);
+}
+
+.heartbeat-run-deliveries__status--sending {
+  color: #1c7ed6;
+  background: rgba(28, 126, 214, 0.12);
+}
+
+.heartbeat-run-deliveries em {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--fg-muted);
+  font-size: 11px;
+  font-style: normal;
+}
+
+.heartbeat-run-deliveries button {
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.heartbeat-run-deliveries button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media screen and (max-width: 620px) {
+  .heartbeat-run-detail__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .heartbeat-run-fact--wide {
+    grid-column: auto;
+  }
+
+  .heartbeat-run-deliveries li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .heartbeat-run-deliveries em {
+    grid-column: 1 / -1;
+  }
+
+  .heartbeat-run-timeline li {
+    grid-template-columns: 58px 8px minmax(0, 1fr);
+  }
+}
+
+/* ── filter menu (popover) ──────────────────────────────────── */
+
+.heartbeat-filter-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.heartbeat-filter-menu__option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+.heartbeat-filter-menu__option:hover {
+  background: var(--accent-soft, rgba(128,128,128,0.1));
+}
+.heartbeat-filter-menu__option--selected {
+  color: var(--accent);
+  font-weight: 600;
+}
+.heartbeat-filter-menu__check {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── tasklist ─────────────────────────────────────────────────── */
+
+.heartbeat-tasklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── card ─────────────────────────────────────────────────────── */
+
+.heartbeat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+
+.heartbeat-card:hover {
+  border-color: var(--border);
+}
+
+.heartbeat-card--disabled {
+  opacity: 0.55;
+}
+
+.heartbeat-card--quota-paused {
+  border-color: color-mix(in srgb, var(--warning, #d99a2b) 30%, var(--border-soft));
+}
+
+.heartbeat-card__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heartbeat-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--fg-faint);
+}
+
+.heartbeat-card__dot--on {
+  background: #4caf50;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.5);
+}
+
+.heartbeat-card__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.heartbeat-card__title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.heartbeat-card__title-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  text-align: left;
+  font: inherit;
+  transition: background 0.12s;
+  overflow: hidden;
+}
+.heartbeat-card__title-btn:hover {
+  background: var(--hover-bg);
+}
+
+.heartbeat-card__title-scope {
+  flex-shrink: 0;
+  font-size: 11.5px;
+  color: var(--fg-faint);
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.heartbeat-card__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.heartbeat-card .heartbeat-card__head-actions .heartbeat-card__open-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.heartbeat-card__open-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+.heartbeat-card__open-btn:hover:not(:disabled) {
+  background: var(--hover-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.heartbeat-card__open-btn--danger:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--err) 36%, transparent);
+  background: color-mix(in srgb, var(--err) 10%, transparent);
+  color: var(--err);
+}
+.heartbeat-card__open-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.heartbeat-card__badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--border-soft);
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.heartbeat-card__badge--on {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+
+.heartbeat-card__badge--quota {
+  background: color-mix(in srgb, var(--warning, #d99a2b) 16%, transparent);
+  color: var(--warning, #c27b00);
+  text-transform: none;
+}
+
+/* ── toggle ───────────────────────────────────────────────────── */
+
+.heartbeat-card__toggle {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 9px;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.heartbeat-card__toggle:hover {
+  background: var(--fg-faint);
+}
+
+.heartbeat-card__toggle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.heartbeat-card__toggle--on {
+  background: #4caf50;
+}
+
+.heartbeat-card__toggle--on:hover {
+  background: #43a047;
+}
+
+.heartbeat-card__toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.heartbeat-card__toggle--on .heartbeat-card__toggle-knob {
+  transform: translateX(14px);
+}
+
+/* ── compact meta in single row ──────────────────────────────── */
+
+.heartbeat-card__meta-item--compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--fg-faint);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.heartbeat-card__meta-sep {
+  color: var(--border);
+}
+
+.heartbeat-card__runs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 16px;
+}
+
+.heartbeat-card__run {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 2px 6px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-muted);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.heartbeat-card__run:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.heartbeat-card__run--starting {
+  cursor: default;
+}
+
+.heartbeat-card__run--starting:hover {
+  background: transparent;
+  color: var(--fg-muted);
+}
+
+.heartbeat-card__run-time {
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--fg-faint);
+}
+
+.heartbeat-card__run-reason {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+}
+
+.heartbeat-run-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 5px;
+  font-size: 10.5px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--fg-muted);
+  background: var(--border-soft);
+}
+
+.heartbeat-run-status--running {
+  color: #1c7ed6;
+  background: rgba(28, 126, 214, 0.12);
+}
+
+.heartbeat-run-status--success {
+  color: #2f9e44;
+  background: rgba(47, 158, 68, 0.14);
+}
+
+.heartbeat-run-status--warning {
+  color: #b7791f;
+  background: rgba(183, 121, 31, 0.14);
+}
+
+.heartbeat-run-status--danger {
+  color: #d9480f;
+  background: rgba(217, 72, 15, 0.14);
+}
+
+.heartbeat-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+
+.heartbeat-card__btn:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.heartbeat-card__btn--danger:hover {
+  color: var(--err);
+  background: rgba(128, 128, 128, 0.1);
+}
+
+.heartbeat-card__confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  padding: 2px 4px 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--err) 24%, var(--border));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--err) 8%, transparent);
+  font-size: 11.5px;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+.heartbeat-card__confirm-label {
+  color: color-mix(in srgb, var(--err) 82%, var(--fg-muted));
+}
+
+.heartbeat-card__confirm .heartbeat-card__btn {
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+}
+
+.heartbeat-card__confirm .heartbeat-card__btn--danger {
+  border-color: color-mix(in srgb, var(--err) 52%, transparent);
+  background: color-mix(in srgb, var(--err) 82%, var(--bg));
+  color: var(--danger-fg, #fff);
+}
+
+.heartbeat-card__confirm .heartbeat-card__btn--danger:hover {
+  background: color-mix(in srgb, var(--err) 90%, var(--bg));
+  color: var(--danger-fg, #fff);
+}
+
+/* ── editor ───────────────────────────────────────────────────── */
+
+.heartbeat-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 16px 0;
+}
+
+.heartbeat-task-section__count--workspace {
+	position: absolute;
+	top: 13px;
+	right: 24px;
+	z-index: 2;
+}
+
+.heartbeat-editor__online-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 8px;
+  color: #2563eb;
+  background: rgba(59, 130, 246, 0.1);
+  font-size: 12px;
+}
+
+.heartbeat-editor__online-notice strong {
+  padding: 2px 7px;
+  border-radius: 5px;
+  background: rgba(59, 130, 246, 0.14);
+}
+
+.heartbeat-editor__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.heartbeat-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.heartbeat-editor__field > label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── editor text inputs ───────────────────────────────────────── */
+
+.heartbeat-editor__input {
+  height: 32px;
+  padding: 0 11px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.heartbeat-editor__textarea {
+  padding: 8px 11px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: inherit;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.heartbeat-editor__input:focus,
+.heartbeat-editor__textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.heartbeat-editor__textarea {
+  resize: none;
+  min-height: 80px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.heartbeat-editor__prompt-box {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.heartbeat-editor__prompt-box:focus-within {
+  border-color: var(--accent);
+}
+
+.heartbeat-editor__textarea--prompt {
+  width: 100%;
+  min-height: 140px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.heartbeat-editor__textarea--prompt:focus {
+  border-color: transparent;
+}
+
+.heartbeat-editor__prompt-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.heartbeat-editor__tool-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.heartbeat-editor__tool-block .heartbeat-editor-select {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.heartbeat-editor__tool-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--fg-faint);
+}
+
+.heartbeat-editor-select {
+  position: relative;
+  min-width: 0;
+}
+
+.heartbeat-editor-select--freq {
+  flex: 0 0 112px;
+}
+
+.heartbeat-editor-select--freq-day,
+.heartbeat-editor-select--freq-unit {
+  flex-basis: 82px;
+}
+
+.heartbeat-editor-select--source-type {
+  flex: 0 0 112px;
+}
+
+.heartbeat-editor-select--source-format {
+  flex: 0 0 92px;
+}
+
+.heartbeat-editor-select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--bg) 82%, var(--bg-elev));
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.heartbeat-editor-select__trigger:hover,
+.heartbeat-editor-select__trigger:focus-visible {
+  outline: none;
+  background: var(--hover-bg);
+  border-color: var(--border-focus);
+}
+
+.heartbeat-editor-select__value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.heartbeat-editor-select__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor-select__visual {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-elev));
+  color: var(--fg-muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.heartbeat-editor-select__visual--expert {
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-elev));
+}
+
+.heartbeat-editor-select__visual-fallback {
+  line-height: 1;
+}
+
+.heartbeat-editor-select__visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.heartbeat-editor-select__menu {
+  max-height: min(320px, 70vh);
+  overflow-y: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+.heartbeat-editor-select__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heartbeat-editor-select__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 30px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.heartbeat-editor-select__option:hover,
+.heartbeat-editor-select__option:focus-visible {
+  outline: none;
+  background: var(--accent-soft, rgba(128,128,128,0.1));
+}
+
+.heartbeat-editor-select__option--selected {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.heartbeat-editor-select__option-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.heartbeat-editor-select__check {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.heartbeat-editor-select__trigger.heartbeat-editor-multiselect__trigger {
+  height: auto;
+  min-height: 32px;
+  padding-block: 4px;
+}
+
+.heartbeat-editor-multiselect__values {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 4px;
+  min-width: 0;
+  max-height: 74px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.heartbeat-editor-multiselect__placeholder {
+  overflow: hidden;
+  color: var(--fg-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor-multiselect__tag {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 22px;
+  padding: 1px 7px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-elev));
+  color: var(--fg);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.heartbeat-editor-multiselect__tag > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor-multiselect__option {
+  cursor: pointer;
+}
+
+.heartbeat-editor-multiselect__option:has(input:focus-visible) {
+  outline: none;
+  background: var(--accent-soft, rgba(128,128,128,0.1));
+}
+
+.heartbeat-editor-multiselect__option input {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.heartbeat-editor-multiselect__option-content {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.heartbeat-editor-multiselect__option-content small {
+  overflow: hidden;
+  max-width: 100%;
+  color: var(--fg-faint);
+  font-size: 11px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor-multiselect__option--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.heartbeat-editor-multiselect__empty {
+  padding: 7px 8px;
+  color: var(--fg-faint);
+  font-size: 12px;
+}
+
+/* ── editor rows ──────────────────────────────────────────────── */
+
+.heartbeat-editor__row {
+  display: flex;
+  gap: 12px;
+}
+
+.heartbeat-editor__row > .heartbeat-editor__field {
+  flex: 0;
+}
+
+.heartbeat-editor__field--grow {
+  flex: 1 !important;
+  min-width: 0;
+}
+
+.heartbeat-editor__field--auto {
+  flex: 0 1 auto !important;
+}
+
+.heartbeat-editor__field--toggle {
+  min-width: 180px;
+}
+
+.heartbeat-editor__optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--fg-faint);
+  font-size: 10.5px;
+}
+
+.heartbeat-editor__mode-hint {
+  font-size: 11px;
+  color: var(--fg-muted);
+  line-height: 1.4;
+}
+
+.heartbeat-editor__tw-add {
+  cursor: pointer;
+  color: var(--fg-faint);
+}
+
+.heartbeat-editor__tw-sep {
+  font-size: 11px;
+}
+
+.heartbeat-editor__tw-clear {
+  padding: 0 4px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--fg-muted);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ── frequency: unified components ──────────────────────────────── */
+/* All freq-* components share height: 32px for visual consistency */
+
+.heartbeat-editor__freq-interval,
+.heartbeat-editor__cycle-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heartbeat-editor__freq-label {
+  font-size: 13px;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+.heartbeat-editor__freq-input {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  width: 60px;
+}
+.heartbeat-editor__freq-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.heartbeat-editor__freq-input--time {
+  width: 100px;
+  font-family: var(--font-ui);
+}
+
+/* ── weekday buttons ──────────────────────────────────────────── */
+
+.heartbeat-editor__weekdays {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.heartbeat-editor__weekday-btn {
+  height: 32px;
+  min-width: 38px;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.heartbeat-editor__weekday-btn:hover {
+  background: var(--hover-bg);
+}
+.heartbeat-editor__weekday-btn--on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.heartbeat-editor__weekday-btn--on:hover {
+  opacity: 0.88;
+}
+
+/* ── cycle wrap ────────────────────────────────────────────────── */
+
+.heartbeat-editor__cycle-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── editor toggle switch ─────────────────────────────────────── */
+
+.heartbeat-editor__toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.heartbeat-editor__toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.heartbeat-editor__toggle:hover {
+  background: var(--fg-faint);
+}
+
+.heartbeat-editor__toggle--on {
+  background: #4caf50;
+}
+
+.heartbeat-editor__toggle--on:hover {
+  background: #43a047;
+}
+
+.heartbeat-editor__toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.heartbeat-editor__toggle--on .heartbeat-editor__toggle-knob {
+  transform: translateX(16px);
+}
+
+.heartbeat-editor__toggle-label {
+  font-size: 12px;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+/* ── editor actions ───────────────────────────────────────────── */
+
+.heartbeat-business {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--card-bg);
+}
+
+.heartbeat-business__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.heartbeat-business__head h3 {
+  margin: 0 0 3px;
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.heartbeat-business__head p {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+.heartbeat-business__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.heartbeat-business__grid label,
+.heartbeat-business__label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.heartbeat-business__sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heartbeat-business-source {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.heartbeat-business-source--inactive {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heartbeat-business-source__title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.heartbeat-business-source__title strong {
+  font-size: 12.5px;
+  color: var(--fg);
+}
+
+.heartbeat-business-source__title span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+
+.heartbeat-business-source__controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.heartbeat-business-source__location {
+  flex: 1;
+  min-width: 0;
+}
+
+.heartbeat-business-file {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "button name"
+    "button path";
+  align-items: center;
+  gap: 2px 8px;
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 5px 8px;
+  border: 1px dashed var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+}
+
+.heartbeat-business-file--drag {
+  border-color: var(--accent);
+  background: var(--hover-bg);
+}
+
+.heartbeat-business-file__pick {
+  grid-area: button;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.heartbeat-business-file__pick:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.heartbeat-business-file__name,
+.heartbeat-business-file__path {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-business-file__name {
+  grid-area: name;
+  font-size: 12px;
+  color: var(--fg);
+}
+
+.heartbeat-business-file__path {
+  grid-area: path;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--fg-faint);
+}
+
+.heartbeat-business-source__rows {
+  flex: 1;
+  min-height: 92px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.heartbeat-business-source__error {
+  font-size: 11px;
+  color: #d9480f;
+}
+
+.heartbeat-editor__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 24px 0 16px;
+}
+
+.heartbeat-editor__template-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--fg-muted);
+  user-select: none;
+}
+
+.heartbeat-editor__actions > .heartbeat-editor__save-feedback {
+  flex: 0 0 100%;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  overflow-wrap: anywhere;
+}
+
+.heartbeat-editor__actions > .heartbeat-editor__save-feedback--error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--err) 24%, var(--border-soft));
+  border-radius: 6px;
+  font-size: var(--font-control);
+  color: var(--err);
+}
+
+.heartbeat-editor__save-feedback--error > svg {
+  flex: 0 0 16px;
+  margin-top: 2px;
+}
+
+.heartbeat-editor__save-feedback--error > .banner__msg {
+  min-width: 0;
+  color: var(--fg);
+  font-weight: 400;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.heartbeat-editor__template-toggle input {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── scope selector ───────────────────────────────────────────── */
+
+.heartbeat-editor__scope-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heartbeat-editor__connector-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.heartbeat-editor__connector-grid .heartbeat-scope-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.heartbeat-editor__effective-range {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.heartbeat-editor__effective-range > span {
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+.heartbeat-editor__datetime-input {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.heartbeat-editor__datetime-input .heartbeat-editor__input {
+  width: 100%;
+}
+
+.heartbeat-editor__input--empty-datetime::-webkit-datetime-edit {
+  color: transparent;
+}
+
+.heartbeat-editor__datetime-input > span {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  overflow: hidden;
+  max-width: calc(100% - 54px);
+  transform: translateY(-50%);
+  color: var(--fg-muted);
+  font-size: 14px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.heartbeat-editor__datetime-input:focus-within > span {
+  opacity: 0;
+}
+
+.heartbeat-editor__date-picker {
+  position: relative;
+}
+
+.heartbeat-editor__date-picker-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--heartbeat-ref-surface);
+  color: var(--fg-muted);
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.heartbeat-editor__date-picker-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor__date-picker-trigger > svg {
+  flex: 0 0 auto;
+}
+
+.heartbeat-editor__date-picker-trigger:hover {
+  border-color: var(--border);
+}
+
+.heartbeat-editor__date-picker-trigger:focus-visible,
+.heartbeat-editor__date-picker-trigger[aria-expanded="true"] {
+  outline: none;
+  border-color: var(--border-focus);
+}
+
+.heartbeat-editor__date-picker-menu {
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  background: var(--heartbeat-ref-surface);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+.heartbeat-editor__preview ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 2px 0 0;
+  padding-left: 20px;
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+.heartbeat-scope-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  box-sizing: border-box;
+}
+
+.heartbeat-scope-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-focus);
+}
+
+.heartbeat-scope-btn--active {
+  background: rgba(128, 128, 128, 0.08);
+  border-color: var(--border);
+  color: var(--fg);
+}
+
+/* ── project dropdown ─────────────────────────────────────────── */
+
+.heartbeat-project-wrap {
+  position: relative;
+}
+
+.heartbeat-project-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  min-width: 220px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 4px;
+}
+
+.heartbeat-project-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 12.5px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.heartbeat-project-menu__item:hover {
+  background: var(--hover-bg);
+}
+
+.heartbeat-project-menu__item--active {
+  background: rgba(128, 128, 128, 0.08);
+  color: var(--accent);
+}
+
+.heartbeat-project-menu__current {
+  font-size: 10px;
+  color: var(--fg-faint);
+  margin-left: 8px;
+}
+
+.heartbeat-project-menu__empty {
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+/* ── Sidebar header automation button ── */
+
+.sidebar__hb-header {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 2px;
+}
+
+.sidebar__hb-header--new {
+  padding-top: 2px;
+  padding-bottom: 0;
+}
+
+.sidebar__hb-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-faint);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s;
+}
+
+.sidebar__hb-add:hover {
+  background: var(--hover-bg);
+  color: var(--fg);
+}
+
+.sidebar__hb-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 400;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fg-dim);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: color 0.12s, background 0.12s;
+}
+
+.sidebar__hb-btn:hover {
+  background: var(--sidebar-hover);
+  color: var(--fg);
+}
+
+/* ── Project collapsible section ── */
+
+.sidebar__project-section {
+  margin-top: 8px;
+  padding: 0 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar__project-section .project-tree__header-title {
+  display: none;
+}
+
+.sidebar__project-section .project-tree__header {
+  position: absolute;
+  top: 2px;
+  right: 12px;
+  border: none;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.sidebar__project-section:hover .project-tree__header {
+  opacity: 1;
+}
+
+.sidebar__project-section .project-tree {
+  --project-tree-edge-gap: 12px;
+}
+
+.sidebar__project-section .sidebar__section--projects {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar__project-section .project-tree > .project-tree__list {
+  margin: 0;
+  padding: 0;
+}
+
+/* 项目树行与顶部菜单宽度对齐 */
+:root[data-theme-style] .sidebar__project-section .project-tree__folder,
+:root[data-theme-style] .sidebar__project-section .project-tree__topic {
+  margin-right: 8px;
+}
+
+:root[data-theme-style] .project-tree__search {
+  margin: 0 12px;
+}
+
+:root[data-theme-style] .project-tree__topic {
+  padding-right: 0;
+}
+
+/* 项目文件夹右侧的新建话题按钮悬停显示（上游 styles.css 已内置） */
+
+:root[data-theme-style] .project-tree__topic-label {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+:root[data-theme-style] .project-tree__folder-label {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* 项目文件夹右侧 + 图标默认隐藏，悬停显示 */
+.sidebar__project-section .project-tree__new-topic {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+
+.sidebar__project-section .project-tree__folder:hover .project-tree__new-topic,
+.sidebar__project-section .project-tree__folder:focus-within .project-tree__new-topic {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:root[data-theme-style] .project-tree__topic--active .project-tree__topic-label {
+  color: var(--fg);
+  font-weight: 400;
+}
+
+.sidebar__project-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  height: 30px;
+}
+
+.sidebar__project-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 400;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fg-dim);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: color 0.12s;
+}
+
+.sidebar__project-header:hover {
+  color: var(--fg);
+}
+
+.sidebar__hb-label {
+  flex: 1;
+  text-align: left;
+}
+
+.sidebar__hb-hint {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--fg-faint);
+  letter-spacing: normal;
+}
+
+/* ===================================================================
+ * WorkBuddy automation visual alignment
+ *
+ * Presentation-only overrides: existing controls, state, and event
+ * handlers remain unchanged.
+ * ================================================================ */
+
+.heartbeat-modal {
+  --heartbeat-ref-surface: var(--bg-elev);
+  --heartbeat-ref-subtle: color-mix(in srgb, var(--fg) 4%, transparent);
+  --heartbeat-ref-hover: color-mix(in srgb, var(--fg) 7%, transparent);
+  --heartbeat-ref-control: color-mix(in srgb, var(--fg) 8%, transparent);
+  --heartbeat-ref-control-hover: color-mix(in srgb, var(--fg) 12%, transparent);
+  --heartbeat-ref-disabled: color-mix(in srgb, var(--fg) 34%, transparent);
+  --heartbeat-ref-primary: var(--fg);
+  --heartbeat-ref-primary-fg: var(--chat-bg);
+}
+
+.heartbeat-backdrop:not(.heartbeat-backdrop--embedded) {
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: none;
+}
+
+.heartbeat-backdrop:not(.heartbeat-backdrop--embedded) .heartbeat-modal {
+  width: min(600px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  border-color: transparent;
+  border-radius: 12px;
+  background: var(--heartbeat-ref-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+}
+
+.heartbeat-modal--embedded {
+  overflow: hidden;
+  background: var(--chat-bg);
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__header--workspace {
+  width: 100%;
+  min-height: 72px;
+  padding: 12px 24px 8px;
+}
+
+.heartbeat-page-heading {
+  align-items: center;
+  gap: 16px;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__copy h1 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+.heartbeat-page-heading__copy p {
+  margin-top: 4px;
+  color: var(--fg-muted);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__add,
+.heartbeat-toolbar__btn--primary,
+.heartbeat-btn--primary {
+  border-color: var(--heartbeat-ref-primary);
+  background: var(--heartbeat-ref-primary);
+  color: var(--heartbeat-ref-primary-fg);
+  box-shadow: none;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__add {
+  height: 32px;
+  padding-inline: 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.heartbeat-modal__header .heartbeat-page-heading__add:hover:not(:disabled),
+.heartbeat-toolbar__btn--primary:hover:not(:disabled),
+.heartbeat-btn--primary:hover:not(:disabled) {
+  border-color: var(--heartbeat-ref-primary);
+  background: var(--heartbeat-ref-primary);
+  color: var(--heartbeat-ref-primary-fg);
+  opacity: 0.88;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace {
+  width: 100%;
+  padding: 0 24px 20px;
+  gap: 0;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace:hover {
+  scrollbar-color: var(--border) transparent;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace::-webkit-scrollbar,
+.heartbeat-editor::-webkit-scrollbar,
+.heartbeat-run-detail::-webkit-scrollbar {
+  width: 6px;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace::-webkit-scrollbar-track,
+.heartbeat-editor::-webkit-scrollbar-track,
+.heartbeat-run-detail::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace::-webkit-scrollbar-thumb,
+.heartbeat-editor::-webkit-scrollbar-thumb,
+.heartbeat-run-detail::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: transparent;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace:hover::-webkit-scrollbar-thumb,
+.heartbeat-editor:hover::-webkit-scrollbar-thumb,
+.heartbeat-run-detail:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--fg) 20%, transparent);
+}
+
+.heartbeat-embedded-templates {
+  gap: 10px;
+  margin: 8px 0 40px;
+}
+
+.heartbeat-embedded-templates__head {
+  min-height: 32px;
+}
+
+.heartbeat-embedded-templates__head h2,
+.heartbeat-task-section__head h2 {
+  color: var(--fg-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.heartbeat-embedded-templates__head p {
+  margin-top: 2px;
+  color: var(--fg-faint);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.heartbeat-modal--embedded .heartbeat-template-grid {
+  gap: 10px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card-wrap,
+.heartbeat-embedded-templates .heartbeat-template-card {
+  min-height: 66px;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card {
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 14px;
+  padding: 12px 16px;
+  border-color: var(--border-soft);
+  border-radius: 10px;
+  background: var(--heartbeat-ref-subtle);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card:hover {
+  border-color: var(--border);
+  background: var(--heartbeat-ref-hover);
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg-muted);
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.heartbeat-embedded-templates .heartbeat-template-card__desc {
+  margin-top: 2px;
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+.heartbeat-task-section {
+  gap: 0;
+}
+
+.heartbeat-task-section__head {
+  min-height: 36px;
+  padding: 0 8px;
+}
+
+.heartbeat-task-section__count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: var(--heartbeat-ref-control);
+  font-size: 11px;
+}
+
+.heartbeat-task-section__toolbar {
+  min-height: 56px;
+  padding: 10px 0;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search {
+  width: min(100%, 200px);
+  max-width: 200px;
+  min-width: 80px;
+  height: 32px;
+  padding-inline: 10px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: var(--heartbeat-ref-control);
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search:hover,
+.heartbeat-modal__body--workspace .heartbeat-toolbar__search:focus-within {
+  border-color: transparent;
+  background: var(--heartbeat-ref-control-hover);
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn {
+  height: 32px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: var(--heartbeat-ref-control);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn:hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--heartbeat-ref-control-hover);
+}
+
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn--primary,
+.heartbeat-modal__body--workspace .heartbeat-toolbar__btn--primary:hover:not(:disabled) {
+  border-color: var(--heartbeat-ref-primary);
+  background: var(--heartbeat-ref-primary);
+  color: var(--heartbeat-ref-primary-fg);
+}
+
+.heartbeat-tasklist {
+  gap: 0;
+}
+
+.heartbeat-card {
+  gap: 0;
+  min-height: 36px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  transition: background-color 0.15s ease;
+}
+
+.heartbeat-card:hover {
+  border-color: transparent;
+  border-radius: 8px;
+  background: var(--heartbeat-ref-hover);
+}
+
+.heartbeat-card--disabled {
+  opacity: 1;
+}
+
+.heartbeat-card--quota-paused {
+  border: 0;
+  background: color-mix(in srgb, var(--warning, #d99a2b) 5%, transparent);
+}
+
+.heartbeat-card__head {
+  min-height: 36px;
+  gap: 8px;
+}
+
+.heartbeat-card__dot {
+  width: 6px;
+  height: 6px;
+  margin: 0 5px;
+  background: var(--heartbeat-ref-disabled);
+  box-shadow: none;
+}
+
+.heartbeat-card__dot--on {
+  background: #00c29a;
+  box-shadow: none;
+}
+
+.heartbeat-card__title {
+  flex: 0 1 36%;
+  max-width: 36%;
+  gap: 8px;
+}
+
+.heartbeat-card__title-btn {
+  gap: 8px;
+  padding: 0;
+  border-radius: 0;
+}
+
+.heartbeat-card__title-btn:hover {
+  background: transparent;
+}
+
+.heartbeat-card__title-text {
+  flex: 0 1 auto;
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.heartbeat-card__title-btn:hover .heartbeat-card__title-text {
+  text-decoration: underline;
+}
+
+.heartbeat-card__title-scope {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--heartbeat-ref-disabled);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  text-overflow: ellipsis;
+}
+
+.heartbeat-card__badge {
+  padding: 1px 6px;
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 10px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.heartbeat-card__meta-item--compact {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  gap: 6px;
+  color: var(--heartbeat-ref-disabled);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  text-overflow: ellipsis;
+}
+
+.heartbeat-card__meta-item--compact svg {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+}
+
+.heartbeat-card__meta-sep {
+  color: var(--heartbeat-ref-disabled);
+}
+
+.heartbeat-card__head-actions {
+  height: 24px;
+  gap: 4px;
+}
+
+.heartbeat-card__open-btn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  color: var(--fg-muted);
+}
+
+.heartbeat-card__open-btn:hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--heartbeat-ref-control-hover);
+  color: var(--fg);
+}
+
+.heartbeat-card__open-btn--danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--err) 10%, transparent);
+  color: var(--err);
+}
+
+.heartbeat-card__toggle {
+  width: 28px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--heartbeat-ref-control-hover);
+}
+
+.heartbeat-card__toggle:hover {
+  background: color-mix(in srgb, var(--fg) 18%, transparent);
+}
+
+.heartbeat-card__toggle--on,
+.heartbeat-card__toggle--on:hover {
+  background: var(--heartbeat-ref-primary);
+}
+
+.heartbeat-card__toggle-knob {
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: var(--heartbeat-ref-primary-fg);
+}
+
+.heartbeat-card__toggle--on .heartbeat-card__toggle-knob {
+  transform: translateX(12px);
+}
+
+.heartbeat-card__runs {
+  gap: 0;
+  margin: 0 0 6px 24px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.heartbeat-card__run {
+  min-height: 28px;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.heartbeat-run-status {
+  min-width: auto;
+  height: 20px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.heartbeat-run-status--running,
+.heartbeat-run-status--success,
+.heartbeat-run-status--warning,
+.heartbeat-run-status--danger {
+  background: transparent;
+}
+
+.heartbeat-card__run-time,
+.heartbeat-card__run-reason {
+  color: var(--heartbeat-ref-disabled);
+  font-size: 12px;
+}
+
+.heartbeat-empty--tasks {
+  min-height: 120px;
+  border-color: var(--border-soft);
+  border-radius: 10px;
+  background: var(--heartbeat-ref-subtle);
+}
+
+.heartbeat-empty__icon {
+  background: var(--heartbeat-ref-control);
+  color: var(--fg-muted);
+}
+
+/* Full-page edit and run-detail views mirror the reference's compact
+   56px detail header and centered form column. */
+.heartbeat-modal--embedded > .heartbeat-modal__header:not(.heartbeat-modal__header--workspace) {
+  min-height: 56px;
+  height: 56px;
+  padding: 12px 24px;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__back {
+  width: 32px;
+  height: 32px;
+  margin-left: -8px;
+  border-radius: 8px;
+}
+
+.heartbeat-editor {
+  width: min(100%, 648px);
+  margin: 0 auto;
+  padding: 16px 24px 0;
+  scroll-padding-block: 16px 88px;
+}
+
+.heartbeat-editor__online-notice {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.heartbeat-editor__online-notice strong {
+  flex: 0 0 auto;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.heartbeat-editor__online-notice span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.heartbeat-editor__fields {
+  gap: 16px;
+}
+
+.heartbeat-editor__field {
+  gap: 8px;
+}
+
+.heartbeat-editor__field > label {
+  color: var(--fg-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.heartbeat-editor__optional {
+  color: var(--fg-faint);
+  font-size: 12px;
+}
+
+.heartbeat-editor__field-error,
+.heartbeat-editor__optional.heartbeat-editor__field-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  color: var(--err);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.heartbeat-editor__field-error > svg {
+  flex-shrink: 0;
+}
+
+.heartbeat-editor [aria-invalid="true"] {
+  outline: 1px solid var(--err);
+  outline-offset: 2px;
+}
+
+.heartbeat-editor__input,
+.heartbeat-editor__freq-input,
+.heartbeat-editor-select__trigger,
+.heartbeat-scope-btn {
+  height: 32px;
+  border-color: var(--border);
+  border-radius: 8px;
+  background: var(--heartbeat-ref-surface);
+  font-size: 14px;
+}
+
+.heartbeat-editor__input:focus,
+.heartbeat-editor__freq-input:focus,
+.heartbeat-editor__textarea:focus,
+.heartbeat-editor__prompt-box:focus-within,
+.heartbeat-editor-select__trigger:focus-visible {
+  border-color: var(--border-focus);
+}
+
+.heartbeat-editor__prompt-box {
+  border-color: var(--border);
+  border-radius: 8px;
+  background: var(--heartbeat-ref-surface);
+}
+
+.heartbeat-editor__textarea--prompt {
+  min-height: 120px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.heartbeat-editor__prompt-tools {
+  padding: 8px 10px;
+  border-top-color: var(--border-soft);
+}
+
+.heartbeat-editor-select__trigger:hover {
+  border-color: var(--border);
+  background: var(--heartbeat-ref-hover);
+}
+
+.heartbeat-editor-select__menu,
+.heartbeat-project-menu {
+  border-color: var(--border);
+  border-radius: 8px;
+  background: var(--heartbeat-ref-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+}
+
+.heartbeat-editor .set-seg {
+  padding: 2px;
+  border-color: transparent;
+  border-radius: 8px;
+  background: var(--heartbeat-ref-control);
+}
+
+.heartbeat-editor .set-seg__btn {
+  min-height: 30px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg-muted);
+}
+
+.heartbeat-editor .set-seg__btn--on {
+  background: var(--heartbeat-ref-surface);
+  color: var(--fg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.heartbeat-editor__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin-top: 8px;
+  padding: 16px 0 20px;
+  border-top: 1px solid var(--border-soft);
+  background: var(--chat-bg);
+}
+
+.heartbeat-btn {
+  height: 32px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.heartbeat-btn:not(.heartbeat-btn--primary):not(.heartbeat-btn--danger) {
+  background: var(--heartbeat-ref-surface);
+}
+
+/* Full-page automation editor: the desktop workspace keeps every existing
+   control and state transition, while presenting the task draft as the
+   wide authoring canvas used by the current automation reference. */
+.layout:has(.heartbeat-editor--full-page) {
+  --sidebar-width: 0px;
+  --chrome-left-toggle-offset: 0px;
+  grid-template-columns: 0 minmax(var(--chat-min-width), 1fr) !important;
+}
+
+.layout:has(.heartbeat-editor--full-page) > .sidebar,
+.layout:has(.heartbeat-editor--full-page) > .sidebar-resizer,
+.layout:has(.heartbeat-editor--full-page) > .sidebar-expand-toggle {
+  display: none;
+}
+
+.heartbeat-modal--embedded .heartbeat-modal__body--workspace:has(.heartbeat-editor--full-page) {
+  padding: 0;
+}
+
+.heartbeat-editor--full-page {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0 8px 28px;
+  background: var(--chat-bg);
+  scroll-padding-block: 72px 32px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 8px 20px 8px 0;
+  background: var(--chat-bg);
+}
+
+.heartbeat-editor__breadcrumb {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  color: var(--fg);
+}
+
+.heartbeat-editor__breadcrumb > svg {
+  flex: 0 0 auto;
+}
+
+.heartbeat-editor__breadcrumb button {
+  padding: 0;
+  border: 0;
+  color: var(--fg-dim);
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.heartbeat-editor__breadcrumb button:hover {
+  color: var(--fg);
+}
+
+.heartbeat-editor__breadcrumb h1 {
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  color: var(--fg);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 26px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor__topbar-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__topbar-actions .heartbeat-btn {
+  min-width: 86px;
+  height: 40px;
+  padding-inline: 20px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__topbar-cancel {
+  background: var(--heartbeat-ref-control);
+  color: var(--fg);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__topbar-save,
+.heartbeat-editor--full-page .heartbeat-editor__topbar-save:hover:not(:disabled) {
+  background: var(--fg);
+  color: var(--chat-bg);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__topbar-save:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__online-notice {
+  min-height: 52px;
+  margin: 16px 0 14px;
+  padding: 10px 14px;
+  border-color: color-mix(in srgb, #3887ff 28%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, #3887ff 13%, var(--chat-bg));
+  color: #1464e8;
+}
+
+.heartbeat-editor__online-notice-close {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.heartbeat-editor__online-notice-close:hover {
+  background: color-mix(in srgb, currentColor 9%, transparent);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__fields {
+  gap: 20px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__fields > * {
+  order: 10;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--title {
+  order: 1;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--workspace {
+  order: 2;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--prompt {
+  order: 3;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--connectors {
+  order: 4;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--frequency {
+  order: 5;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--effective-range {
+  order: 6;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--notifications {
+  order: 7;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--failure-cooldown {
+  order: 8;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--conversation {
+  order: 9;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--missed-policy {
+  order: 10;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field {
+  gap: 9px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field > label {
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__optional {
+  font-size: 12px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__input,
+.heartbeat-editor--full-page .heartbeat-editor__freq-input,
+.heartbeat-editor--full-page .heartbeat-editor-select__trigger {
+  height: 40px;
+  border-color: var(--border-soft);
+  background: var(--chat-bg);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__workspace-picker {
+  width: 100%;
+}
+
+.heartbeat-editor__workspace-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 50px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  color: var(--fg);
+  background: var(--chat-bg);
+  font: inherit;
+  cursor: pointer;
+}
+
+.heartbeat-editor__workspace-trigger:hover,
+.heartbeat-editor__workspace-trigger:focus-visible {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--heartbeat-ref-subtle);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__workspace-picker .heartbeat-project-menu {
+  width: min(420px, 100%);
+  min-width: 280px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__prompt-box {
+  border-color: var(--border-soft);
+  border-radius: 9px;
+  background: var(--chat-bg);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__textarea--prompt {
+  min-height: 164px;
+  max-height: 260px;
+  padding: 14px 20px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__prompt-tools {
+  min-height: 58px;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 18px;
+  border-top-color: var(--border-soft);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block {
+  display: inline-flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  gap: 3px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block > svg {
+  flex: 0 0 auto;
+  color: var(--fg-dim);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block .heartbeat-editor-select {
+  flex: 0 1 auto;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block .heartbeat-editor-select__trigger {
+  width: auto;
+  min-width: 0;
+  height: 34px;
+  gap: 6px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--fg);
+  font-size: 14px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block .heartbeat-editor-select__trigger:hover,
+.heartbeat-editor--full-page .heartbeat-editor__tool-block .heartbeat-editor-select__trigger:focus-visible {
+  border: 0;
+  background: var(--heartbeat-ref-control);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block--approval .heartbeat-editor-select__trigger {
+  color: var(--warning, #e47a18);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__tool-block--approval > svg {
+  color: var(--warning, #e47a18);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__connector-grid {
+  min-height: 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  background: var(--chat-bg);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__connector-grid > .heartbeat-editor__optional:only-child {
+  color: var(--fg-faint);
+  font-size: 13px;
+}
+
+.heartbeat-editor__connector-picker {
+  position: relative;
+}
+
+.heartbeat-editor__connector-picker > summary {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  color: var(--fg-muted);
+  background: var(--chat-bg);
+  font-size: 13px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.heartbeat-editor__connector-picker > summary::-webkit-details-marker {
+  display: none;
+}
+
+.heartbeat-editor__connector-picker > summary:hover,
+.heartbeat-editor__connector-picker > summary:focus-visible {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--heartbeat-ref-subtle);
+}
+
+.heartbeat-editor__connector-picker > summary svg {
+  flex: 0 0 auto;
+  transition: transform 140ms ease;
+}
+
+.heartbeat-editor__connector-picker[open] > summary svg {
+  transform: rotate(180deg);
+}
+
+.heartbeat-editor__connector-picker-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 7;
+  padding: 6px;
+  border: 1px solid var(--border-soft);
+  border-radius: 9px;
+  background: var(--heartbeat-ref-surface);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16);
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__connector-picker-menu .heartbeat-editor__connector-grid {
+  min-height: 36px;
+  padding: 4px;
+  border: 0;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--frequency .set-seg {
+  min-height: 40px;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--frequency .set-seg__btn {
+  min-width: 70px;
+  min-height: 34px;
+  padding-inline: 14px;
+  font-size: 14px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--effective-range .heartbeat-editor__input {
+  height: 44px;
+}
+
+.heartbeat-editor__notification-targets {
+  display: flex;
+  flex-direction: column;
+}
+
+.heartbeat-editor__switch-row {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--fg);
+  font-size: 13px;
+}
+
+.heartbeat-editor__notification-targets .heartbeat-editor__switch-row {
+  border-top: 1px solid var(--border-soft);
+}
+
+.heartbeat-editor__switch-row--disabled {
+  color: var(--fg-faint);
+}
+
+.heartbeat-editor__switch-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heartbeat-editor__switch-copy strong {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heartbeat-editor__switch-copy small,
+.heartbeat-editor__switch-copy code {
+  color: var(--fg-faint);
+  font-size: 11px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--notifications {
+  gap: 0;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__field--notifications > label {
+  margin-bottom: 4px;
+}
+
+.heartbeat-editor--full-page .heartbeat-editor__actions {
+  position: static;
+  margin-top: 8px;
+  padding: 20px 0 0;
+  border-top-color: var(--border-soft);
+  background: transparent;
+}
+
+.heartbeat-run-detail {
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+@media screen and (max-width: 760px) {
+  .heartbeat-modal--embedded .heartbeat-modal__header--workspace {
+    min-height: 68px;
+    padding: 10px 16px 8px;
+  }
+
+  .heartbeat-modal--embedded .heartbeat-modal__body--workspace {
+    padding: 0 16px 24px;
+  }
+
+  .heartbeat-page-heading {
+    align-items: center;
+  }
+
+  .heartbeat-modal__header .heartbeat-page-heading__copy h1 {
+    font-size: 18px;
+  }
+
+  .heartbeat-page-heading__copy p {
+    display: none;
+  }
+
+  .heartbeat-task-section__toolbar {
+    min-height: auto;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+
+  .heartbeat-modal__body--workspace .heartbeat-toolbar__search {
+    width: 100%;
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .heartbeat-card {
+    padding: 6px 8px;
+  }
+
+  .heartbeat-card__head {
+    flex-wrap: wrap;
+  }
+
+  .heartbeat-card__title {
+    flex: 1 1 calc(100% - 30px);
+    max-width: calc(100% - 30px);
+  }
+
+  .heartbeat-card__meta-item--compact {
+    order: 3;
+    flex-basis: calc(100% - 24px);
+    margin-left: 24px;
+    font-size: 12px;
+  }
+
+  .heartbeat-card__head-actions {
+    order: 4;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .heartbeat-editor,
+  .heartbeat-run-detail {
+    padding: 16px;
+  }
+}

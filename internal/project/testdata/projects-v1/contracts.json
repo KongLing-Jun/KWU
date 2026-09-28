@@ -1,0 +1,664 @@
+{
+  "metadata": {
+    "contract_version": "projects-v1-20260812.1",
+    "contract_hash_algorithm": "sha256",
+    "fixture_bytes": {
+      "encoding": "utf-8",
+      "bom": false,
+      "line_endings": "lf",
+      "final_newline": true,
+      "hash_scope": "exact_file_bytes",
+      "self_hash_embedded": false,
+      "runtime_hash": "lowercase_sha256_of_exact_file_bytes",
+      "self_reference_policy": "do_not_embed_fixture_hash_because_it_would_change_the_hashed_bytes"
+    },
+    "authority": "Reasonix Cloud",
+    "consumer": "Reasonix Desktop",
+    "approved_on": "2026-08-05"
+  },
+  "routes": {
+    "operations": [
+      "GET /api/v1/projects",
+      "POST /api/v1/projects",
+      "POST /api/v1/projects/onboarding/claim",
+      "GET /api/v1/projects/{project_id}",
+      "PATCH /api/v1/projects/{project_id}",
+      "GET /api/v1/projects/{project_id}/instructions",
+      "PUT /api/v1/projects/{project_id}/instructions",
+      "GET /api/v1/projects/{project_id}/work-items",
+      "POST /api/v1/projects/{project_id}/work-items",
+      "GET /api/v1/work-items/{work_item_id}",
+      "PATCH /api/v1/work-items/{work_item_id}",
+      "POST /api/v1/work-items/{work_item_id}/move",
+      "DELETE /api/v1/work-items/{work_item_id}"
+    ],
+    "authentication": "existing_requireAuth_and_API_Guard",
+    "project_delete": "not_exposed",
+    "work_item_delete": "permanent_idempotent",
+    "disabled_behavior": "404 NOT_FOUND"
+  },
+  "dto": {
+    "project_create": {
+      "name": {
+        "type": "string",
+        "presence": "required",
+        "null": "forbidden",
+        "empty": "forbidden",
+        "blank": "forbidden",
+        "leading_trailing_whitespace": "preserved",
+        "maximum_utf8_bytes": 200,
+        "maximum_unicode_characters": 15
+      },
+      "description": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "default_null",
+        "null": "allowed",
+        "empty": "stored_empty",
+        "maximum_utf8_bytes": 4000
+      },
+      "human_description": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "stored_empty_and_absent_from_canonical_bytes",
+        "null": "forbidden",
+        "empty": "stored_empty_and_present_in_canonical_bytes",
+        "maximum_utf8_bytes": 12000
+      },
+      "agent_instruction": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "stored_empty_and_absent_from_canonical_bytes",
+        "null": "forbidden",
+        "empty": "stored_empty_and_present_in_canonical_bytes",
+        "maximum_utf8_bytes": 48000
+      },
+      "owner_user_id": {
+        "presence": "forbidden",
+        "source": "authenticated_actor"
+      }
+    },
+    "project_patch": {
+      "expected_version": {
+        "type": "integer",
+        "presence": "required",
+        "null": "forbidden",
+        "minimum": 1,
+        "maximum": 9007199254740990
+      },
+      "name": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "unchanged",
+        "null": "forbidden",
+        "empty": "forbidden",
+        "blank": "forbidden",
+        "leading_trailing_whitespace": "preserved",
+        "maximum_utf8_bytes": 200,
+        "maximum_unicode_characters": 15
+      },
+      "description": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "unchanged",
+        "null": "clear",
+        "empty": "stored_empty",
+        "maximum_utf8_bytes": 4000
+      },
+      "status": {
+        "type": "enum",
+        "values": [
+          "active",
+          "archived"
+        ],
+        "presence": "optional",
+        "omitted": "unchanged",
+        "null": "forbidden",
+        "mutual_exclusion": "metadata_fields"
+      },
+      "body_rule": "at_least_one_mutation_and_status_cannot_mix_with_name_or_description"
+    },
+    "instruction_put": {
+      "expected_version": {
+        "type": "integer",
+        "presence": "required",
+        "null": "forbidden",
+        "minimum": 1,
+        "maximum": 9007199254740990
+      },
+      "human_description": {
+        "type": "string",
+        "presence": "required",
+        "null": "forbidden",
+        "empty": "clear",
+        "maximum_utf8_bytes": 12000
+      },
+      "agent_instruction": {
+        "type": "string",
+        "presence": "required",
+        "null": "forbidden",
+        "empty": "clear",
+        "maximum_utf8_bytes": 48000
+      }
+    },
+    "work_item_create": {
+      "title": {
+        "type": "string",
+        "presence": "required",
+        "null": "forbidden",
+        "empty": "forbidden",
+        "blank": "forbidden",
+        "leading_trailing_whitespace": "preserved",
+        "maximum_utf8_bytes": 300
+      },
+      "description": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "default_null",
+        "null": "allowed",
+        "empty": "stored_empty",
+        "maximum_utf8_bytes": 8000
+      },
+      "status": {
+        "type": "enum",
+        "values": [
+          "todo",
+          "in_progress",
+          "paused",
+          "done"
+        ],
+        "presence": "optional",
+        "omitted": "todo",
+        "null": "forbidden"
+      }
+    },
+    "work_item_patch": {
+      "expected_version": {
+        "type": "integer",
+        "presence": "required",
+        "null": "forbidden",
+        "minimum": 1,
+        "maximum": 9007199254740990
+      },
+      "title": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "unchanged",
+        "null": "forbidden",
+        "empty": "forbidden",
+        "blank": "forbidden",
+        "leading_trailing_whitespace": "preserved",
+        "maximum_utf8_bytes": 300
+      },
+      "description": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "unchanged",
+        "null": "clear",
+        "empty": "stored_empty",
+        "maximum_utf8_bytes": 8000
+      },
+      "status": {
+        "presence": "forbidden",
+        "surface": "work_item_move"
+      }
+    },
+    "work_item_move": {
+      "expected_version": {
+        "type": "integer",
+        "presence": "required",
+        "null": "forbidden",
+        "minimum": 1,
+        "maximum": 9007199254740990
+      },
+      "target_status": {
+        "type": "enum",
+        "values": [
+          "todo",
+          "in_progress",
+          "paused",
+          "done"
+        ],
+        "presence": "required",
+        "null": "forbidden"
+      },
+      "before_work_item_id": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "no_anchor",
+        "null": "no_anchor"
+      },
+      "after_work_item_id": {
+        "type": "string",
+        "presence": "optional",
+        "omitted": "no_anchor",
+        "null": "no_anchor"
+      },
+      "anchor_rule": "at_most_one_before_or_after",
+      "no_anchor": "append"
+    },
+    "work_item_delete": {
+      "expected_version": {
+        "type": "integer",
+        "presence": "required",
+        "null": "forbidden",
+        "minimum": 1,
+        "maximum": 9007199254740990
+      },
+      "effect": "permanent_delete",
+      "project_work_item_count": "decremented_atomically",
+      "replay_after_delete": "same_command_result_for_same_actor_operation_and_key"
+    },
+    "project_read": {
+      "fields": [
+        "project_id",
+        "owner_user_id",
+        "name",
+        "description",
+        "status",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "description_null": "allowed",
+      "version_range": "1..9007199254740991",
+      "timestamps": "RFC3339Nano_UTC"
+    },
+    "instruction_read": {
+      "fields": [
+        "project_id",
+        "human_description",
+        "agent_instruction",
+        "content_hash",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "text_null": "forbidden",
+      "version_range": "1..9007199254740991",
+      "new_project": "both_text_fields_empty_at_version_1"
+    },
+    "work_item_read": {
+      "fields": [
+        "work_item_id",
+        "project_id",
+        "title",
+        "description",
+        "status",
+        "rank",
+        "version",
+        "created_at",
+        "updated_at"
+      ],
+      "description_null": "allowed",
+      "rank": "signed_safe_JSON_integer_server_owned",
+      "rank_range": "-9007199254740991..9007199254740991",
+      "version_range": "1..9007199254740991"
+    },
+    "list_envelope": {
+      "fields": [
+        "items",
+        "next_cursor",
+        "total_count",
+        "undated_count"
+      ],
+      "next_cursor_null": "allowed_only_when_no_next_page",
+      "total_count": "complete_count_for_status_filters_and_optional_scheduled_range_independent_of_pagination",
+      "undated_count": "complete_count_for_status_and_filters_where_start_at_and_due_at_are_null_independent_of_scheduled_range_and_pagination"
+    }
+  },
+  "limits": {
+    "projects_per_owner_including_archived": 1000,
+    "work_items_per_project": 10000,
+    "wire_integer": {
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991,
+      "reason": "exact_round_trip_through_ECMAScript_Number"
+    },
+    "page_size": {
+      "default": 20,
+      "minimum": 1,
+      "maximum": 100
+    },
+    "cursor": {
+      "maximum_bytes": 2048
+    },
+    "request_body": {
+      "maximum_bytes": 65536,
+      "unknown_fields": "rejected",
+      "field_names": "case_sensitive_exact",
+      "case_variant_aliases": "rejected_as_unknown",
+      "duplicate_keys": "rejected",
+      "trailing_json": "rejected"
+    },
+    "idempotency_key": {
+      "minimum_utf8_bytes": 1,
+      "maximum_utf8_bytes": 200,
+      "leading_trailing_whitespace": "forbidden_not_normalized"
+    },
+    "search": {
+      "maximum_utf8_bytes": 200,
+      "matching": "case_insensitive_literal_prefix",
+      "escaped_literals": "%_\\"
+    },
+    "text": {
+      "units": "utf-8_bytes",
+      "invalid_utf8": "rejected",
+      "nul_code_point": "forbidden"
+    }
+  },
+  "query": {
+    "projects": {
+      "allowed": [
+        "page_size",
+        "cursor",
+        "status",
+        "search"
+      ],
+      "status_values": [
+        "active",
+        "archived",
+        "all"
+      ],
+      "default_status": "active"
+    },
+    "work_items": {
+      "allowed": [
+        "page_size",
+        "cursor",
+        "status",
+        "search",
+        "assignee_user_id",
+        "priority",
+        "label_id",
+        "scheduled_from",
+        "scheduled_to"
+      ],
+      "status_values": [
+        "todo",
+        "in_progress",
+        "paused",
+        "done",
+        "all"
+      ],
+      "default_status": "all",
+      "search_matching": "case_insensitive_literal_contains",
+      "cursor_binding": [
+        "status",
+        "search",
+        "assignee_user_id",
+        "priority",
+        "label_id",
+        "scheduled_from",
+        "scheduled_to"
+      ],
+      "scheduled_range": {
+        "pairing": "both_or_neither",
+        "format": "YYYY-MM-DD",
+        "timezone": "UTC",
+        "endpoints": "inclusive",
+        "maximum_days": 42,
+        "matches": "start_at_or_due_at"
+      }
+    },
+    "unknown": "400 VALIDATION_FAILED"
+  },
+  "work_item": {
+    "states": [
+      "todo",
+      "in_progress",
+      "paused",
+      "done"
+    ],
+    "transitions": {
+      "allowed": [
+        "todo->in_progress",
+        "todo->done",
+        "in_progress->todo",
+        "in_progress->paused",
+        "in_progress->done",
+        "paused->todo",
+        "paused->in_progress",
+        "paused->done",
+        "done->todo"
+      ],
+      "same_state": "ordering_only",
+      "effective_no_op": "HTTP_200_same_version_and_rank_with_receipt"
+    },
+    "errors": {
+      "invalid_transition": "409 CONFLICT invalid_transition",
+      "anchor_malformed_or_self": "400 VALIDATION_FAILED anchor_invalid",
+      "anchor_missing_foreign_project_or_status": "409 CONFLICT anchor_invalid"
+    },
+    "ordering": {
+      "rank_type": "BIGINT",
+      "initial_gap": 1000,
+      "serialization": "per_project_and_target_status",
+      "rebalance": "transactional_without_unaffected_business_version_change"
+    }
+  },
+  "cursor": {
+    "encoding": "base64url_of_versioned_authenticated_payload",
+    "order": {
+      "projects": "updated_at desc, project_id desc",
+      "work_items": "status asc, rank asc, work_item_id asc"
+    },
+    "bound_to": "version,resource_kind,owner,filters,ordering_tuple",
+    "malformed_or_mismatch": "400 VALIDATION_FAILED"
+  },
+  "capability": {
+    "path": "/api/v1/me",
+    "field": "capabilities.projects_v1",
+    "fields": [
+      "enabled",
+      "contract_version",
+      "contract_hash_algorithm",
+      "contract_hash",
+      "instructions",
+      "work_items"
+    ],
+    "contract_version": "projects-v1-20260812.1",
+    "contract_hash_algorithm": "sha256",
+    "contract_hash_source": "exact_fixture_bytes",
+    "compatibility": "version_and_hash_must_match",
+    "slices": {
+      "instructions": true,
+      "work_items": true
+    },
+    "absent_or_disabled": "unavailable",
+    "fleet_readiness": {
+      "shared_authority": "PostgreSQL service_runtime_settings.projects_v1_enabled",
+      "required_per_instance": "migration_fingerprint,contract_version,contract_hash,instructions,work_items",
+      "drift": "set_shared_flag_false_and_keep_local_guard_disabled",
+      "redis_authoritative": false
+    }
+  },
+  "instruction_content_hash": {
+    "algorithm": "sha256",
+    "output": "lowercase_hex",
+    "encoding": "utf-8",
+    "unicode_normalization": "none",
+    "line_endings": "lf",
+    "framing": "projects-v1:instruction-content:v1\nhuman_description:<utf8-byte-length>\n<bytes>\nagent_instruction:<utf8-byte-length>\n<bytes>",
+    "examples": [
+      {
+        "name": "empty",
+        "human_description": "",
+        "agent_instruction": "",
+        "framed_bytes_utf8": "projects-v1:instruction-content:v1\nhuman_description:0\n\nagent_instruction:0\n",
+        "sha256": "f530ea9082be59c830ae0083e1f57e4c460ce13a2a870827c432207dd8151f48"
+      },
+      {
+        "name": "unicode_preserved",
+        "human_description": "项目说明",
+        "agent_instruction": "Use LF\n不要越权",
+        "framed_bytes_utf8": "projects-v1:instruction-content:v1\nhuman_description:12\n项目说明\nagent_instruction:19\nUse LF\n不要越权",
+        "sha256": "9e4b6bbdc5ab25b03605358244dc07dbfaa817032e554041e852c20b311d4742"
+      }
+    ]
+  },
+  "success": {
+    "mutation_http_status": 200,
+    "readback_required": true,
+    "command_result_fields": [
+      "operation_id",
+      "resource_kind",
+      "resource_id",
+      "project_id",
+      "committed_version"
+    ],
+    "command_result_rules": {
+      "operation_id": "required_string",
+      "resource_kind": "project|instruction|work_item",
+      "resource_id": "required_string",
+      "project_id": "required_for_instruction_and_work_item_else_same_as_resource_id",
+      "committed_version": "positive_integer"
+    },
+    "envelope": "existing_api_v1_data_error_request_id_server_time"
+  },
+  "idempotency": {
+    "required_for": "every_mutation",
+    "transport_header": "X-Idempotency-Key",
+    "scope": "actor_user_id_and_operation",
+    "receipt": {
+      "minimum_days": 30,
+      "commits_with_business_change": true,
+      "stores": "key_hash,server_request_digest,digest_key_version,compact_command_result",
+      "create_identity_after_cleanup": "lifetime_key_hash_and_canonical_creation_request_digest",
+      "deleted_resource_replay": "receipt_without_resource_lookup"
+    },
+    "canonical_request_bytes": {
+      "encoding": "utf-8",
+      "object_keys": "recursive_lexicographic_order",
+      "whitespace": "none_outside_strings",
+      "numbers": "base10_minimal_no_exponent_for_integer_versions",
+      "unicode_normalization": "none",
+      "line_endings_inside_strings": "preserved_as_json_escapes",
+      "omitted_fields": "absent",
+      "explicit_null": "present_as_null",
+      "transport_fields": "excluded",
+      "transport_field_names": [
+        "Authorization",
+        "X-Idempotency-Key",
+        "X-Request-ID"
+      ],
+      "examples": [
+        {
+          "operation": "project.create",
+          "request": {
+            "name": "Alpha",
+            "description": null
+          },
+          "canonical_bytes_utf8": "{\"description\":null,\"name\":\"Alpha\"}",
+          "desktop_local_payload_sha256": "0cfefb00a54da63c04281d17ff31e49af491da86e41378aa4633718711bbc309",
+          "server_digest_input_utf8": "reasonix:projects-v1:server-request-digest:v1\nproject.create\n{\"description\":null,\"name\":\"Alpha\"}"
+        },
+        {
+          "operation": "project.create",
+          "request": {
+            "name": "Alpha",
+            "human_description": "调研模板",
+            "agent_instruction": "# 角色\n请调研"
+          },
+          "canonical_bytes_utf8": "{\"agent_instruction\":\"# 角色\\n请调研\",\"human_description\":\"调研模板\",\"name\":\"Alpha\"}",
+          "desktop_local_payload_sha256": "232e605df1db3fa828f84894a2d9e1eb5824f4e68831a1d6f1365b97621ad056",
+          "server_digest_input_utf8": "reasonix:projects-v1:server-request-digest:v1\nproject.create\n{\"agent_instruction\":\"# 角色\\n请调研\",\"human_description\":\"调研模板\",\"name\":\"Alpha\"}"
+        },
+        {
+          "operation": "instruction.put",
+          "request": {
+            "expected_version": 1,
+            "human_description": "",
+            "agent_instruction": "Ship safely"
+          },
+          "canonical_bytes_utf8": "{\"agent_instruction\":\"Ship safely\",\"expected_version\":1,\"human_description\":\"\"}",
+          "desktop_local_payload_sha256": "49ef4181963dc6d0baad41cec4f86a6dafed72b6217a5ebbf95c9853f504b258",
+          "server_digest_input_utf8": "reasonix:projects-v1:server-request-digest:v1\ninstruction.put\n{\"agent_instruction\":\"Ship safely\",\"expected_version\":1,\"human_description\":\"\"}"
+        },
+        {
+          "operation": "work_item.create",
+          "request": {
+            "title": "First task",
+            "description": null,
+            "status": "todo"
+          },
+          "canonical_bytes_utf8": "{\"description\":null,\"status\":\"todo\",\"title\":\"First task\"}",
+          "desktop_local_payload_sha256": "3c5ff350d7e52ff526f824fb6694c360d714b009bd1fe60280cbdc5b26b9bcd7",
+          "server_digest_input_utf8": "reasonix:projects-v1:server-request-digest:v1\nwork_item.create\n{\"description\":null,\"status\":\"todo\",\"title\":\"First task\"}"
+        },
+        {
+          "operation": "work_item.move",
+          "request": {
+            "expected_version": 3,
+            "target_status": "in_progress",
+            "before_work_item_id": null
+          },
+          "canonical_bytes_utf8": "{\"before_work_item_id\":null,\"expected_version\":3,\"target_status\":\"in_progress\"}",
+          "desktop_local_payload_sha256": "a8f2514f469476f262cf514559c31fccdbaed0054d4dc7ebcfc048ec4af5887c",
+          "server_digest_input_utf8": "reasonix:projects-v1:server-request-digest:v1\nwork_item.move\n{\"before_work_item_id\":null,\"expected_version\":3,\"target_status\":\"in_progress\"}"
+        }
+      ]
+    },
+    "server_request_digest": {
+      "algorithm": "HMAC-SHA-256",
+      "domain": "reasonix:projects-v1:server-request-digest:v1",
+      "input": "domain_lf_operation_lf_canonical_request_bytes",
+      "digest_key_version": "stored_with_receipt",
+      "visibility": "cloud_server_only",
+      "secret_visibility": "cloud_server_only",
+      "wire_field": "none",
+      "logs_or_metrics": "forbidden"
+    },
+    "desktop_local_payload_hash": {
+      "algorithm": "SHA-256",
+      "input": "same_canonical_request_bytes",
+      "output": "lowercase_hex",
+      "keyed": false,
+      "purpose": "local_journal_integrity",
+      "sent_as_cloud_proof": false,
+      "distinct_from": "cloud_server_request_digest"
+    },
+    "replay": {
+      "same_key_same_digest": "return_original_command_result",
+      "same_key_changed_digest": "409 IDEMPOTENCY_CONFLICT",
+      "create_after_receipt_cleanup": "same_request_resolves_original_changed_request_conflicts"
+    }
+  },
+  "errors": {
+    "AUTH_REQUIRED": {
+      "http_status": 401,
+      "retryable": false,
+      "safe_details": "none"
+    },
+    "VALIDATION_FAILED": {
+      "http_status": 400,
+      "retryable": false,
+      "safe_details": "allowlisted_field_and_reason_only"
+    },
+    "NOT_FOUND": {
+      "http_status": 404,
+      "retryable": false,
+      "safe_details": "none",
+      "foreign_equals_missing": true
+    },
+    "CONFLICT": {
+      "http_status": 409,
+      "retryable": false,
+      "safe_reasons": "project_archived,version_mismatch,invalid_transition,anchor_invalid"
+    },
+    "IDEMPOTENCY_CONFLICT": {
+      "http_status": 409,
+      "retryable": false,
+      "safe_details": "none"
+    },
+    "QUOTA_EXCEEDED": {
+      "http_status": 409,
+      "retryable": false,
+      "safe_details": "resource,limit,current"
+    }
+  },
+  "error_policy": {
+    "message_language": "zh-CN_existing_client_error_catalog",
+    "response_forbids": "sql,upstream,stack,request_body,instruction,description,path,idempotency_key,digest"
+  }
+}

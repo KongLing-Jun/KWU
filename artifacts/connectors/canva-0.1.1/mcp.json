@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "servers": [
+    {
+      "id": "canva",
+      "transport": "streamable-http",
+      "url": "https://mcp.canva.cn/mcp",
+      "auth": {
+        "type": "oauth",
+        "scopes": [
+          "profile:read",
+          "design:meta:read",
+          "design:content:read",
+          "design:content:write",
+          "folder:read",
+          "folder:write",
+          "brandtemplate:meta:read",
+          "brandtemplate:content:read",
+          "brandtemplate:content:write",
+          "comment:read",
+          "comment:write",
+          "asset:read",
+          "asset:write",
+          "brandkit:read",
+          "help:answers:read",
+          "help:answers:write"
+        ],
+        "resource": "https://mcp.canva.cn/mcp"
+      }
+    }
+  ]
+}

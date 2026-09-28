@@ -1,0 +1,61 @@
+{
+  "subject": "Host-controlled DashboardDocument composition and rendering inside the existing KWU cross-border ecommerce superpower prototype",
+  "inside": [
+    "Versioned DashboardDocument and WidgetEnvelope TypeScript contracts",
+    "Feature-local DashboardStore interface and browser-local serialized JSON adapter",
+    "Host-style add, update, remove, move and attach-evidence actions",
+    "Document revision CAS and operationId idempotency",
+    "Finite trusted Widget Registry with surface and version checks",
+    "Shared document rendering into conversation-inline and research-canvas surfaces",
+    "Deterministic complete, partial, loading and empty documents",
+    "Source coverage and unavailable-data presentation",
+    "1688 supply discovery, eBay US marketplace snapshot and Shopify merchant-operation role semantics",
+    "Existing catalog, composer, citation, scenario popover, capability transition and canvas collapse interactions"
+  ],
+  "outside": [
+    {
+      "system": "Real Shopify, eBay and 1688 APIs",
+      "contract": "loadNormalizedResearch(scenarioId) returns platform-scoped data, coverage, provenance and evidence references without claiming unavailable metrics.",
+      "adapter": "DeterministicCrossborderResearchAdapter",
+      "scenarioIds": [
+        "complete-research",
+        "partial-evidence",
+        "loading-research"
+      ]
+    },
+    {
+      "system": "MCP transport and model runtime",
+      "contract": "The runtime may request only the five declared dashboard actions using schema-valid arguments; it cannot pass executable UI source or arbitrary file paths.",
+      "adapter": "DeterministicDashboardActionReplayAdapter",
+      "scenarioIds": [
+        "action-replay",
+        "evidence-follow-up"
+      ]
+    },
+    {
+      "system": "Desktop sidecar file persistence",
+      "contract": "DashboardStore loads and saves a JSON-serializable DashboardDocument by workspaceId, taskId and documentId, preserving revision semantics.",
+      "adapter": "BrowserLocalDashboardStore",
+      "scenarioIds": [
+        "reload-persistence"
+      ]
+    },
+    {
+      "system": "Production session binding",
+      "contract": "resolveDashboardScope(sessionId) returns an authorized workspaceId, taskId and documentId without making the session the owner of task facts.",
+      "adapter": "FixedPrototypeTaskBindingAdapter",
+      "scenarioIds": [
+        "complete-research",
+        "reload-persistence"
+      ]
+    },
+    {
+      "system": "Credential storage, package lifecycle and write-side commerce operations",
+      "contract": "These capabilities remain unavailable; the prototype exposes no token, install, purchase, payment, order or listing mutation surface.",
+      "adapter": "UnavailableProductionCapabilityAdapter",
+      "scenarioIds": [
+        "complete-research"
+      ]
+    }
+  ]
+}

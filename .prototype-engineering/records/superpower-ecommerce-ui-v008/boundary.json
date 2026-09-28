@@ -1,0 +1,44 @@
+{
+  "subject": "Desktop task-scoped JSON persistence and session binding for the existing host-controlled ecommerce superpower dashboard",
+  "inside": [
+    "Profile-owned task dashboard and hashed session-binding sidecar files",
+    "Strict scope identifiers, payload limits and known widget validation",
+    "Atomic serialized writes, revision CAS and operationId idempotency",
+    "Host commands for ensure binding, ensure/load document and controlled dashboard actions",
+    "Frontend Desktop bridge with explicit browser-local fallback",
+    "Persistent complete-research document and non-persistent demo projections",
+    "Existing trusted Widget Registry, conversation-inline and research-canvas rendering"
+  ],
+  "outside": [
+    {
+      "system": "Real Shopify, eBay and 1688 APIs",
+      "contract": "Normalized platform-scoped facts and coverage enter as deterministic DashboardDocument seed JSON.",
+      "adapter": "DeterministicCrossborderResearchAdapter",
+      "scenarioIds": ["desktop-first-open", "desktop-reload"]
+    },
+    {
+      "system": "MCP transport and model runtime",
+      "contract": "The caller may submit only one schema-valid declared dashboard action; executable UI source and paths are rejected by construction.",
+      "adapter": "FrontendControlledActionTrigger",
+      "scenarioIds": ["desktop-action", "invalid-action"]
+    },
+    {
+      "system": "Production session schema integration",
+      "contract": "A profile-owned binding sidecar associates the active session identity with a capability task without mutating session records.",
+      "adapter": "HashedSessionBindingSidecar",
+      "scenarioIds": ["desktop-first-open", "binding-mismatch"]
+    },
+    {
+      "system": "Multi-process and cloud synchronization",
+      "contract": "The prototype guarantees in-process serialization and atomic local replacement only.",
+      "adapter": "SingleProcessAtomicFileStore",
+      "scenarioIds": ["desktop-action", "desktop-reload"]
+    },
+    {
+      "system": "Standalone browser preview",
+      "contract": "When Wails bindings are unavailable, the same document contract uses the existing namespaced localStorage adapter.",
+      "adapter": "BrowserLocalDashboardStore",
+      "scenarioIds": ["browser-fallback"]
+    }
+  ]
+}

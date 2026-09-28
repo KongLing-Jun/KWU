@@ -1,0 +1,111 @@
+{
+  "fixture_version": "b0-v1",
+  "dependency_id": "CLOUD-USAGE-01",
+  "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+  "cases": [
+    {
+      "name": "partial_accepted",
+      "partial": {
+        "task_id": "task_01",
+        "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+        "freeze_id": "frz_01",
+        "sequence": 1,
+        "report_mode": "cumulative",
+        "calls": [
+          {
+            "call_id": "call_success",
+            "model_id": "model_fixture_01",
+            "pricing_group": "default",
+            "pricing_evidence_id": "price_01",
+            "occurred_at": "2026-07-11T00:09:00Z",
+            "usage": {"input_tokens": 10, "normal_input_tokens": 8, "cached_input_tokens": 2, "cache_read_tokens": 2, "cache_write_tokens": 0, "output_tokens": 4, "request_count": 1, "provider_total_tokens": 14, "breakdown_status": "exact"},
+            "raw_usage_redacted": {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+          }
+        ],
+        "idempotency_key": "kwu_dd1bae80f3f3bd49ead529b4e237f208",
+        "created_at": "2026-07-11T00:10:00Z"
+      }
+    },
+    {
+      "name": "partial_retryable",
+      "partial": {
+        "task_id": "task_retry",
+        "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+        "freeze_id": "frz_retry",
+        "sequence": 1,
+        "report_mode": "cumulative",
+        "calls": [
+          {
+            "call_id": "call_retry",
+            "model_id": "model_fixture_01",
+            "pricing_group": "default",
+            "pricing_evidence_id": "price_retry",
+            "occurred_at": "2026-07-11T00:10:00Z",
+            "usage": {"request_count": 1, "breakdown_status": "exact"}
+          }
+        ],
+        "idempotency_key": "kwu_0ba8eb19cf6b5a7312fcf806d008fdf2",
+        "created_at": "2026-07-11T00:11:00Z"
+      },
+      "error": {"code": "usage_retryable", "message": "fixture upload unavailable", "retryable": true}
+    },
+    {
+      "name": "final_settled",
+      "final": {
+        "task_id": "task_01",
+        "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+        "freeze_id": "frz_01",
+        "calls": [
+          {
+            "call_id": "call_success",
+            "model_id": "model_fixture_01",
+            "pricing_group": "default",
+            "pricing_evidence_id": "price_01",
+            "occurred_at": "2026-07-11T00:09:00Z",
+            "usage": {"input_tokens": 10, "normal_input_tokens": 8, "cached_input_tokens": 2, "cache_read_tokens": 2, "cache_write_tokens": 0, "output_tokens": 4, "request_count": 1, "provider_total_tokens": 14, "breakdown_status": "exact"},
+            "raw_usage_redacted": {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+          }
+        ],
+        "client_summary": {"model_call_count": 1, "started_at": "2026-07-11T00:00:00Z", "finished_at": "2026-07-11T00:12:00Z"},
+        "task_result": "completed",
+        "idempotency_key": "kwu_eca5c4f63d7b77c5c71775cba4a80437",
+        "created_at": "2026-07-11T00:12:00Z"
+      },
+      "settlement": {
+        "settlement_id": "set_01",
+        "task_id": "task_01",
+        "state": "settled",
+        "charged_amount": "12.5000",
+        "charged_free_amount": "10.0000",
+        "charged_subscription_amount": "2.5000",
+        "released_free_amount": "0",
+        "released_subscription_amount": "0",
+        "uncovered_amount": "0",
+        "observed_at": "2026-07-11T00:13:00Z"
+      }
+    },
+    {
+      "name": "final_rejected",
+      "final": {
+        "task_id": "task_rejected",
+        "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+        "freeze_id": "frz_rejected",
+        "calls": [
+          {
+            "call_id": "call_rejected",
+            "model_id": "model_fixture_01",
+            "pricing_group": "default",
+            "pricing_evidence_id": "price_rejected",
+            "occurred_at": "2026-07-11T00:10:00Z",
+            "usage": {"request_count": 1, "breakdown_status": "exact"}
+          }
+        ],
+        "client_summary": {"model_call_count": 1, "started_at": "2026-07-11T00:00:00Z", "finished_at": "2026-07-11T00:12:00Z"},
+        "task_result": "failed",
+        "idempotency_key": "kwu_88438fd599617eb1caa5ea5f74d59ae1",
+        "created_at": "2026-07-11T00:12:00Z"
+      },
+      "error": {"code": "usage_rejected", "message": "fixture final rejected"}
+    }
+  ]
+}

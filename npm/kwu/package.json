@@ -1,0 +1,38 @@
+{
+  "name": "kwu",
+  "version": "0.0.0",
+  "description": "Clouvia cache-first coding agent for the terminal.",
+  "bin": {
+    "kwu": "bin/kwu.js"
+  },
+  "files": [
+    "bin/kwu.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/xiaoxiaotest9527-bit/KWU#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaoxiaotest9527-bit/KWU.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xiaoxiaotest9527-bit/KWU/issues"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "cli",
+    "coding-assistant",
+    "tui"
+  ],
+  "optionalDependencies": {
+    "@kwu/cli-darwin-arm64": "0.0.0",
+    "@kwu/cli-darwin-x64": "0.0.0",
+    "@kwu/cli-linux-arm64": "0.0.0",
+    "@kwu/cli-linux-x64": "0.0.0",
+    "@kwu/cli-win32-arm64": "0.0.0",
+    "@kwu/cli-win32-x64": "0.0.0"
+  }
+}

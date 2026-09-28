@@ -1,0 +1,46 @@
+.browser-smoke {
+  display: grid;
+  gap: 16px;
+  margin: 0 auto;
+  max-width: 880px;
+  padding: 24px;
+}
+
+.browser-smoke__nav,
+.browser-smoke__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.browser-smoke__composer {
+  display: grid;
+  gap: 8px;
+}
+
+.browser-smoke__composer textarea {
+  min-height: 96px;
+}
+
+.browser-smoke-followup {
+  display: block;
+  min-height: 720px;
+  padding: 80px 40px;
+}
+
+.browser-smoke-followup .chat-pane {
+  display: block;
+}
+
+.browser-smoke-project-composer {
+  display: grid;
+  min-height: 720px;
+  align-content: end;
+  gap: 16px;
+  padding: 40px;
+}
+
+.browser-smoke-project-composer__controls {
+  display: flex;
+  gap: 8px;
+}

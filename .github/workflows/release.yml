@@ -1,0 +1,46 @@
+name: Release
+
+# CLI binary line. Tag namespace `v<semver>` triggers this: it builds the
+# release archives + checksums and publishes the GitHub release. Desktop is
+# `desktop-v*` (release-desktop.yml). A prerelease `v*-rc*` builds archives and
+# a prerelease GitHub release.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write # create the release and upload archives
+
+jobs:
+  cache-guard:
+    name: cache hit guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - run: ./scripts/cache-guard.sh
+
+  goreleaser:
+    name: archives + checksums + github release
+    needs: cache-guard
+    runs-on: ubuntu-latest
+    # CLI stable release (archives + GitHub release). Gated on the `release`
+    # environment so only maintainers can approve it going public.
+    environment: release
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: goreleaser/goreleaser-action@v7
+        with:
+          version: '~> v2'
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,77 @@
+# Build artifacts
+/bin/
+/dist/
+/stage/
+/npm/.stage/
+/kwu
+/kwu.exe
+
+# Go test/build scratch
+*.test
+*.out
+*.coverprofile
+coverage.out
+cpu.prof
+mem.prof
+
+# Wails desktop artifacts
+/desktop/build/*
+!/desktop/build/appicon.png
+!/desktop/build/appicon.svg
+/desktop/desktop
+/desktop/frontend/dist/*
+!/desktop/frontend/dist/.gitkeep
+/desktop/frontend/sourcemaps/
+/desktop/frontend/wailsjs/
+/desktop/frontend/package.json.md5
+.worktrees/
+# Environment / local config (clouvia.example.toml is the shared template)
+.env
+.env.local
+*.local
+/clouvia.toml
+/kwu.toml
+/desktop/.env
+/desktop/clouvia.toml
+/desktop/kwu.toml
+/CLOUVIA.local.md
+/KWU.local.md
+
+# Node / frontend dependencies and caches
+node_modules/
+.pnpm-store/
+.npm/
+
+# Project-local Clouvia state; keep the checked-in legacy review command.
+/.clouvia/*
+/.kwu/*
+!/.kwu/commands/
+!/.kwu/commands/review.md
+
+# CodeGraph per-project index (rebuilt locally; never committed)
+.codegraph/
+
+# Local Codex/dev-server run logs
+.codex-run/
+
+# Local browser/manual verification artifacts
+.playwright-cli/
+output/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex-run
+benchmarks/context-maintenance-e2e/run/
+
+# Local state excluded from the uploaded source snapshot.
+**/.obsidian/
+**/.claudian/
+**/.idea/
+**/.claude/settings.local.json
+**/.claude/worktrees/
+**/node_modules/
+**/.venv/
+**/__pycache__/

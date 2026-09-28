@@ -1,0 +1,29 @@
+{
+  "scenarios": [
+    {
+      "id": "widget-with-evidence",
+      "description": "Each ready summary, trend, comparison and coverage widget exposes citation and uses its first evidence reference.",
+      "fixture": "Complete research document"
+    },
+    {
+      "id": "widget-without-evidence",
+      "description": "A ready widget with no evidence references cites its stable widget revision snapshot.",
+      "fixture": "Canvas widget with empty evidenceRefs"
+    },
+    {
+      "id": "loading-widget",
+      "description": "Loading widgets display the citation control disabled and cannot enter the composer reference.",
+      "fixture": "Loading scenario document"
+    },
+    {
+      "id": "inline-widget",
+      "description": "The conversation-inline summary supports the same citation interaction as canvas widgets.",
+      "fixture": "research.summary on conversation-inline"
+    },
+    {
+      "id": "replace-reference",
+      "description": "Citing a second widget replaces the single active composer reference.",
+      "fixture": "Two ready registered widgets"
+    }
+  ]
+}

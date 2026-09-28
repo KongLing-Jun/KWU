@@ -1,0 +1,12 @@
+{
+  "scenarios": [
+    {"id":"hover-ready","description":"Hovering a ready generated card fades in an outline and right-click hint without changing composer state.","fixture":"Any ready registered widget"},
+    {"id":"right-click-select","description":"Right-clicking a ready card prevents the native menu, selects it and writes its reference into the composer.","fixture":"Canvas trend widget"},
+    {"id":"multi-source-select","description":"Right-clicking additional ready cards preserves prior selections and adds independently removable composer chips.","fixture":"Three ready widgets across both surfaces"},
+    {"id":"toggle-selection","description":"Right-clicking an already selected card removes only that card from the citation collection.","fixture":"Two selected ready widgets"},
+    {"id":"clear-selection","description":"Removing one composer citation chip clears only its matching card treatment.","fixture":"Two selected widgets"},
+    {"id":"submission-snapshot","description":"Submitting a follow-up captures all currently selected sources and later selection changes do not rewrite it.","fixture":"Two selected ready widgets and one follow-up"},
+    {"id":"loading-card","description":"A loading card does not intercept right-click or become selected.","fixture":"Loading scenario widget"},
+    {"id":"reduced-motion","description":"Selection remains visible while fade transitions are disabled when reduced motion is requested.","fixture":"prefers-reduced-motion"}
+  ]
+}

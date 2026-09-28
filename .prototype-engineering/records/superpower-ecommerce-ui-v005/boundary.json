@@ -1,0 +1,46 @@
+{
+  "subject": "KWU superpower catalog and cross-border ecommerce research workspace presentation and local interaction flow",
+  "inside": [
+    "Sidebar entry and selected state for the Superpower workspace",
+    "Superpower catalog hierarchy and capability cards",
+    "Catalog-to-ecommerce-workspace navigation and back navigation",
+    "Research conversation and task progress presentation",
+    "Headerless AI-generated research component canvas",
+    "Deterministic generated-widget specification and local renderer",
+    "Evidence citation into the mock follow-up composer",
+    "Empty composer presentation and research shortcut placement",
+    "True pre-research empty conversation and evidence state",
+    "Centered capability-card chooser and first-submission transition into the compact composer launcher",
+    "Floating demo-scenario popover",
+    "Generated-component canvas collapse and restore interaction",
+    "Deterministic local follow-up response presentation",
+    "Desktop and narrow-desktop responsive behavior"
+  ],
+  "outside": [
+    {
+      "system": "Market and ecommerce data providers",
+      "contract": "loadResearchScenario(id) returns deterministic category, keyword, brand, review and product evidence without network access.",
+      "adapter": "FixtureMarketResearchAdapter",
+      "scenarioIds": [
+        "complete-research",
+        "partial-evidence"
+      ]
+    },
+    {
+      "system": "Agent and model runtime",
+      "contract": "followUp(reference, question) returns a deterministic response attached to the cited evidence without calling the Go bridge.",
+      "adapter": "FixtureResearchRuntimeAdapter",
+      "scenarioIds": [
+        "evidence-follow-up"
+      ]
+    },
+    {
+      "system": "Research persistence and export",
+      "contract": "Prototype selections, saved products and messages remain in React memory; export is presented as unavailable in this UI-only version.",
+      "adapter": "EphemeralWorkspaceAdapter",
+      "scenarioIds": [
+        "complete-research"
+      ]
+    }
+  ]
+}

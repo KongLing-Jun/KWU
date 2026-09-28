@@ -1,0 +1,519 @@
+# Clouvia Guide
+
+<a href="../README.md">README</a>
+&nbsp;·&nbsp;
+<a href="./GUIDE.zh-CN.md">简体中文</a>
+&nbsp;·&nbsp;
+<a href="./SPEC.md">Spec</a>
+
+> Day-to-day configuration and usage. For the engineering contract and internals
+> (data types, registries, package layout, roadmap), see the **[Spec](./SPEC.md)**.
+>
+> **Naming:** Clouvia is the current product name. The `kwu` executable and
+> `KWU_*` provider/runtime variables remain for compatibility. New project
+> configuration uses `clouvia.toml`; see [Configuration paths](./CONFIG_PATHS.md).
+
+## Contents
+
+- [Configuration](#configuration)
+- [Serve HTTP/SSE API](#serve-httpsse-api)
+- [Configuration paths](./CONFIG_PATHS.md)
+- [Reasoning language](./REASONING_LANGUAGE.md)
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [Permissions & sandbox](#permissions--sandbox)
+- [Plugins (MCP)](#plugins-mcp)
+- [Slash commands](#slash-commands)
+- [@ references](#-references)
+- [Two-model collaboration](#two-model-collaboration)
+
+## Configuration
+
+Resolution order: **flag > `./clouvia.toml` > the user config file >
+built-in defaults**. The user config lives at
+`~/.clouvia/config.toml` on macOS/Linux and
+`%AppData%\Clouvia\config.toml` on Windows; see
+[Configuration paths](./CONFIG_PATHS.md) for migration and related data paths.
+Fields marked user/global only, including agent step limits, are not overridden
+by `./clouvia.toml`.
+Provider entries name secrets with `api_key_env`, while the secret values live in
+Clouvia's global `<Clouvia home>/.env`, shared by CLI and desktop. Project
+`.env`, home `.env`, inherited shell environment variables, legacy credentials,
+and the OS keyring are not provider-key runtime fallbacks; legacy credentials are
+only migration sources. Project `.env` still feeds workspace-scoped,
+non-provider `${VAR}` expansion for MCP/plugin settings without importing
+provider keys or stable Clouvia/KWU control variables. See
+[Configuration paths](./CONFIG_PATHS.md) for the full `config.toml` and `.env`
+structure.
+
+For the desktop and CLI usage of visible reasoning language, see
+[Reasoning language](./REASONING_LANGUAGE.md).
+
+```toml
+default_model = "kwu/deepseek-v4-pro"   # executor; set [agent].planner_model to add a planner
+# language    = "zh"               # ui language; empty = auto-detect from $LANG / $KWU_LANG
+
+[ui]
+# shortcut_layout = "desktop"      # classic|desktop; compatibility setting
+
+[agent]
+max_steps = 0                    # user/global only; executor tool-call rounds; 0 = no limit
+planner_max_steps = 0            # user/global only; planner read-only tool-call rounds; 0 = no limit
+reasoning_language = "auto"      # visible reasoning text: auto|zh|en
+# plan_mode_allowed_tools = ["custom_reader"]   # extra read-only custom tools only;
+#                                                # does not unlock blocked tools or unsafe bash
+# planner_model = "kwu/deepseek-v4-flash"      # optional low-cost planner
+# subagent_model = "kwu/deepseek-v4-flash"     # optional default for runAs=subagent skills
+# subagent_models = { review = "kwu/deepseek-v4-flash", security_review = "kwu/deepseek-v4-flash" }
+auto_plan = "off"                  # user-level only; off|on; off keeps plan mode manual
+# auto_plan_classifier = "kwu/deepseek-v4-flash"   # optional; only borderline tasks call it
+
+[[providers]]
+name        = "kwu"
+kind        = "openai"
+base_url    = "http://192.168.10.231:8080/v1"
+models      = ["deepseek-v4-pro", "deepseek-v4-flash"]
+default     = "deepseek-v4-pro"
+api_key_env = "KWU_API_KEY"
+
+[tools]
+enabled = []   # omit/empty = all built-ins
+bash_timeout_seconds = 120   # foreground safety cap; set 0 for no tool-local cap
+
+[skills]
+# Convention roots include .kwu, .agents, .agent, .claude, and .codex skill directories.
+# paths = ["~/my-skills", "../shared/skills"]   # extra custom skill roots
+# excluded_paths = ["~/.agents/skills"]         # hide convention roots without deleting folders
+# disabled_skills = ["review"]                  # hide skills until /skill enable <name>
+
+[permissions]
+mode  = "ask"                                # writer fallback when no rule matches: ask|allow|deny
+deny  = ["Bash(rm -rf*)", "Bash(git push*)"] # hard-blocked in every mode
+allow = ["Bash(go test:*)"]                  # never prompted
+
+[sandbox]
+# workspace_root = ""          # file-writers confined here; empty = current dir
+# allow_write    = ["/tmp"]    # extra dirs write_file/edit_file/multi_edit/move_file may touch
+
+[serve]
+auth_mode = "none"             # none|token|password; use auth before binding beyond localhost
+# token = ""                   # optional fixed token; empty token mode generates one at startup
+# password_hash = ""           # bcrypt hash generated with kwu serve --hash-password --password '...'
+# behind_proxy = false         # true only behind a trusted reverse proxy
+
+[[plugins]]
+name    = "example"
+command = "kwu-plugin-example"
+```
+
+For the full schema and every field's contract, see [`SPEC.md` §5](./SPEC.md#5-configuration-toml).
+
+`[agent].plan_mode_allowed_tools` is an extra read-only declaration for custom or
+external tools KWU cannot classify itself. For MCP/plugin tools, a concrete
+model-visible name such as `mcp__github__issue_read` also promotes that tool to a
+trusted read-only reader for planner and read-only research surfaces. Prefer the
+plugin-level `trusted_read_only_tools` field for stable MCP config; keep
+`plan_mode_allowed_tools` as the compatibility escape valve. It never unlocks
+known blocked plan-mode tools such as `bash`, `task`, writers, installers, or
+memory mutation tools, and it never bypasses bash's plan-mode safety checks.
+
+## Serve HTTP/SSE API
+
+`kwu serve` exposes the local engine as an HTTP command API plus an SSE event
+stream. It does not serve a browser application. Use it for integrations or for
+an independently developed client that implements the API contract.
+
+```bash
+cd your-project
+kwu serve
+# API status: http://127.0.0.1:8787/status
+# event stream: http://127.0.0.1:8787/events
+```
+
+By default it listens on `127.0.0.1:8787` with `auth_mode = "none"`. Keep that
+default for local-only use. If you bind outside loopback, expose it through a
+tunnel, or put it behind a reverse proxy, enable authentication first:
+
+```bash
+kwu serve --auth token
+kwu serve --addr 0.0.0.0:8787 --auth token
+kwu serve --auth password --password 'temporary-password'
+```
+
+Token mode prints an authenticated `/status` URL; pass `--token` or set
+`[serve].token` to reuse a stable token. Password mode requires either
+`--password` at startup or a stored bcrypt hash. Exchange the password for a
+session cookie by posting the `password` form field to `/login`; no HTML login
+page is provided.
+
+```bash
+kwu serve --hash-password --password 'strong-password'
+
+# ~/.clouvia/config.toml
+[serve]
+auth_mode = "password" # none|token|password
+password_hash = "$2a$12$..."
+behind_proxy = true    # only behind a trusted reverse proxy
+```
+
+The API exposes commands, approvals, session history, rewind/fork/summarize,
+model and reasoning-effort controls, Goal, Todo state, automation, and provider
+status. Use `--model`, `--max-steps`, or `--resume` for one-off launches;
+otherwise `serve` uses the user-global `default_model`.
+
+## Keyboard shortcuts
+
+Shortcuts are documented by client because users usually look for the keys that
+work in the surface they are using. The small mode rule is: `Shift+Tab` only
+controls Plan, `Ctrl/Cmd+Y` only controls YOLO, and paste stays on the platform
+paste key.
+
+`[ui].shortcut_layout` is still accepted for old configs, but the shortcut
+behavior below is unified across layouts.
+
+### Desktop GUI
+
+Desktop shortcuts are managed from **Settings → Shortcuts**. Pick a row, press a
+new key combination, and KWU saves it for the desktop app. Conflicting
+bindings are rejected so one shortcut never triggers two actions. Press `?` or
+use the help button in the topic bar to open the shortcuts sheet; it is generated
+from the same shortcut registry, so it reflects any custom bindings.
+
+Global shortcuts:
+
+| Key or control | What it does | Notes |
+| --- | --- | --- |
+| `Cmd+K` on macOS, `Ctrl+K` on Windows/Linux | Toggles the command palette | The palette focuses search when it opens; `Esc` closes it. |
+| `Cmd+,` on macOS, `Ctrl+,` on Windows/Linux | Opens Settings | Use **Shortcuts** in Settings to customize desktop bindings. |
+| `Cmd+W` on macOS, `Ctrl+W` on Windows/Linux | Closes the active top tab | The last tab is kept by the normal close-tab guard. |
+| `Cmd+B` / `Ctrl+B` | Shows or hides the left sidebar | Same action as clicking the sidebar toggle. |
+| `Cmd+Shift+B` / `Ctrl+Shift+B` | Expands or collapses the most recent shell output | Same action as clicking the collapsed shell-output hint. |
+| `Cmd+1`-`Cmd+9` on macOS, `Ctrl+1`-`Ctrl+9` elsewhere | Jumps to the matching visible chat in the sidebar | Hold `Cmd`/`Ctrl` briefly to reveal the numbered badges. Existing custom shortcuts that already use the same key take precedence. |
+| `Cmd++`, `Cmd+-`, `Cmd+0` on macOS; `Ctrl++`, `Ctrl+-`, `Ctrl+0` elsewhere | Increases, decreases, or resets text size | `=` is accepted for the plus key on keyboards that report it that way. |
+| `?` | Opens the keyboard shortcuts sheet | The sheet shows the current effective desktop bindings. |
+
+Composer shortcuts:
+
+| Key or control | What it does | Notes |
+| --- | --- | --- |
+| `Enter` | Sends the current message | IME composition confirmation is left alone. |
+| `Shift+Enter` | Inserts a newline | The composer keeps focus. |
+| `Shift+Tab` | Toggles Plan on/off | Plan is read-only planning and does not cycle Ask/Auto/YOLO. |
+| `Cmd+Y` / `Ctrl+Y` | Toggles YOLO on/off | Turning YOLO off restores the previous Ask/Auto base when known. |
+| `Cmd+V` on macOS, `Ctrl+V` on Windows/Linux | Pastes clipboard content | Clipboard images are attached; images can also be dropped into the composer. |
+| Plain `Up` / `Down` at the prompt boundary | Recalls older or newer submitted prompts | Modified arrows and native text navigation stay with the textarea. |
+| `Esc` while a turn is running | Cancels the running turn | If the turn has not produced a response yet, the draft is restored. |
+
+Menus and controls:
+
+| Key or control | What it does | Notes |
+| --- | --- | --- |
+| `Up` / `Down` in slash, `@`, or past-chat menus | Moves the highlighted item | Past-chat search uses the same navigation keys. |
+| `Enter` / `Tab` in those menus | Accepts the highlighted item | Directory-like entries can keep the menu open for the next level. |
+| `Esc` in those menus | Closes the current menu or returns from past-chat search | Regular typing continues after the menu closes. |
+| Ask / Auto / YOLO approval controls | Picks the tool approval posture directly | Clicking these controls is unchanged by keyboard shortcuts. |
+| Tool approval card | `Left` / `Right`, `Enter`, `1`-`4`, `Esc` | Move the highlighted action, confirm it, pick a numbered action, or deny. The default highlighted action is Allow once. |
+| Plan approval card | `Left` / `Right`, `Enter`, `1`-`3`, `Esc` | Move between Revise plan, Start execution, and Exit plan. The default highlighted action is Start execution. |
+| Plan control | Toggles Plan on/off | Same mode as `Shift+Tab`. |
+| Goal item in the collaboration menu | Starts, views, or clears Goal | Goal is not in any keyboard cycle. |
+
+### CLI / TUI
+
+Chat and transcript shortcuts:
+
+| Key or command | What it does | Notes |
+| --- | --- | --- |
+| `Enter` | Sends the current message | While a turn is running, non-empty input is queued as follow-up feedback. |
+| `Shift+Enter`, `Alt+Enter`, or `Ctrl+J` | Inserts a newline | Plain `Enter` is reserved for send/confirm. |
+| Plain `Up` / `Down` while idle | Recalls older or newer submitted prompts | In a running turn, the same keys navigate queued follow-up feedback. |
+| `PageUp` / `PageDown` | Scrolls the transcript | Works regardless of the current chat state. |
+| `Ctrl+Home` / `Ctrl+End` | Jumps to the top or bottom of the transcript | Useful after long tool output. |
+| `Esc` | Backs out of the current action | It un-sends a just-submitted turn before any reply, cancels a running turn, or clears non-empty input. |
+| Double `Esc` on an empty idle composer | Opens the rewind picker | Same entry point as `/rewind`. |
+| Terminal native selection | Copies transcript text | KWU does not enable mouse reporting by default, so terminal selection/copy remains available. |
+| `Ctrl+C` | Cancels, clears, or quits | Cancels a running turn, clears non-empty input, or quits on a second empty-composer press. |
+| `Ctrl+D` | Quits the TUI | Immediate quit. |
+| `Ctrl+V`, `Ctrl+Shift+V`, `Meta+V`, or `Super+V` | Pastes clipboard content | The CLI tries an image first, then falls back to text or file references. |
+| `/paste-image` | Pastes a clipboard image | Use it when you want image-only paste or the terminal handles text paste itself. |
+| A line starting with `!` | Runs a shell command directly | The command runs locally without asking the model. |
+
+Mode and display shortcuts:
+
+| Key or command | What it does | Notes |
+| --- | --- | --- |
+| `Shift+Tab` | Toggles Plan on/off | Plan is read-only planning and does not cycle Ask/Auto/YOLO. |
+| `Ctrl+Y` | Toggles YOLO on/off | Turning YOLO off restores the previous Ask/Auto base when known. Terminals that forward Command/Super may also send `Cmd+Y`, but `Ctrl+Y` is the reliable terminal shortcut. |
+| `--yolo`, `--dangerously-skip-permissions` | Starts chat in YOLO | Same runtime mode as `Ctrl+Y`. |
+| `Ctrl+O` | Toggles verbose reasoning display | Also available through `/verbose`. |
+| `Ctrl+B` | Expands or collapses long shell output | Works with terminal-native text selection because the TUI does not enable mouse reporting by default. |
+| Ask / Auto | No keyboard cycle | Ask is the default interactive base. Auto is not entered through `Shift+Tab`; use clients or APIs that expose the tool approval posture directly. |
+| `/goal <objective>`, `/goal --research <objective>`, `/goal --simple <objective>`, `/goal status`, `/goal clear` | Starts, checks, or clears Goal | Goal is not in any keyboard cycle; clearly long-horizon goals automatically enable AutoResearch. Ordinary prompts with strong AutoResearch signals are also upgraded into Goal. |
+
+Picker and approval shortcuts:
+
+| Context | Keys | What they do |
+| --- | --- | --- |
+| Slash or `@` completion | `Up` / `Down`, `Tab` / `Enter`, `Esc` | Move, accept, or close the completion menu. |
+| Tool approval prompt | `y`/`1`, `a`/`2`, `p`/`3`, `n`/`4`, `Enter`, `Esc`, `Ctrl+C` | Allow once, allow for session, persist allow, deny, accept default allow once, deny, or cancel the turn. |
+| Ask question card | `Up`/`Down` or `j`/`k`, `Left`/`Right` or `h`/`l`, `Space`, `Enter`, `1`-`9`, `Esc`, `Ctrl+C` | Navigate answers/tabs, toggle multi-select answers, submit/activate, pick numbered options, dismiss, or cancel the turn. |
+| Rewind picker | `Up`/`Down` or `j`/`k`, `Enter`, `b`, `c`, `d`, `f`, `s`, `u`, `Esc` | Choose a turn, apply both/conversation/code/fork/summarize actions, or go back/close. |
+| Resume picker | `Up`/`Down` or `j`/`k`, `Enter`, `Esc` | Choose a saved session or close the picker. |
+| MCP import picker | `Up`/`Down` or `j`/`k`, `Space`, `Enter`, `Esc` / `Ctrl+C` | Move, select servers, import selected servers, or cancel. |
+| MCP manager | `Up`/`Down` or `j`/`k`, `Enter`, `Left`/`Right` or `h`/`l`, `r`, number keys, `q` / `Ctrl+C` | Navigate server lists/details, refresh, choose actions, or close. |
+| `/clear` confirmation | Arrow keys or `j`/`k` / `Tab`, `Enter`, `y`, `n`, `Esc` / `Ctrl+C` | Toggle Clear/Cancel, confirm clear, or cancel. |
+
+Mode meanings:
+
+| Mode | Meaning |
+| --- | --- |
+| Ask | Prompts for fallback writer approvals. |
+| Auto | Auto-allows fallback approvals; explicit `ask` / `deny` rules still apply. |
+| YOLO | Skips ordinary tool approval prompts; `deny`, user `ask` questions, and plan approval prompts still wait. |
+| Plan | Keeps the next work read-only until a plan is approved or Plan is turned off. |
+| Goal | Pursues a saved objective until complete, blocked, or cleared. |
+
+## Permissions & sandbox
+
+Permissions gate each tool call: `deny` > `ask` > `allow` > fallback. Bash and
+file mutation tools require approval by default; read-only tools generally do
+not. Approvals are stored and matched as permission rules, not button labels:
+for example `Bash(npm run build)`, `Bash(npm run test:*)`, and `Edit(docs/**)`.
+`kwu` can grant Bash as an exact command or as a conservative command
+prefix (for example `Bash(go test:*)`), while file-editing tools share session
+edit grants and persist path-scoped rules such as `Edit(src/app.go)`.
+`kwu run` stays autonomous but still honours `deny`.
+
+Permissions are *policy* (which calls to allow / prompt). The **sandbox** is
+*enforcement*: the file-writers (`write_file` / `edit_file` / `multi_edit` / `move_file`)
+refuse any path outside `[sandbox] workspace_root` (default: the current dir, so
+edits stay in the project), resolving symlinks and `..` so a link can't tunnel
+out. Reads are unrestricted. `bash` is itself jailed on macOS by default
+(`[sandbox] bash`, Seatbelt): commands may write only those same roots (plus
+temp and toolchain caches) and reach the network only when `[sandbox] network`
+is set. Other platforms fall back to running unconfined for now (see
+[`SPEC.md` §9](./SPEC.md#9-roadmap-not-in-current-scope) for the escape-prompt and
+Linux support still to come).
+
+## Plugins (MCP)
+
+KWU is an MCP client. A `[[plugins]]` entry's `type` selects the transport:
+`stdio` (default) launches a local subprocess (`command`/`args`/`env`); `http`
+(Streamable HTTP) connects to a remote `url` with optional static `headers`
+(`${VAR}` / `${VAR:-default}` expanded from the environment, so tokens stay out
+of the file). Tools surface to the model as `mcp__<server>__<tool>`; a tool
+declaring MCP's `readOnlyHint: true` joins parallel dispatch and the permission
+reader-default, but planner / read-only research does not trust third-party
+read-only hints by default. For audited third-party readers, declare raw MCP tool
+names on the plugin:
+
+```toml
+[[plugins]]
+name = "github"
+command = "github-mcp"
+trusted_read_only_tools = ["issue_read", "pull_request_read"]
+```
+
+In the desktop MCP panel, expand a configured server and open its tools list.
+Click **Trust read-only** to add every currently listed tool that the server
+reports with MCP `readOnlyHint: true`, click a single tool's **Trust** button to
+add an audited reader manually, and use **Untrust** to remove a tool from the
+planner / read-only research allowlist. The desktop writes the raw MCP tool names
+to `trusted_read_only_tools` in the owning config source: project `.mcp.json`
+servers are updated under `mcpServers.<server>.trusted_read_only_tools`, while
+ordinary Clouvia plugins are updated in the user's Clouvia config. Trust only
+side-effect-free readers; create/update/delete tools should remain untrusted.
+
+A server's **prompts** surface as `/mcp__<server>__<prompt>` slash commands
+(positional args after the command); its **resources** are pulled in by writing
+`@<server>:<uri>` in a message; `/mcp` lists connected servers and what each
+exposes. `make build` also produces `bin/kwu-plugin-example` — a runnable
+reference stdio server (`echo`, `wordcount`, a `review` prompt, a style-guide
+resource) you can copy.
+
+```toml
+[[plugins]]                       # local stdio server
+name    = "example"
+command = "kwu-plugin-example"
+
+[[plugins]]                       # remote server over Streamable HTTP
+name    = "stripe"
+type    = "http"
+url     = "https://mcp.stripe.com"
+headers = { Authorization = "Bearer ${STRIPE_KEY}" }
+```
+
+Enabled MCP servers start connecting automatically in the background after a
+session begins, so chat stays usable while tools come online. Use `/mcp` or the
+desktop MCP panel to refresh status, reconnect a server, inspect failures, or
+disable a server for the current session.
+
+**Already have an `.mcp.json`?** Drop it in the project root and KWU
+reads it as-is — the `mcpServers` spec (`command`/`args`/`env`, `type`/`url`/
+`headers`, `${VAR}` expansion) maps field-for-field onto `[[plugins]]`. Both
+sources are merged; on a name collision `clouvia.toml` wins.
+
+```json
+{
+  "mcpServers": {
+    "filesystem": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path"] },
+    "stripe": { "type": "http", "url": "https://mcp.stripe.com", "headers": { "Authorization": "Bearer ${STRIPE_KEY}" } }
+  }
+}
+```
+
+**Upgrading from `0.x`?** Your old `~/.kwu/config.json` is still read for its
+`mcpServers` (honouring `mcpDisabled`) as a lowest-priority source, so MCP servers
+keep working — move them into `clouvia.toml`'s `[[plugins]]` or a `.mcp.json` when
+convenient.
+
+## Slash commands
+
+In an interactive `kwu` session, built-in commands (`/compact`, `/new`, `/clear`, `/rewind`,
+`/tree`, `/branch`, `/switch`, `/todo`, `/model`, `/mcp`, `/skills`,
+`/memory`, `/goal`, `/output-style`, `/sandbox`, `/language`,
+`/auto-plan`, `/reasoning-language`, `/help`) run
+locally — `/help` lists them all. `/new` starts a new session while saving the
+previous transcript for history/resume; `/clear` asks for confirmation, then
+discards the current context without saving it. `/tree` shows saved conversation
+branches, `/branch [name]` forks the current conversation tip, `/branch <turn>
+[name]` forks from an earlier checkpointed turn, and `/switch <id|name>` loads
+another branch. **Custom commands** are Markdown files under `.clouvia/commands/`
+(project) or `~/.clouvia/commands/` (user) — `review.md` becomes
+`/review`, a subdirectory namespaces it (`git/commit.md` → `/git:commit`). The
+body is a prompt template; invoking the command sends it as a turn.
+
+`/memory` lists both memory documents (`KWU.md` / `AGENTS.md`) and saved
+auto-memory facts. During agent turns, the read-only `history` and `memory`
+tools let the model retrieve prior session decisions, compacted-history
+archives, and saved facts on demand instead of injecting that dynamic state into
+the stable system prompt. `/forget <name>` archives a saved fact rather than
+deleting it permanently; the CLI/TUI and desktop memory panel can show those
+archived files for traceability, but they are not searched as active memory.
+Agent-initiated `remember` and `forget` calls always ask for fresh approval and
+show a compact preview of the saved or archived memory before they run.
+Retrieval keeps the top BM25 result while trimming weak common-word matches, and
+0-result responses suggest narrower, more distinctive follow-up searches.
+Memory v5 has been retired. It is no longer registered, invoked, configurable,
+or written to disk. The `/memory-v5` and `kwu config memory-v5` commands, the
+`agent.memory_compiler` setting, and its workflow metrics have been removed.
+At startup, obsolete config keys are removed when the file is writable and are
+otherwise ignored. Existing compiler state is left untouched for manual backup
+or removal. Legacy transcripts containing `<memory-compiler-execution>` remain
+readable and display their original user request.
+
+```markdown
+---
+description: Review the staged diff
+argument-hint: [focus-area]
+---
+Review the staged diff. Focus on $ARGUMENTS, list bugs with file:line.
+```
+
+`$ARGUMENTS` expands to all space-separated args, `$1`…`$N` to positional ones.
+MCP prompts also appear here as `/mcp__<server>__<prompt>`.
+
+## Goal and AutoResearch
+
+Goal is the unified runtime for long-running objectives. Ordinary `/goal`
+objectives stay lightweight: KWU keeps working until the goal is complete,
+blocked, or cleared. When a goal is clearly long-horizon, Goal automatically
+enables the AutoResearch strategy instead of requiring a separate
+`/auto-research` skill; `auto-research` is not listed as a standalone built-in
+skill in Settings -> Skills or the slash menu. If an ordinary chat prompt has a
+very strong long-horizon signal, the host also upgrades it into the equivalent
+of `/goal --research <original prompt>`.
+
+AutoResearch is enabled for goals with strong signals such as "keep
+researching", "long-running", "thoroughly", "debug until the root cause is
+clear", "do not spin", "run experiments", "verify repeatedly", or "turn this
+into a complete plan". It can also trigger when the objective combines multiple
+phases such as research/diagnosis, implementation/fixing, verification/testing,
+optimization/documentation/release, or when the user names an existing
+`.clouvia/autoresearch/<task-id>/` directory. Advanced users can force it with
+`/goal --research <objective>` or force lightweight Goal with
+`/goal --simple <objective>`. Ordinary-chat auto-upgrade is more conservative
+than `/goal`'s internal classification: standalone phrases such as "long term",
+"optimize", "research this", or "verify this" do not create AutoResearch tasks
+by themselves.
+
+Once AutoResearch is active, the agent treats the goal as a stateful research
+loop instead of a chat-only continuation. It creates or reuses a project-local
+`.clouvia/autoresearch/<task-id>/` directory. For new tasks, the default id
+shape is `YYYYMMDD-HHMMSS-slug`, such as `20260618-224530-cache-audit`; KWU
+checks the project directory first and appends `-2`, `-3`, and so on only if
+that id already exists. The task state includes `task_spec.md`, `progress.json`,
+`findings.jsonl`, `directions_tried.json`, and `iteration_log.jsonl`, records
+each iteration's direction, evidence, verification result, and blocker, and uses
+`stale_count` to detect repeated weak progress. Repeated stalls force a
+structural pivot, such as changing evidence source, entrypoint, test oracle,
+decomposition, benchmark, or worker strategy, rather than retrying the same
+tactic.
+
+Workers and subagents may explore independently, but the orchestrator owns the
+canonical state files. Completion requires a requirement-by-requirement evidence
+audit against `task_spec.md`; a passing narrow check is not treated as proof of a
+broad requirement. Dynamic run state stays in `.clouvia/autoresearch/...`, not
+in `KWU.md`, `AGENTS.md`, project memory, tool schemas, or the cache-stable
+system prompt. Public publishing, destructive operations, credentials, payments,
+and external notifications still follow the normal approval, privacy, and cache
+gates.
+
+## @ references
+
+Embed `@` references in a message and KWU resolves them before sending, as
+tagged context blocks: `@path/to/file` (or `@dir`) injects a local file's
+contents (or a directory listing), and `@<server>:<uri>` injects an MCP
+resource. A local path is only treated as a reference when it actually exists,
+so ordinary `@mentions` stay literal. Typing `/` or `@` opens an autocomplete
+menu — slash commands, or hierarchical file navigation (one directory level at a
+time, descend into folders) plus MCP resources.
+
+## Two-model collaboration
+
+`kwu setup` keeps first-run minimal: pick provider → keys (every SKU of a
+chosen provider is enabled). Running two models together (executor + planner,
+separate cache-stable sessions) is a one-line edit afterwards — set
+`planner_model` to another enabled model reference:
+
+```toml
+[agent]
+planner_model = "kwu/deepseek-v4-flash"   # used as the low-cost planner
+```
+
+The planner sees loaded `KWU.md` / `AGENTS.md` memory and a small read-only
+research tool set, so it can inspect relevant files before handing a plan to the
+executor. Writer and workflow tools remain executor-only. `max_steps` limits the
+executor; `planner_max_steps` limits only the planner, and either can be set to
+`0` for no round limit.
+
+Keep step-limit preferences in the user config. Project `./clouvia.toml` files
+do not override `max_steps` or `planner_max_steps`.
+
+Subagent skills inherit the executor model by default. Set `subagent_model` to
+run them on another configured model, or use `subagent_models` to override only
+specific skills such as `review` or `security_review`.
+
+Use `read_only_task` when planning needs isolated, deeper research without
+granting write-capable delegation. Use `read_only_skill` when the same need is
+best expressed through an existing skill. Both run ephemeral read-only
+subagents with only read-only research tools plus safe foreground bash, return
+only the final answer, and do not create resumable subagent transcripts. In
+token economy mode, connect only this narrow surface with
+`connect_tool_source(source="read_only_skill")`; the full `skills` source still
+enables writer-capable skill tools and remains blocked in plan mode.
+
+For interactive frontends, plan mode is manual by default. Set
+`agent.auto_plan = "on"` to make complex-looking tasks enter plan mode
+automatically: KWU first drafts a read-only plan, then waits for approval
+before editing or running side-effecting commands. `auto_plan_classifier` can
+name a cheap model such as `kwu/deepseek-v4-flash`; it is only called for borderline
+inputs and falls back to the heuristic if classification fails. Use
+`/auto-plan off|on` inside `kwu` to change the user-level setting, or
+`kwu config auto-plan off|on` from a shell/script. Auto-plan is user-level
+only; `agent.auto_plan` in a project `clouvia.toml` is ignored. The visible
+reasoning language uses a similar shape: `/reasoning-language auto|zh|en` in the
+session, or `kwu config reasoning-language auto|zh|en` in a shell/script.
+Pass `--local` to the reasoning-language shell command only when you
+intentionally want a project-local override.
+
+The why behind separate sessions (keeping each model's prefix cache-stable) is in
+[`SPEC.md` §3.5](./SPEC.md#35-two-model-collaboration-coordinator).

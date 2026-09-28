@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-01T15:30:00+08:00",
+  "sources": [
+    {
+      "tier": "official-workbuddy",
+      "title": "WorkBuddy 连接器说明",
+      "url": "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Connector",
+      "supports": [
+        "连接器存在 MCP + CLI 与 Skill + CLI 两种实现形态",
+        "QQ 邮箱、乐享等连接器的授权与能力说明"
+      ]
+    },
+    {
+      "tier": "official-workbuddy",
+      "title": "WorkBuddy MCP 配置指南",
+      "url": "https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/MCP-Guide",
+      "supports": [
+        "用户级 ~/.workbuddy/mcp.json",
+        "项目级 <project>/.workbuddy/mcp.json",
+        "mcpServers 配置结构与状态含义"
+      ]
+    },
+    {
+      "tier": "official-workbuddy",
+      "title": "WorkBuddy 更新日志",
+      "url": "https://www.workbuddy.cn/docs/workbuddy/Changelog",
+      "supports": [
+        "5.3.5 发布信息",
+        "5.3.3 增加连接器搜索",
+        "连接器最低客户端版本匹配、静态 header、User-Agent、工具禁用与 OAuth/CLI 演进"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "腾讯云企业连接器管理",
+      "url": "https://cloud.tencent.com/document/product/1831/134453",
+      "supports": [
+        "企业连接器支持 MCP OAuth 2.1、OAuth 2.0 授权码、API Key、工具过滤、超时和自定义 header"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "企业版个人连接器说明",
+      "url": "https://cloud.tencent.com/document/product/1831/134525",
+      "supports": [
+        "连接器技术形态、独立授权、按需访问和模型解释流程"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "腾讯文档 MCP",
+      "url": "https://cloud.tencent.com/developer/mcp/server/11803",
+      "supports": [
+        "腾讯文档 MCP 能力、公开 endpoint 与 Authorization 方式"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "腾讯乐享 MCP",
+      "url": "https://cloud.tencent.com/developer/mcp/server/11802",
+      "supports": [
+        "腾讯乐享 MCP 服务与能力说明"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "TAPD MCP",
+      "url": "https://cloud.tencent.com/developer/mcp/server/11474",
+      "supports": [
+        "TAPD MCP 服务与工具说明"
+      ]
+    },
+    {
+      "tier": "official-workbuddy",
+      "title": "腾讯文档资料库说明",
+      "url": "https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Knowledge-Base/Tencent-Doc",
+      "supports": [
+        "资料库入口与连接器入口存在部分能力重叠"
+      ]
+    },
+    {
+      "tier": "official-workbuddy",
+      "title": "ima 知识库说明",
+      "url": "https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Knowledge-Base/IMA%20Knowledge%20Base/01-Workbuddy-IMA-Basic-Guide",
+      "supports": [
+        "ima 知识库入口及其使用方式"
+      ]
+    },
+    {
+      "tier": "official-workbuddy",
+      "title": "乐享知识库说明",
+      "url": "https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Knowledge-Base/Lexiang",
+      "supports": [
+        "乐享知识库入口及其使用方式"
+      ]
+    },
+    {
+      "tier": "official-tencent-cloud",
+      "title": "腾讯云 MCP 市场",
+      "url": "https://cloud.tencent.com/developer/mcp",
+      "supports": [
+        "WorkBuddy MCP Hub 指向的外部 MCP 生态"
+      ],
+      "caveat": "市场中的服务不能等同于 WorkBuddy 5.3.5 的预置连接器目录。"
+    }
+  ],
+  "caveats": [
+    "官方连接器文档列举的卡片少于 5.3.5 运行时目录，且不同页面之间存在不一致；当前版本的完整清单应以本地市场索引和运行时注册表为准。",
+    "公开页面会持续变化，本文件记录的是 2026-08-01 的核验结果。"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "artifacts": {
+    "boundary": ".prototype-engineering/records/superpower-ecommerce-ui-v004/boundary.json",
+    "brief": ".prototype-engineering/records/superpower-ecommerce-ui-v004/brief.md",
+    "record": ".prototype-engineering/records/superpower-ecommerce-ui-v004/record.md",
+    "repositoryMap": ".prototype-engineering/records/superpower-ecommerce-ui-v004/repository-map.md",
+    "scenarios": ".prototype-engineering/records/superpower-ecommerce-ui-v004/scenarios.json"
+  },
+  "boundaryVersion": 1,
+  "checks": [
+    {
+      "at": "2026-08-21T13:11:10+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/verification.md",
+      "name": "focused-ui-tests",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T13:11:10+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/verification.md",
+      "name": "frontend-production-build",
+      "status": "passed"
+    },
+    {
+      "at": "2026-08-21T13:11:10+00:00",
+      "evidence": ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/capabilities-settled-after-submit.png",
+      "name": "empty-capability-transition",
+      "status": "passed"
+    }
+  ],
+  "createdAt": "2026-08-21T13:04:38+00:00",
+  "decision": "continue",
+  "evidence": [
+    ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/verification.md",
+    ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/capabilities-settled-after-submit.png",
+    ".prototype-engineering/evidence/superpower-ecommerce-ui-v004/empty-capability-cards.png"
+  ],
+  "git": {
+    "baseCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72",
+    "verifiedCommit": "0c0efad491edfcbfbad90e5e2bc6ac24c2060b72"
+  },
+  "history": [
+    {
+      "at": "2026-08-21T13:04:38+00:00",
+      "from": null,
+      "to": "draft"
+    },
+    {
+      "at": "2026-08-21T13:05:01+00:00",
+      "from": "draft",
+      "to": "discovered"
+    },
+    {
+      "at": "2026-08-21T13:05:01+00:00",
+      "from": "discovered",
+      "to": "framed"
+    },
+    {
+      "at": "2026-08-21T13:05:02+00:00",
+      "from": "framed",
+      "to": "bounded"
+    },
+    {
+      "at": "2026-08-21T13:05:02+00:00",
+      "from": "bounded",
+      "to": "frozen"
+    },
+    {
+      "at": "2026-08-21T13:05:02+00:00",
+      "from": "frozen",
+      "to": "building"
+    },
+    {
+      "at": "2026-08-21T13:11:10+00:00",
+      "from": "building",
+      "to": "verified"
+    },
+    {
+      "at": "2026-08-21T13:11:11+00:00",
+      "from": "verified",
+      "to": "recorded"
+    },
+    {
+      "at": "2026-08-21T13:11:11+00:00",
+      "from": "recorded",
+      "to": "decided"
+    }
+  ],
+  "id": "superpower-ecommerce-ui-v004",
+  "name": "superpower-ecommerce-ui",
+  "parentId": "superpower-ecommerce-ui-v003",
+  "phase": "decided",
+  "schemaVersion": 1,
+  "updatedAt": "2026-08-21T13:11:11+00:00",
+  "version": 4
+}

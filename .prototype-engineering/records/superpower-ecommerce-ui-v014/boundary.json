@@ -1,0 +1,24 @@
+{
+  "subject": "Task-scoped evidence resolution and citation-aware execution adapter",
+  "inside": [
+    "Task-scoped evidence artifact resolver interface",
+    "Deterministic prototype evidence catalog",
+    "Bounded prompt-injection-aware hidden context assembly",
+    "Research execution adapter interface and deterministic mock implementation",
+    "Citation-aware answer and source legend rendering"
+  ],
+  "outside": [
+    {
+      "system": "Existing conversation/session service",
+      "contract": "A future adapter accepts the same execution context and streams an answer without requiring session schema changes.",
+      "adapter": "ExistingConversationServiceAdapter",
+      "scenarioIds": ["multi-source-execution", "empty-evidence"]
+    },
+    {
+      "system": "Persistent MCP artifact storage and ACL service",
+      "contract": "Resolve evidence by capability/workspace/task scope and evidence ID, returning only authorized bounded artifacts.",
+      "adapter": "PersistentTaskEvidenceResolver",
+      "scenarioIds": ["multi-source-execution", "partially-unresolved", "scope-mismatch"]
+    }
+  ]
+}

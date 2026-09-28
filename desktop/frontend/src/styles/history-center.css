@@ -1,0 +1,325 @@
+/* Conversation center — monochrome WorkBuddy-inspired presentation.
+   This layer is intentionally scoped to the history modal so the selected
+   application theme and every conversation-center interaction stay intact. */
+.history-modal {
+  --history-primary: #000000;
+  --history-primary-hover: rgba(0, 0, 0, 0.82);
+  --history-primary-fg: #ffffff;
+  --history-primary-soft: rgba(0, 0, 0, 0.06);
+  --history-primary-soft-hover: rgba(0, 0, 0, 0.09);
+  --history-panel: #ffffff;
+  --history-subtle: #f7f7f7;
+  --history-muted: #f2f2f2;
+  --history-border: rgba(0, 0, 0, 0.08);
+  --history-border-strong: rgba(0, 0, 0, 0.12);
+  --history-shadow: 0 24px 48px -4px rgba(0, 0, 0, 0.2), 0 6px 12px -8px rgba(0, 0, 0, 0.2);
+  --accent: var(--history-primary);
+  --accent-strong: var(--history-primary-hover);
+  --accent-soft: var(--history-primary-soft);
+  --control-primary-bg: var(--history-primary);
+  --control-primary-fg: var(--history-primary-fg);
+  --ok: var(--history-primary);
+  border-color: var(--history-border-strong);
+  border-radius: 12px;
+  background: var(--history-panel);
+  box-shadow: var(--history-shadow);
+}
+
+.history-modal-backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.history-modal .history-modal__head {
+  min-height: 64px;
+  padding: 12px 20px;
+  border-bottom-color: var(--history-border);
+  background: var(--history-panel);
+}
+
+.history-modal .history-modal__heading {
+  gap: 20px;
+}
+
+.history-modal .history-modal__title {
+  color: var(--fg);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.history-modal .history-modal__tabs {
+  gap: 2px;
+  padding: 3px;
+  border-color: var(--history-border);
+  border-radius: 10px;
+  background: var(--history-muted);
+}
+
+.history-modal .history-modal__tab {
+  height: 32px;
+  padding: 0 13px;
+  border-radius: 8px;
+  color: var(--fg-dim);
+  font-weight: 550;
+}
+
+.history-modal .history-modal__tab:hover {
+  background: var(--history-primary-soft);
+  color: var(--fg);
+}
+
+.history-modal .history-modal__tab--active,
+.history-modal .history-modal__tab--active:hover {
+  background: var(--history-panel);
+  color: var(--history-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.history-modal .history-modal__tab span {
+  border: 0;
+  background: transparent;
+  color: var(--fg-faint);
+}
+
+.history-modal .history-modal__tab--active span {
+  background: var(--history-primary-soft);
+  color: var(--history-primary);
+}
+
+.history-modal .history-toolbar {
+  min-height: 58px;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom-color: var(--history-border);
+  background: var(--history-subtle);
+}
+
+.history-modal .history-search,
+.history-modal .history-workspace-filter,
+.history-modal .history-filter {
+  border-color: var(--history-border-strong);
+  border-radius: 8px;
+  background: var(--history-panel);
+  box-shadow: none;
+}
+
+.history-modal .history-search {
+  height: 36px;
+  padding: 0 11px;
+}
+
+.history-modal .history-workspace-filter {
+  height: 36px;
+}
+
+.history-modal .history-search:focus-within,
+.history-modal .history-workspace-filter:focus-within {
+  border-color: rgba(0, 0, 0, 0.55);
+  box-shadow: 0 0 0 2px var(--history-primary-soft);
+}
+
+.history-modal .history-filter {
+  padding: 3px;
+}
+
+.history-modal .history-filter__pill {
+  height: 28px;
+  border-radius: 6px;
+}
+
+.history-modal .history-filter__pill:hover:not(:disabled) {
+  background: var(--history-primary-soft);
+}
+
+.history-modal .history-filter__pill--on,
+.history-modal .history-filter__pill--on:hover:not(:disabled) {
+  background: var(--history-primary);
+  color: var(--history-primary-fg);
+}
+
+.history-modal .history-filter__pill--on .history-filter__count {
+  color: color-mix(in srgb, var(--history-primary-fg) 72%, transparent);
+}
+
+.history-modal .history-content {
+  background: var(--history-panel);
+}
+
+.history-modal .history-list {
+  padding: 14px;
+  border-right-color: var(--history-border);
+  background: var(--history-subtle);
+}
+
+.history-modal .history-list .mem-section {
+  margin-bottom: 16px;
+}
+
+.history-modal .hist-group__title {
+  padding: 0 2px 8px;
+  color: var(--fg-faint);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+.history-modal .hist-group__count {
+  border-color: var(--history-border);
+  background: var(--history-muted);
+}
+
+.history-modal .hist-item {
+  margin-bottom: 8px;
+  border-color: var(--history-border-strong);
+  border-radius: 10px;
+  background: var(--history-panel);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.history-modal .hist-item:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: var(--history-panel);
+  box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.18);
+  transform: none;
+}
+
+.history-modal .hist-item--current,
+.history-modal .hist-item--selected {
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.history-modal .hist-item--selected,
+.history-modal .hist-item--selected:hover {
+  background: var(--history-muted);
+  box-shadow: none;
+}
+
+.history-modal .hist-item--selected::before {
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--history-primary);
+}
+
+.history-modal .hist-item__main {
+  padding: 11px 12px 10px 14px;
+}
+
+.history-modal .hist-item__preview {
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.history-modal .hist-item__badge--current {
+  color: var(--history-primary);
+}
+
+.history-modal .hist-item__badge--current::before,
+.history-modal .hist-item__badge--open::before {
+  background: var(--history-primary);
+  box-shadow: none;
+}
+
+.history-modal .history-preview {
+  background: var(--history-panel);
+}
+
+.history-modal .history-preview__head {
+  min-height: 64px;
+  padding: 12px 18px;
+  border-bottom-color: var(--history-border);
+  background: var(--history-subtle);
+}
+
+.history-modal .history-preview__title {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.history-modal .history-preview__meta {
+  color: var(--fg-faint);
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.history-modal .history-preview__actions .btn {
+  height: 34px;
+  padding-inline: 13px;
+  border-radius: 8px;
+}
+
+.history-modal .history-preview__actions .btn--primary {
+  border-color: var(--history-primary);
+  background: var(--history-primary);
+  color: var(--history-primary-fg);
+}
+
+.history-modal .history-preview__actions .btn--primary:hover:not(:disabled) {
+  border-color: var(--history-primary-hover);
+  background: var(--history-primary-hover);
+}
+
+.history-modal .history-preview__body .transcript {
+  padding: 18px 22px 24px;
+}
+
+.history-modal .history-preview__body .msg--user .msg__body {
+  border-color: var(--history-primary);
+  border-radius: 10px;
+  background: var(--history-primary);
+  color: var(--history-primary-fg);
+  box-shadow: none;
+}
+
+.history-modal .history-preview__body .msg--user .msg__text {
+  color: inherit;
+}
+
+.history-modal .modal-close-button:hover {
+  border-color: transparent;
+  background: var(--history-primary-soft-hover);
+}
+
+:root[data-theme="dark"] .history-modal {
+  --history-primary: #ffffff;
+  --history-primary-hover: rgba(255, 255, 255, 0.88);
+  --history-primary-fg: #1a1a1a;
+  --history-primary-soft: rgba(255, 255, 255, 0.08);
+  --history-primary-soft-hover: rgba(255, 255, 255, 0.12);
+  --history-panel: #1f1f1f;
+  --history-subtle: #191919;
+  --history-muted: #292929;
+  --history-border: rgba(255, 255, 255, 0.08);
+  --history-border-strong: rgba(255, 255, 255, 0.14);
+  --history-shadow: 0 24px 48px -4px rgba(0, 0, 0, 0.42), 0 6px 12px -8px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] .history-modal .history-search:focus-within,
+:root[data-theme="dark"] .history-modal .history-workspace-filter:focus-within {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+:root[data-theme="dark"] .history-modal .hist-item:hover,
+:root[data-theme="dark"] .history-modal .hist-item--current,
+:root[data-theme="dark"] .history-modal .hist-item--selected {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 760px) {
+  .history-modal .history-modal__head {
+    padding: 10px 14px;
+  }
+
+  .history-modal .history-toolbar {
+    padding: 10px;
+  }
+
+  .history-modal .history-list {
+    padding: 10px;
+  }
+
+  .history-modal .history-preview__body .transcript {
+    padding: 14px;
+  }
+}

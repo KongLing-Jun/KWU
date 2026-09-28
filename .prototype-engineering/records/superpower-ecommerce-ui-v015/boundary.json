@@ -1,0 +1,25 @@
+{
+  "subject": "Non-invasive durable evidence to existing-session business loop",
+  "inside": [
+    "Desktop task-scoped EvidenceDocument JSON persistence and validation",
+    "Existing active-session controller submission adapter",
+    "Live assistant response projection into capability follow-ups",
+    "Visible-question versus hidden-evidence submit separation",
+    "Answer citation navigation, canvas reveal and widget focus",
+    "Explicit deterministic browser-preview fallback"
+  ],
+  "outside": [
+    {
+      "system": "Configured model provider",
+      "contract": "The existing session controller owns model routing, credentials, tool policy, streaming, cancellation and persisted turns; the capability supplies display and bounded submit text only.",
+      "adapter": "ActiveSessionResearchAdapter",
+      "scenarioIds": ["desktop-real-session", "session-unavailable"]
+    },
+    {
+      "system": "Live marketplace connectors",
+      "contract": "Future authorized adapters upsert provenance-bearing artifacts into the same task EvidenceDocument contract; unavailable credentials never produce fabricated live data.",
+      "adapter": "MarketplaceEvidenceIngestionAdapter",
+      "scenarioIds": ["persisted-evidence", "external-credentials-absent"]
+    }
+  ]
+}

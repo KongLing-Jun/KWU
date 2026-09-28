@@ -1,0 +1,132 @@
+{
+  "fixture_version": "s0-v1",
+  "binding": {
+    "actor_id": "local",
+    "profile_id": "default",
+    "cloud_user_id": "usr_01",
+    "binding_status": "bound",
+    "binding_generation": 1
+  },
+  "sessions": [
+    {
+      "scope": {
+        "profile_id": "default",
+        "cloud_user_id": "usr_01",
+        "binding_generation": 1
+      },
+      "state": "authenticated",
+      "access_token": "fixture_access_token",
+      "refresh_token": "fixture_refresh_token",
+      "issued_at": "2026-07-09T00:00:00Z",
+      "expires_at": "2026-07-09T01:00:00Z"
+    }
+  ],
+  "freeze_cases": [
+    {
+      "name": "freeze_granted",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_01",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_a21592da760ce05a65355e980f6d5145"
+      },
+      "result": {
+        "freeze": {
+          "scope": {
+            "profile_id": "default",
+            "cloud_user_id": "usr_01",
+            "binding_generation": 1
+          },
+          "freeze_id": "frz_01",
+          "task_id": "task_01",
+          "status": "active",
+          "freeze_amount": "300.0000",
+          "free_frozen_amount": "300.0000",
+          "subscription_frozen_amount": "0.0000",
+          "low_balance_mode": false,
+          "expires_at": "2026-07-09T02:00:00Z"
+        },
+        "balance": {
+          "total_balance": "21000.0000",
+          "free_balance": "1000.0000",
+          "subscription_balance": "20000.0000",
+          "available_balance": "20700.0000",
+          "free_available_balance": "700.0000",
+          "subscription_available_balance": "20000.0000",
+          "frozen_balance": "300.0000",
+          "free_frozen_balance": "300.0000",
+          "subscription_frozen_balance": "0.0000",
+          "version": 13
+        }
+      }
+    },
+    {
+      "name": "insufficient_balance",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_insufficient",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_397de4ac700a8e9c797b5346fc7f5576"
+      },
+      "error": {
+        "code": "INSUFFICIENT_BALANCE",
+        "message": "fixture balance is below the task minimum"
+      }
+    },
+    {
+      "name": "network_failure",
+      "request": {
+        "scope": {
+          "profile_id": "default",
+          "cloud_user_id": "usr_01",
+          "binding_generation": 1
+        },
+        "task_id": "task_network",
+        "model_id": "model_deepseek_v3",
+        "client_task_type": "chat",
+        "client_estimated_cost": "0.0000",
+        "idempotency_key": "kwu_0eae804ae0f7d72cc5a9db01f7f95890"
+      },
+      "error": {
+        "code": "NETWORK_UNAVAILABLE",
+        "message": "fixture network unavailable",
+        "retryable": true
+      }
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt_settlement_01",
+      "event_type": "settlement.completed",
+      "cloud_user_id": "usr_01",
+      "occurred_at": "2026-07-09T00:10:00Z",
+      "version": 13,
+      "data": {
+        "task_id": "task_01",
+        "settlement_id": "set_01"
+      }
+    },
+    {
+      "event_id": "evt_other_user",
+      "event_type": "balance.updated",
+      "cloud_user_id": "usr_other",
+      "occurred_at": "2026-07-09T00:11:00Z",
+      "version": 14,
+      "data": {
+        "total_balance": "999.0000"
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "fixture_version": "b0-v1",
+  "dependency_id": "CLOUD-SETTLEMENT-01",
+  "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+  "cases": [
+    {
+      "name": "settled",
+      "task_id": "task_01",
+      "settlement": {
+        "settlement_id": "set_01",
+        "task_id": "task_01",
+        "state": "settled",
+        "charged_amount": "12.5000",
+        "uncovered_amount": "0",
+        "observed_at": "2026-07-11T00:13:00Z"
+      }
+    },
+    {
+      "name": "settled_with_uncovered_amount",
+      "task_id": "task_uncovered",
+      "settlement": {
+        "settlement_id": "set_uncovered",
+        "task_id": "task_uncovered",
+        "state": "settled",
+        "charged_amount": "20.0000",
+        "uncovered_amount": "5.0000",
+        "observed_at": "2026-07-11T00:14:00Z"
+      }
+    },
+    {
+      "name": "pricing_pending",
+      "task_id": "task_pending",
+      "settlement": {
+        "settlement_id": "set_pending",
+        "task_id": "task_pending",
+        "state": "pricing_pending",
+        "observed_at": "2026-07-11T00:15:00Z"
+      }
+    },
+    {
+      "name": "zero_call_released",
+      "task_id": "task_zero",
+      "settlement": {
+        "settlement_id": "set_zero",
+        "task_id": "task_zero",
+        "state": "settled",
+        "charged_amount": "0",
+        "released_free_amount": "0",
+        "released_subscription_amount": "0",
+        "uncovered_amount": "0",
+        "observed_at": "2026-07-11T00:02:00Z"
+      }
+    },
+    {
+      "name": "settlement_exception",
+      "task_id": "task_exception",
+      "settlement": {
+        "settlement_id": "set_exception",
+        "task_id": "task_exception",
+        "state": "exception",
+        "observed_at": "2026-07-11T00:16:00Z",
+        "error_code": "fixture_settlement_exception"
+      }
+    },
+    {
+      "name": "settlement_lookup_failure",
+      "task_id": "task_lookup_failure",
+      "error": {"code": "settlement_exception", "message": "fixture settlement lookup failed"}
+    }
+  ]
+}

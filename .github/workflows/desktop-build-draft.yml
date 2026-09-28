@@ -1,0 +1,223 @@
+name: Desktop build draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Use an existing annotated stable tag or dry-run macOS"
+        required: true
+        type: choice
+        options:
+          - existing-tag
+          - dry-run
+        default: existing-tag
+      version:
+        description: "Stable X.Y.Z version (without desktop-v)"
+        required: true
+        type: string
+      release_targets:
+        description: "Comma-separated targets in canonical order, or all"
+        required: true
+        type: string
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-stable-release
+  cancel-in-progress: false
+
+env:
+  RELEASE_REPOSITORY: xiaoxiaotest9527-bit/KWU-release
+
+jobs:
+  resolve:
+    name: Freeze and validate release source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      tag: ${{ steps.release.outputs.tag }}
+      version: ${{ steps.release.outputs.version }}
+      source_commit: ${{ steps.release.outputs.source_commit }}
+      tag_object: ${{ steps.release.outputs.tag_object }}
+      notes_path: ${{ steps.release.outputs.notes_path }}
+      dry_run: ${{ steps.release.outputs.dry_run }}
+      targets: ${{ steps.release.outputs.targets }}
+    steps:
+      - name: Check out trusted workflow tooling and full history
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Resolve immutable release identity
+        id: release
+        shell: pwsh
+        env:
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_RELEASE_TARGETS: ${{ inputs.release_targets }}
+        run: |
+          if ($env:GITHUB_REF -ne 'refs/heads/main-v3') {
+            throw 'Desktop build dispatches must use the main-v3 workflow definition'
+          }
+          if (-not $env:INPUT_RELEASE_TARGETS.Trim()) { throw 'release_targets must be non-empty' }
+          $parameters = @{
+            Action = 'Resolve'
+            Mode = $env:INPUT_MODE
+            Version = $env:INPUT_VERSION
+            ReleaseTargets = $env:INPUT_RELEASE_TARGETS
+          }
+          ./scripts/desktop-actions-draft.ps1 @parameters
+
+  create-draft:
+    name: Create resumable Draft before platform builds
+    if: ${{ needs.resolve.result == 'success' && needs.resolve.outputs.dry_run != 'true' }}
+    needs: resolve
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out trusted release tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Check out frozen source only for approved release notes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.source_commit }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Create or safely resume empty Draft
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+        run: |
+          $parameters = @{
+            Action = 'CreateDraft'
+            Tag = '${{ needs.resolve.outputs.tag }}'
+            Version = '${{ needs.resolve.outputs.version }}'
+            SourceCommit = '${{ needs.resolve.outputs.source_commit }}'
+            TagObject = '${{ needs.resolve.outputs.tag_object }}'
+            NotesFile = Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}'
+            ReleaseRepository = $env:RELEASE_REPOSITORY
+          }
+          ./scripts/desktop-actions-draft.ps1 @parameters
+
+      - name: Record the Windows signing-machine handoff
+        shell: bash
+        run: |
+          {
+            echo "## Draft ready for the Windows signing machine"
+            echo
+            echo "- Tag: \`${{ needs.resolve.outputs.tag }}\`"
+            echo "- Source commit: \`${{ needs.resolve.outputs.source_commit }}\`"
+            echo "- Selected targets: \`${{ needs.resolve.outputs.targets }}\`."
+            echo "- Windows may build now. If macOS is selected, the local release script waits for its verified Draft asset before uploading Windows assets."
+            echo "- Next: on the fixed Windows machine run \`./scripts/desktop-release.ps1 -Action BuildWindows -Version ${{ needs.resolve.outputs.version }} -ReleaseTargets '${{ needs.resolve.outputs.targets }}'\`."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  build-and-upload-macos:
+    name: Build and upload unsigned macOS universal DMG
+    if: ${{ needs.resolve.result == 'success' && contains(needs.resolve.outputs.targets, 'macos-universal') }}
+    needs: resolve
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - name: Check out trusted release tooling
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Check out frozen source for the platform build
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          ref: ${{ needs.resolve.outputs.source_commit }}
+          path: release-source
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        with:
+          go-version-file: release-source/desktop/go.mod
+          cache: true
+          cache-dependency-path: release-source/desktop/go.sum
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@f3d73ada1fa6e5c0c19973ff70a3f5cabf225cc5 # v6.0.0
+        with:
+          version: 10.34.5
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: release-source/desktop/frontend/pnpm-lock.yaml
+
+      - name: Install native packaging tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          brew install create-dmg
+          go install github.com/wailsapp/wails/v2/cmd/wails@v2.12.0
+
+      - name: Build and verify universal DMG
+        working-directory: release-source
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf dist
+          scripts/desktop-build.sh darwin/universal '${{ needs.resolve.outputs.version }}' stable
+          scripts/assert-macos-release-architecture.sh dist/Clouvia-darwin-universal.dmg '${{ needs.resolve.outputs.version }}'
+
+      - name: Upload immutable DMG directly to Draft
+        if: ${{ needs.resolve.outputs.dry_run != 'true' }}
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_REPO_TOKEN }}
+        run: |
+          $waitParameters = @{
+            Action = 'WaitForDraft'
+            Tag = '${{ needs.resolve.outputs.tag }}'
+            Version = '${{ needs.resolve.outputs.version }}'
+            SourceCommit = '${{ needs.resolve.outputs.source_commit }}'
+            TagObject = '${{ needs.resolve.outputs.tag_object }}'
+            NotesFile = Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}'
+            ReleaseRepository = $env:RELEASE_REPOSITORY
+            WaitTimeoutSeconds = 600
+            WaitIntervalSeconds = 5
+          }
+          ./scripts/desktop-actions-draft.ps1 @waitParameters
+          $parameters = @{
+            Action = 'UploadAsset'
+            Tag = '${{ needs.resolve.outputs.tag }}'
+            Version = '${{ needs.resolve.outputs.version }}'
+            SourceCommit = '${{ needs.resolve.outputs.source_commit }}'
+            TagObject = '${{ needs.resolve.outputs.tag_object }}'
+            NotesFile = Join-Path 'release-source' '${{ needs.resolve.outputs.notes_path }}'
+            ArtifactPath = 'release-source/dist/Clouvia-darwin-universal.dmg'
+            ReleaseRepository = $env:RELEASE_REPOSITORY
+          }
+          ./scripts/desktop-actions-draft.ps1 @parameters
+
+  dry-run-summary:
+    name: Confirm macOS-only no-publication dry run
+    if: ${{ always() && needs.resolve.outputs.dry_run == 'true' && needs.build-and-upload-macos.result == 'success' }}
+    needs: [resolve, build-and-upload-macos]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Record dry-run result
+        shell: bash
+        run: |
+          {
+            echo "## Desktop macOS build dry run passed"
+            echo
+            echo "- Source commit: \`${{ needs.resolve.outputs.source_commit }}\`"
+            echo "- No tag, Draft Release, asset upload, OSS object, or cloud release row was created."
+            echo "- A real six-signature Windows dry run is performed only on the fixed signing machine."
+          } >> "$GITHUB_STEP_SUMMARY"

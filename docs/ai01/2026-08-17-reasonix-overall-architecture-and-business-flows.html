@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reasonix 整体结构与全业务流程 · 2026-08-17</title>
+  <style>
+    *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body,h1,h2,h3,p,ul,ol,table{margin:0}
+    :root{--paper:#f6f4f0;--paper2:#efece6;--card:#fffdfa;--ink:#1a1714;--muted:#544e46;--soft:#8a8378;--rule:rgba(26,23,20,.14);--rule2:rgba(26,23,20,.28);--accent:#d97757;--accent-tint:rgba(217,119,87,.14);--link:#2f5fa8;--green:#53745a;--warn:#9a6838;--sans:"Segoe UI Variable","Segoe UI","Microsoft YaHei UI",sans-serif;--mono:"Cascadia Code",Consolas,monospace}
+    body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65;padding:40px 28px 64px}.page{max-width:1280px;margin:auto}.eyebrow,.tag,.mono{font-family:var(--mono)}
+    .hero{border-bottom:1px solid var(--rule2);padding:8px 0 36px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-size:clamp(34px,5vw,64px);font-weight:620;line-height:1.06;letter-spacing:-.045em;margin:12px 0}.lead{font-size:18px;color:var(--muted);max-width:920px}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.tag{border:1px solid var(--rule2);border-radius:4px;padding:5px 9px;font-size:11px;color:var(--muted);background:rgba(255,255,255,.4)}
+    nav{display:flex;gap:8px;flex-wrap:wrap;padding:18px 0 8px;position:sticky;top:0;background:rgba(246,244,240,.94);backdrop-filter:blur(10px);z-index:4;border-bottom:1px solid var(--rule)}nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:6px 9px;border-radius:4px}nav a:hover{background:var(--accent-tint);color:var(--ink)}
+    section{padding:54px 0 4px;scroll-margin-top:64px}.section-head{display:grid;grid-template-columns:80px 1fr;gap:18px;margin-bottom:22px}.num{font:600 13px var(--mono);color:var(--accent);padding-top:8px}.section-head h2{font-size:30px;letter-spacing:-.025em;line-height:1.2}.section-head p{color:var(--muted);max-width:920px;margin-top:8px}.callout{border-left:3px solid var(--accent);background:var(--accent-tint);padding:16px 18px;margin:18px 0;color:var(--muted)}.callout strong{color:var(--ink)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;min-width:0;overflow-wrap:anywhere}.span3{grid-column:span 3}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.card h3{font-size:16px;margin-bottom:8px}.card p,.card li{font-size:14px;color:var(--muted)}.card ul{padding-left:18px}.card li+li{margin-top:5px}.metric{font:600 26px var(--mono);color:var(--accent);display:block}.status{display:inline-block;font:600 10px var(--mono);letter-spacing:.08em;border:1px solid var(--rule2);border-radius:3px;padding:2px 6px;margin-bottom:9px}.status.ok{color:var(--green);border-color:rgba(83,116,90,.4)}.status.gated{color:var(--warn);border-color:rgba(154,104,56,.4)}.status.local{color:var(--link);border-color:rgba(47,95,168,.35)}
+    .diagram{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px;overflow-x:auto}.diagram svg{display:block;width:100%;min-width:960px;height:auto}.diagram-note{font:11px var(--mono);color:var(--soft);margin-top:10px}.diagram text{font-family:var(--sans)}.diagram .mono-svg{font-family:var(--mono)}
+    table{width:100%;border-collapse:collapse;background:var(--card);font-size:13px}th,td{text-align:left;vertical-align:top;padding:11px 12px;border:1px solid var(--rule)}th{font:600 11px var(--mono);letter-spacing:.06em;background:var(--paper2);color:var(--muted)}td{color:var(--muted)}td:first-child{color:var(--ink);font-weight:600}.table-wrap{overflow-x:auto}.link{color:var(--link)}a.link{text-decoration:none;border-bottom:1px solid rgba(47,95,168,.3)}code{font:12px var(--mono);background:var(--paper2);padding:2px 5px;border-radius:3px;color:var(--ink)}
+    .legend{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0 0;font-size:12px;color:var(--muted)}.legend span::before{content:"";display:inline-block;width:18px;height:2px;background:var(--muted);vertical-align:middle;margin-right:6px}.legend .accent::before{background:var(--accent)}.legend .api::before{background:var(--link)}.legend .async::before{height:1px;background:repeating-linear-gradient(90deg,var(--soft) 0 5px,transparent 5px 9px)}
+    footer{border-top:1px solid var(--rule2);margin-top:64px;padding-top:22px;color:var(--soft);font:11px var(--mono);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    @media(max-width:900px){body{padding:24px 16px 48px}.span3,.span4,.span6{grid-column:span 12}.section-head{grid-template-columns:1fr}.num{padding:0}.hero h1{font-size:38px}nav{position:static}}
+    @media print{body{padding:16px;background:#fff}nav{display:none}.diagram,.card,table{break-inside:avoid}section{break-before:page}.hero+nav+section{break-before:auto}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">Reasonix · Product / Architecture / Business Flow</p>
+    <h1>整体结构与全业务流程</h1>
+    <p class="lead">基于 Desktop、Cloud、Admin 三个集成工作树的当前代码静态审计，说明用户如何从入口、会话和能力配置进入 Agent 执行，数据如何在本地与云端分治，项目协作、自动化、商业化和运营治理如何形成完整闭环。</p>
+    <div class="meta">
+      <span class="tag">审计日期 2026-08-17</span><span class="tag">Reasonix 本地设计系统</span><span class="tag">静态自包含 HTML</span><span class="tag">current-code snapshot</span>
+    </div>
+  </header>
+
+  <nav aria-label="文档目录">
+    <a href="#conclusions">结论</a><a href="#architecture">整体结构</a><a href="#value-stream">价值流</a><a href="#agent">Agent 执行</a><a href="#capability">能力供应链</a><a href="#commerce">商业化</a><a href="#data">数据归属</a><a href="#operations">运营治理</a><a href="#inventory">功能全集</a><a href="#evidence">边界与证据</a>
+  </nav>
+
+  <section id="conclusions">
+    <div class="section-head"><div class="num">00</div><div><h2>先看结论</h2><p>Reasonix 不是单一网页应用，而是“本地智能工作台 + 云端业务平台 + 管理运营台”组成的多入口 Agent 产品。</p></div></div>
+    <div class="grid">
+      <article class="card span3"><span class="metric">3</span><h3>三个产品边界</h3><p>Desktop 承载执行体验；Cloud 承载跨设备权威业务；Admin 承载运营控制与只读治理。</p></article>
+      <article class="card span3"><span class="metric">6+</span><h3>六类运行入口</h3><p>桌面 UI、CLI、HTTP/SSE、ACP、IM Bot、自动化任务，共享同一 Agent 核心。</p></article>
+      <article class="card span3"><span class="metric">Local-first</span><h3>本地优先</h3><p>工作区、会话正文、Git、个人配置和多数运行状态保留在用户设备。</p></article>
+      <article class="card span3"><span class="metric">Cloud-authority</span><h3>云端权威</h3><p>账号、订阅积分、目录、项目协作、媒体任务、发布与审计以 Cloud 为准。</p></article>
+      <article class="card span6"><span class="status ok">CONFIRMED</span><h3>邀请协作同步的真实含义</h3><p>被邀请者加入同一个 CloudProject 后，可以读取/修改其权限允许的工作项、标签、活动和资产元数据；这不是两个账号的全量数据镜像，也不会同步本地工作区、个人会话、个人模型密钥或本地计划任务。</p></article>
+      <article class="card span6"><span class="status ok">CONFIRMED</span><h3>资产存储</h3><p>项目资产二进制对象进入私有 OSS，对象关系与状态写入 PostgreSQL，下载通过短时签名 URL；本地工作区文件不因此自动上传。详见 <a class="link" href="2026-08-17-reasonix-project-business-flow.html">项目业务全流程专题</a>。</p></article>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <div class="section-head"><div class="num">01</div><div><h2>产品整体结构</h2><p>入口层统一进入 Desktop 的适配器和本地运行核心；只有需要身份、共享、目录、计费或异步恢复的业务才进入 Cloud。Admin 不绕过 Cloud 直接改数据库。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="overall-title overall-desc">
+        <title id="overall-title">Reasonix 产品整体架构</title><desc id="overall-desc">六类用户入口经本地运行核心连接工作区与本地状态，并通过 HTTPS 调用云 API、存储、后台任务与外部提供商；管理端通过云 API 治理。</desc>
+        <defs><marker id="overall-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="overall-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker><marker id="overall-link" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#2f5fa8"/></marker></defs>
+        <rect width="1200" height="700" fill="#fffdfa"/>
+        <rect x="24" y="56" width="248" height="568" rx="4" fill="#efece6" stroke="rgba(26,23,20,.18)"/><rect x="296" y="56" width="520" height="568" rx="4" fill="rgba(217,119,87,.04)" stroke="rgba(217,119,87,.4)"/><rect x="840" y="56" width="336" height="568" rx="4" fill="rgba(47,95,168,.035)" stroke="rgba(47,95,168,.3)"/>
+        <text x="40" y="84" class="mono-svg" font-size="12" letter-spacing="2" fill="#544e46">ENTRY SURFACES</text><text x="312" y="84" class="mono-svg" font-size="12" letter-spacing="2" fill="#d97757">LOCAL DESKTOP RUNTIME</text><text x="856" y="84" class="mono-svg" font-size="12" letter-spacing="2" fill="#2f5fa8">CLOUD PLATFORM</text>
+        <!-- connectors first -->
+        <path d="M248 172H360" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M248 336H360" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M248 500H360" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/>
+        <path d="M512 172H552V336H584" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M512 336H584" fill="none" stroke="#d97757" stroke-width="2" marker-end="url(#overall-accent)"/><path d="M512 500H552V336H584" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/>
+        <path d="M688 384V460" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M792 336H872" fill="none" stroke="#2f5fa8" stroke-width="2" marker-end="url(#overall-link)"/><text x="832" y="324" class="mono-svg" text-anchor="middle" font-size="10" fill="#2f5fa8">HTTPS / JSON</text>
+        <path d="M1008 220V276" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M1008 384V444" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#overall-muted)"/><path d="M1008 548V588H1120V220H1088" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#overall-muted)"/>
+        <!-- nodes -->
+        <g><rect x="48" y="120" width="200" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="64" y="144" class="mono-svg" font-size="10" fill="#8a8378">GUI</text><text x="148" y="176" text-anchor="middle" font-size="18" font-weight="600" fill="#1a1714">桌面工作台</text><text x="148" y="200" text-anchor="middle" font-size="12" fill="#544e46">React · Wails · 多标签页</text></g>
+        <g><rect x="48" y="284" width="200" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="64" y="308" class="mono-svg" font-size="10" fill="#8a8378">API</text><text x="148" y="340" text-anchor="middle" font-size="18" font-weight="600" fill="#1a1714">CLI / HTTP / ACP</text><text x="148" y="364" text-anchor="middle" font-size="12" fill="#544e46">交互、SSE、协议适配</text></g>
+        <g><rect x="48" y="448" width="200" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="64" y="472" class="mono-svg" font-size="10" fill="#8a8378">ASYNC</text><text x="148" y="504" text-anchor="middle" font-size="18" font-weight="600" fill="#1a1714">Bots / 自动化</text><text x="148" y="528" text-anchor="middle" font-size="12" fill="#544e46">IM 消息、定时与触发任务</text></g>
+        <g><rect x="360" y="120" width="152" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="376" y="144" class="mono-svg" font-size="10" fill="#8a8378">ADAPTER</text><text x="436" y="176" text-anchor="middle" font-size="17" font-weight="600">入口适配器</text><text x="436" y="200" text-anchor="middle" font-size="11" fill="#544e46">Wails / CLI / Serve</text></g>
+        <g><rect x="584" y="280" width="208" height="104" rx="4" fill="rgba(217,119,87,.10)" stroke="#d97757"/><text x="600" y="304" class="mono-svg" font-size="10" fill="#d97757">CORE</text><text x="688" y="336" text-anchor="middle" font-size="18" font-weight="650">Boot → Controller → Agent</text><text x="688" y="360" text-anchor="middle" font-size="11" fill="#544e46">模型 · 工具 · 审批 · 记忆 · Todo</text></g>
+        <g><rect x="360" y="284" width="152" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="376" y="308" class="mono-svg" font-size="10" fill="#8a8378">CONTROL</text><text x="436" y="340" text-anchor="middle" font-size="17" font-weight="600">会话与模式</text><text x="436" y="364" text-anchor="middle" font-size="11" fill="#544e46">run / chat / code</text></g>
+        <g><rect x="360" y="448" width="152" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="376" y="472" class="mono-svg" font-size="10" fill="#8a8378">SCHEDULER</text><text x="436" y="504" text-anchor="middle" font-size="17" font-weight="600">任务与 Bot 运行时</text><text x="436" y="528" text-anchor="middle" font-size="11" fill="#544e46">触发、投递、重试</text></g>
+        <g><rect x="584" y="460" width="208" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="600" y="484" class="mono-svg" font-size="10" fill="#8a8378">LOCAL STATE</text><text x="688" y="516" text-anchor="middle" font-size="17" font-weight="600">工作区 / Git / SQLite / JSONL</text><text x="688" y="540" text-anchor="middle" font-size="11" fill="#544e46">本地文件、会话、配置、索引</text></g>
+        <g><rect x="872" y="116" width="216" height="104" rx="4" fill="#fffdfa" stroke="#2f5fa8"/><text x="888" y="140" class="mono-svg" font-size="10" fill="#2f5fa8">HTTP API</text><text x="980" y="172" text-anchor="middle" font-size="18" font-weight="600">Cloud Server</text><text x="980" y="196" text-anchor="middle" font-size="11" fill="#544e46">Gin · auth · business routes</text></g>
+        <g><rect x="872" y="280" width="216" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="888" y="304" class="mono-svg" font-size="10" fill="#8a8378">AUTHORITY</text><text x="980" y="336" text-anchor="middle" font-size="18" font-weight="600">Postgres / Redis / OSS</text><text x="980" y="360" text-anchor="middle" font-size="11" fill="#544e46">关系数据 · 临时状态 · 对象</text></g>
+        <g><rect x="872" y="444" width="216" height="104" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="888" y="468" class="mono-svg" font-size="10" fill="#8a8378">WORKER</text><text x="980" y="500" text-anchor="middle" font-size="18" font-weight="600">恢复与后台任务</text><text x="980" y="524" text-anchor="middle" font-size="11" fill="#544e46">结算、回收、轮询、清理</text></g>
+        <g><rect x="1096" y="444" width="64" height="104" rx="4" fill="#efece6" stroke="rgba(26,23,20,.28)"/><text x="1128" y="488" text-anchor="middle" font-size="13" font-weight="600">Admin</text><text x="1128" y="512" text-anchor="middle" font-size="9" fill="#544e46">Vue</text></g>
+      </svg>
+      <div class="legend"><span>本地内部调用</span><span class="accent">核心执行链</span><span class="api">云 API</span><span class="async">异步恢复/治理</span></div>
+    </div>
+    <div class="grid" style="margin-top:14px">
+      <article class="card span4"><h3>Desktop 技术栈</h3><p>Go 1.25/1.26 toolchain，Wails v2，React 19，TypeScript 6，Vite 8，Zustand，TanStack Virtual。</p></article>
+      <article class="card span4"><h3>Cloud 技术栈</h3><p>Go 1.26.4，Gin，pgx/GORM，PostgreSQL，Redis，Aliyun OSS，Goose 迁移；Server 与 Worker 分进程。</p></article>
+      <article class="card span4"><h3>Admin 技术栈</h3><p>Vue 3.5，Vite 5，TypeScript，Naive UI，Pinia，Alova；路由元数据和 Cloud Admin API 双重约束。</p></article>
+    </div>
+  </section>
+
+  <section id="value-stream">
+    <div class="section-head"><div class="num">02</div><div><h2>端到端业务价值流</h2><p>从首次使用到持续运营的主链。每一步都标明主要数据落点，避免把“功能页面”误解成“业务完成”。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="value-title value-desc">
+        <title id="value-title">Reasonix 端到端业务价值流</title><desc id="value-desc">用户、Desktop、Agent 核心、Cloud 和运营五条泳道上的八步业务价值链。</desc>
+        <defs><marker id="value-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="value-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker></defs>
+        <rect width="1200" height="560" fill="#fffdfa"/><g fill="rgba(26,23,20,.025)"><rect x="120" y="48" width="1056" height="88"/><rect x="120" y="224" width="1056" height="88"/><rect x="120" y="400" width="1056" height="88"/></g>
+        <g stroke="rgba(26,23,20,.15)"><line x1="120" y1="48" x2="120" y2="488"/><line x1="24" y1="136" x2="1176" y2="136"/><line x1="24" y1="224" x2="1176" y2="224"/><line x1="24" y1="312" x2="1176" y2="312"/><line x1="24" y1="400" x2="1176" y2="400"/><line x1="24" y1="488" x2="1176" y2="488"/></g>
+        <g class="mono-svg" font-size="11" fill="#544e46" text-anchor="middle"><text x="72" y="96">用户</text><text x="72" y="184">DESKTOP</text><text x="72" y="272">AGENT</text><text x="72" y="360">CLOUD</text><text x="72" y="448">运营</text></g>
+        <!-- flow first -->
+        <path d="M196 96H264" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#value-arrow)"/><path d="M344 96H412" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#value-arrow)"/><path d="M492 96H560V184H588" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#value-arrow)"/><path d="M668 184H736V272H764" fill="none" stroke="#d97757" stroke-width="2" marker-end="url(#value-accent)"/><path d="M844 272H884V360H912" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#value-arrow)"/><path d="M992 360H1028V448H1060" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#value-arrow)"/>
+        <!-- steps -->
+        <g><rect x="132" y="68" width="64" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="164" y="92" text-anchor="middle" font-size="12" font-weight="600">注册/登录</text><text x="164" y="112" text-anchor="middle" font-size="9" fill="#544e46">身份</text></g>
+        <g><rect x="264" y="68" width="80" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="304" y="92" text-anchor="middle" font-size="12" font-weight="600">选择入口</text><text x="304" y="112" text-anchor="middle" font-size="9" fill="#544e46">UI/CLI/Bot</text></g>
+        <g><rect x="412" y="68" width="80" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="452" y="92" text-anchor="middle" font-size="12" font-weight="600">配置能力</text><text x="452" y="112" text-anchor="middle" font-size="9" fill="#544e46">模型/Skill/MCP</text></g>
+        <g><rect x="588" y="156" width="80" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="628" y="180" text-anchor="middle" font-size="12" font-weight="600">创建会话</text><text x="628" y="200" text-anchor="middle" font-size="9" fill="#544e46">上下文快照</text></g>
+        <g><rect x="764" y="244" width="80" height="56" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="804" y="268" text-anchor="middle" font-size="12" font-weight="650">Agent 执行</text><text x="804" y="288" text-anchor="middle" font-size="9" fill="#544e46">工具/审批/结果</text></g>
+        <g><rect x="912" y="332" width="80" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="952" y="356" text-anchor="middle" font-size="12" font-weight="600">共享/商业</text><text x="952" y="376" text-anchor="middle" font-size="9" fill="#544e46">项目/计费/媒体</text></g>
+        <g><rect x="1060" y="420" width="88" height="56" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="1104" y="444" text-anchor="middle" font-size="12" font-weight="600">治理与恢复</text><text x="1104" y="464" text-anchor="middle" font-size="9" fill="#544e46">审计/重试/发布</text></g>
+        <g class="mono-svg" font-size="9" fill="#8a8378"><text x="132" y="524">01 ONBOARD</text><text x="264" y="524">02 ENTER</text><text x="412" y="524">03 CONFIGURE</text><text x="588" y="524">04 CONTEXT</text><text x="764" y="524">05 EXECUTE</text><text x="912" y="524">06 EXPAND</text><text x="1060" y="524">07 OPERATE</text></g>
+      </svg>
+    </div>
+    <div class="callout"><strong>关键边界：</strong>不登录也可使用本地能力（取决于模型/提供商配置），但跨设备账号、订阅、云目录、项目协作和云端媒体等业务需要 Cloud；“本地执行成功”与“云端业务完成”是两种不同完成态。</div>
+  </section>
+
+  <section id="agent">
+    <div class="section-head"><div class="num">03</div><div><h2>一次 Agent 请求如何完成</h2><p>Desktop UI、CLI、HTTP、ACP、Bot 和自动化的外层协议不同，核心都收敛到 Controller/Agent。审批是执行路径的一部分，不是界面装饰。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="seq-title seq-desc">
+        <title id="seq-title">Agent 请求执行时序</title><desc id="seq-desc">用户入口、适配器、控制器与 Agent、模型提供商、工具与工作区之间的请求、审批、工具调用和持久化时序。</desc>
+        <defs><marker id="seq-call" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="seq-success" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker><marker id="seq-open" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><polyline points="0 0,8 4,0 8" fill="none" stroke="#544e46" stroke-width="1.2"/></marker></defs>
+        <rect width="1200" height="680" fill="#fffdfa"/>
+        <g stroke="rgba(26,23,20,.22)" stroke-dasharray="4 4"><line x1="132" y1="112" x2="132" y2="640"/><line x1="356" y1="112" x2="356" y2="640"/><line x1="600" y1="112" x2="600" y2="640"/><line x1="844" y1="112" x2="844" y2="640"/><line x1="1068" y1="112" x2="1068" y2="640"/></g>
+        <!-- messages first -->
+        <g fill="none" stroke="#544e46" stroke-width="1.5" marker-end="url(#seq-call)"><line x1="132" y1="152" x2="356" y2="152"/><line x1="356" y1="204" x2="600" y2="204"/><line x1="600" y1="256" x2="844" y2="256"/><line x1="844" y1="320" x2="600" y2="320" stroke-dasharray="6 4"/><line x1="600" y1="408" x2="132" y2="408" stroke-dasharray="6 4"/><line x1="132" y1="460" x2="600" y2="460"/><line x1="600" y1="512" x2="1068" y2="512"/><line x1="1068" y1="564" x2="600" y2="564" stroke-dasharray="6 4"/></g>
+        <line x1="600" y1="616" x2="132" y2="616" stroke="#d97757" stroke-width="2" marker-end="url(#seq-success)"/>
+        <g class="mono-svg" font-size="10" fill="#544e46"><text x="244" y="144" text-anchor="middle">submit(prompt, context)</text><text x="480" y="196" text-anchor="middle">normalize + run</text><text x="720" y="248" text-anchor="middle">stream request</text><text x="720" y="312" text-anchor="middle">tool call / delta</text><text x="356" y="400" text-anchor="middle">approval question</text><text x="356" y="452" text-anchor="middle">approve / reject</text><text x="836" y="504" text-anchor="middle">execute scoped tool</text><text x="836" y="556" text-anchor="middle">result</text><text x="356" y="608" text-anchor="middle" fill="#d97757">stream result + persist</text></g>
+        <!-- alt frame -->
+        <rect x="112" y="360" width="508" height="132" rx="4" fill="rgba(26,23,20,.018)" stroke="rgba(26,23,20,.26)"/><rect x="112" y="360" width="44" height="20" rx="2" fill="#efece6" stroke="rgba(26,23,20,.26)"/><text x="134" y="374" class="mono-svg" text-anchor="middle" font-size="9" fill="#544e46">ALT</text><text x="168" y="380" class="mono-svg" font-size="9" fill="#544e46">[需要权限确认]</text><line x1="120" y1="436" x2="612" y2="436" stroke="rgba(26,23,20,.2)" stroke-dasharray="4 4"/><text x="168" y="452" class="mono-svg" font-size="9" fill="#544e46">[已信任或只读]</text>
+        <!-- actors over lifelines -->
+        <g><rect x="64" y="48" width="136" height="64" rx="4" fill="#efece6" stroke="rgba(26,23,20,.3)"/><text x="132" y="76" text-anchor="middle" font-size="15" font-weight="600">用户入口</text><text x="132" y="96" text-anchor="middle" font-size="10" fill="#544e46">UI · CLI · Bot</text></g>
+        <g><rect x="288" y="48" width="136" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="356" y="76" text-anchor="middle" font-size="15" font-weight="600">Adapter</text><text x="356" y="96" text-anchor="middle" font-size="10" fill="#544e46">协议与事件</text></g>
+        <g><rect x="520" y="48" width="160" height="64" rx="4" fill="rgba(217,119,87,.10)" stroke="#d97757"/><text x="600" y="76" text-anchor="middle" font-size="15" font-weight="650">Controller / Agent</text><text x="600" y="96" text-anchor="middle" font-size="10" fill="#544e46">上下文 · 策略 · 循环</text></g>
+        <g><rect x="776" y="48" width="136" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="844" y="76" text-anchor="middle" font-size="15" font-weight="600">模型提供商</text><text x="844" y="96" text-anchor="middle" font-size="10" fill="#544e46">LLM / MaaS</text></g>
+        <g><rect x="988" y="48" width="160" height="64" rx="4" fill="#efece6" stroke="rgba(26,23,20,.3)"/><text x="1068" y="76" text-anchor="middle" font-size="15" font-weight="600">工具 / 工作区</text><text x="1068" y="96" text-anchor="middle" font-size="10" fill="#544e46">Shell · MCP · 文件 · Git</text></g>
+        <rect x="596" y="196" width="8" height="428" fill="rgba(217,119,87,.12)" stroke="#d97757" stroke-width="1"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="capability">
+    <div class="section-head"><div class="num">04</div><div><h2>模型、专家、Skill、MCP、Connector 的供应链</h2><p>能力不是运行时临时拼凑：发布、发现、安装、配置、会话快照、调用和审计形成一条可追踪的数据流。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cap-title cap-desc">
+        <title id="cap-title">Reasonix 能力供应链数据流</title><desc id="cap-desc">运营发布能力目录，云端提供目录，Desktop 拉取缓存，用户安装配置，会话解析能力并在 Agent 运行中调用，最后回写结果和审计。</desc>
+        <defs><marker id="cap-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="cap-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker><marker id="cap-link" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#2f5fa8"/></marker></defs>
+        <rect width="1200" height="520" fill="#fffdfa"/><g fill="rgba(26,23,20,.025)"><rect x="24" y="52" width="1152" height="88"/><rect x="24" y="228" width="1152" height="88"/><rect x="24" y="404" width="1152" height="88"/></g><g stroke="rgba(26,23,20,.15)"><line x1="24" y1="140" x2="1176" y2="140"/><line x1="24" y1="228" x2="1176" y2="228"/><line x1="24" y1="316" x2="1176" y2="316"/><line x1="24" y1="404" x2="1176" y2="404"/></g>
+        <g class="mono-svg" font-size="10" fill="#544e46"><text x="40" y="80">ADMIN / CLOUD</text><text x="40" y="256">DESKTOP / USER</text><text x="40" y="432">RUNTIME / AUDIT</text></g>
+        <!-- arrows -->
+        <path d="M240 96H324" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#cap-muted)"/><path d="M456 96H540V272H596" fill="none" stroke="#2f5fa8" stroke-width="2" marker-end="url(#cap-link)"/><path d="M728 272H812" fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#cap-muted)"/><path d="M944 272H988V448H1020" fill="none" stroke="#d97757" stroke-width="2" marker-end="url(#cap-accent)"/><path d="M1020 448H764" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#cap-muted)"/><path d="M632 448H488" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#cap-muted)"/>
+        <!-- nodes -->
+        <g><rect x="108" y="64" width="132" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="174" y="92" text-anchor="middle" font-size="14" font-weight="600">发布/下架</text><text x="174" y="112" text-anchor="middle" font-size="10" fill="#544e46">运营命令</text></g>
+        <g><rect x="324" y="64" width="132" height="64" rx="4" fill="#fffdfa" stroke="#2f5fa8"/><text x="390" y="92" text-anchor="middle" font-size="14" font-weight="600">云端目录</text><text x="390" y="112" text-anchor="middle" font-size="10" fill="#544e46">expert/skill/MCP</text></g>
+        <g><rect x="596" y="240" width="132" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="662" y="268" text-anchor="middle" font-size="14" font-weight="600">拉取与缓存</text><text x="662" y="288" text-anchor="middle" font-size="10" fill="#544e46">catalog snapshot</text></g>
+        <g><rect x="812" y="240" width="132" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="878" y="268" text-anchor="middle" font-size="14" font-weight="600">安装与配置</text><text x="878" y="288" text-anchor="middle" font-size="10" fill="#544e46">凭证/权限/启用</text></g>
+        <g><rect x="1020" y="416" width="132" height="64" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="1086" y="444" text-anchor="middle" font-size="14" font-weight="650">会话解析/调用</text><text x="1086" y="464" text-anchor="middle" font-size="10" fill="#544e46">Boot + Agent</text></g>
+        <g><rect x="632" y="416" width="132" height="64" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="698" y="444" text-anchor="middle" font-size="14" font-weight="600">结果与用量</text><text x="698" y="464" text-anchor="middle" font-size="10" fill="#544e46">output/usage</text></g>
+        <g><rect x="356" y="416" width="132" height="64" rx="4" fill="#efece6" stroke="rgba(26,23,20,.3)"/><text x="422" y="444" text-anchor="middle" font-size="14" font-weight="600">本地/云端审计</text><text x="422" y="464" text-anchor="middle" font-size="10" fill="#544e46">按业务边界分治</text></g>
+      </svg>
+    </div>
+    <div class="grid" style="margin-top:14px">
+      <article class="card span4"><span class="status local">LOCAL</span><h3>个人配置</h3><p>模型密钥、MCP 信任、Skill 启用、专家偏好等主要落在本地配置/数据库，不随项目成员共享。</p></article>
+      <article class="card span4"><span class="status ok">CLOUD CATALOG</span><h3>公共目录</h3><p>专家、Skill、Connector、MCP 可由 Cloud 发布/下架，Desktop 拉取后形成可安装目录。</p></article>
+      <article class="card span4"><span class="status gated">CONFIG GATED</span><h3>可用不等于可执行</h3><p>目录可见只代表可发现；真实调用仍依赖提供商凭证、OAuth、可执行产物、权限和网络策略。</p></article>
+    </div>
+  </section>
+
+  <section id="commerce">
+    <div class="section-head"><div class="num">05</div><div><h2>订阅、支付、积分与模型用量闭环</h2><p>购买链与用量结算链相互关联但不是同一事务。Cloud Worker 为支付轮询、授权补偿、冻结超时和结算恢复提供最终一致性。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pay-title pay-desc">
+        <title id="pay-title">Reasonix 商业化双流程</title><desc id="pay-desc">上方是订阅购买、支付验证和权益发放，下方是模型调用的额度检查、冻结、用量上报、结算和恢复。</desc>
+        <defs><marker id="pay-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="pay-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker><marker id="pay-link" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#2f5fa8"/></marker></defs>
+        <rect width="1200" height="620" fill="#fffdfa"/><text x="40" y="48" class="mono-svg" font-size="11" letter-spacing="2" fill="#d97757">A · PURCHASE / UPGRADE</text><text x="40" y="336" class="mono-svg" font-size="11" letter-spacing="2" fill="#2f5fa8">B · MODEL USAGE / SETTLEMENT</text><line x1="24" y1="304" x2="1176" y2="304" stroke="rgba(26,23,20,.18)"/>
+        <!-- top arrows -->
+        <g fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#pay-muted)"><line x1="220" y1="160" x2="268" y2="160"/><line x1="428" y1="160" x2="476" y2="160"/><line x1="844" y1="160" x2="892" y2="160"/><line x1="1052" y1="160" x2="1100" y2="160"/></g><line x1="636" y1="160" x2="684" y2="160" stroke="#2f5fa8" stroke-width="2" marker-end="url(#pay-link)"/><path d="M764 204V240H556V204" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#pay-muted)"/>
+        <!-- bottom arrows -->
+        <g fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#pay-muted)"><line x1="220" y1="464" x2="268" y2="464"/><line x1="428" y1="464" x2="476" y2="464"/><line x1="636" y1="464" x2="684" y2="464"/><line x1="844" y1="464" x2="892" y2="464"/></g><line x1="1052" y1="464" x2="1100" y2="464" stroke="#d97757" stroke-width="2" marker-end="url(#pay-accent)"/><path d="M972 508V552H556V508" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#pay-muted)"/>
+        <!-- top nodes -->
+        <g><rect x="60" y="116" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="140" y="152" text-anchor="middle" font-size="15" font-weight="600">选择套餐</text><text x="140" y="176" text-anchor="middle" font-size="10" fill="#544e46">purchase / upgrade</text></g>
+        <g><rect x="268" y="116" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="348" y="152" text-anchor="middle" font-size="15" font-weight="600">创建订单</text><text x="348" y="176" text-anchor="middle" font-size="10" fill="#544e46">幂等 + 待支付</text></g>
+        <g><rect x="476" y="116" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="556" y="152" text-anchor="middle" font-size="15" font-weight="600">预下单</text><text x="556" y="176" text-anchor="middle" font-size="10" fill="#544e46">渠道参数</text></g>
+        <g><rect x="684" y="116" width="160" height="88" rx="4" fill="rgba(47,95,168,.06)" stroke="#2f5fa8"/><text x="764" y="152" text-anchor="middle" font-size="15" font-weight="600">支付渠道</text><text x="764" y="176" text-anchor="middle" font-size="10" fill="#544e46">回调 / 轮询</text></g>
+        <g><rect x="892" y="116" width="160" height="88" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="972" y="152" text-anchor="middle" font-size="15" font-weight="650">验证与发放</text><text x="972" y="176" text-anchor="middle" font-size="10" fill="#544e46">subscription + credits</text></g>
+        <g><rect x="1100" y="116" width="76" height="88" rx="4" fill="#efece6" stroke="rgba(26,23,20,.3)"/><text x="1138" y="152" text-anchor="middle" font-size="13" font-weight="600">刷新</text><text x="1138" y="176" text-anchor="middle" font-size="9" fill="#544e46">Desktop</text></g>
+        <!-- bottom nodes -->
+        <g><rect x="60" y="420" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="140" y="456" text-anchor="middle" font-size="15" font-weight="600">额度检查</text><text x="140" y="480" text-anchor="middle" font-size="10" fill="#544e46">plan + balance</text></g>
+        <g><rect x="268" y="420" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="348" y="456" text-anchor="middle" font-size="15" font-weight="600">冻结额度</text><text x="348" y="480" text-anchor="middle" font-size="10" fill="#544e46">reservation</text></g>
+        <g><rect x="476" y="420" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="556" y="456" text-anchor="middle" font-size="15" font-weight="600">模型调用</text><text x="556" y="480" text-anchor="middle" font-size="10" fill="#544e46">token usage</text></g>
+        <g><rect x="684" y="420" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="764" y="456" text-anchor="middle" font-size="15" font-weight="600">分段上报</text><text x="764" y="480" text-anchor="middle" font-size="10" fill="#544e46">partial / finalize</text></g>
+        <g><rect x="892" y="420" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="972" y="456" text-anchor="middle" font-size="15" font-weight="600">结算/释放</text><text x="972" y="480" text-anchor="middle" font-size="10" fill="#544e46">ledger + quota</text></g>
+        <g><rect x="1100" y="420" width="76" height="88" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="1138" y="456" text-anchor="middle" font-size="13" font-weight="650">恢复</text><text x="1138" y="480" text-anchor="middle" font-size="9" fill="#544e46">Worker</text></g>
+      </svg>
+    </div>
+  </section>
+
+  <section id="data">
+    <div class="section-head"><div class="num">06</div><div><h2>数据归属、同步与存储</h2><p>“能在 Desktop 看见”不代表“存储在 Desktop”；“加入项目”也不代表同步全部用户数据。下图以权威来源划分，而不是以页面位置划分。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="data-title data-desc">
+        <title id="data-title">Reasonix 数据归属架构</title><desc id="data-desc">本地权威数据、云端权威数据和外部系统数据的存储介质、同步边界与管理访问路径。</desc>
+        <defs><marker id="data-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="data-link" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#2f5fa8"/></marker><marker id="data-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker></defs>
+        <rect width="1200" height="600" fill="#fffdfa"/><rect x="32" y="56" width="336" height="464" rx="4" fill="#efece6" stroke="rgba(26,23,20,.22)"/><rect x="432" y="56" width="336" height="464" rx="4" fill="rgba(217,119,87,.045)" stroke="rgba(217,119,87,.42)"/><rect x="832" y="56" width="336" height="464" rx="4" fill="rgba(47,95,168,.035)" stroke="rgba(47,95,168,.3)"/>
+        <g class="mono-svg" font-size="11" letter-spacing="2"><text x="48" y="84" fill="#544e46">LOCAL AUTHORITY</text><text x="448" y="84" fill="#d97757">CLOUD AUTHORITY</text><text x="848" y="84" fill="#2f5fa8">EXTERNAL SYSTEMS</text></g>
+        <!-- arrows -->
+        <path d="M336 184H464" fill="none" stroke="#2f5fa8" stroke-width="2" marker-end="url(#data-link)"/><path d="M464 248H336" fill="none" stroke="#544e46" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#data-muted)"/><text x="400" y="172" class="mono-svg" text-anchor="middle" font-size="9" fill="#2f5fa8">AUTH / CATALOG / PROJECT</text><text x="400" y="240" class="mono-svg" text-anchor="middle" font-size="9" fill="#544e46">FETCH / REFRESH</text>
+        <path d="M736 184H864" fill="none" stroke="#2f5fa8" stroke-width="2" marker-end="url(#data-link)"/><path d="M864 248H736" fill="none" stroke="#544e46" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#data-muted)"/><path d="M600 376V440" fill="none" stroke="#d97757" stroke-width="2" marker-end="url(#data-accent)"/>
+        <!-- local nodes -->
+        <g><rect x="64" y="116" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="80" y="140" class="mono-svg" font-size="9" fill="#8a8378">FILES / GIT</text><text x="200" y="164" text-anchor="middle" font-size="16" font-weight="600">工作区与代码资产</text><text x="200" y="184" text-anchor="middle" font-size="10" fill="#544e46">用户文件系统</text></g>
+        <g><rect x="64" y="232" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="80" y="256" class="mono-svg" font-size="9" fill="#8a8378">JSONL / SQLITE</text><text x="200" y="280" text-anchor="middle" font-size="16" font-weight="600">会话、索引、自动化</text><text x="200" y="300" text-anchor="middle" font-size="10" fill="#544e46">session catalog / runs / experts</text></g>
+        <g><rect x="64" y="348" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="80" y="372" class="mono-svg" font-size="9" fill="#8a8378">TOML / ENV / JSON</text><text x="200" y="396" text-anchor="middle" font-size="16" font-weight="600">个人配置与 UI 状态</text><text x="200" y="416" text-anchor="middle" font-size="10" fill="#544e46">凭证、偏好、标签页</text></g>
+        <!-- cloud nodes -->
+        <g><rect x="464" y="116" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="480" y="140" class="mono-svg" font-size="9" fill="#8a8378">POSTGRESQL</text><text x="600" y="164" text-anchor="middle" font-size="16" font-weight="600">关系业务权威</text><text x="600" y="184" text-anchor="middle" font-size="10" fill="#544e46">账号/计费/目录/项目/媒体</text></g>
+        <g><rect x="464" y="232" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="480" y="256" class="mono-svg" font-size="9" fill="#8a8378">REDIS</text><text x="600" y="280" text-anchor="middle" font-size="16" font-weight="600">短期协调状态</text><text x="600" y="300" text-anchor="middle" font-size="10" fill="#544e46">验证码/限流/幂等/会话辅助</text></g>
+        <g><rect x="464" y="348" width="272" height="80" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="480" y="372" class="mono-svg" font-size="9" fill="#d97757">PRIVATE OSS</text><text x="600" y="396" text-anchor="middle" font-size="16" font-weight="650">二进制对象资产</text><text x="600" y="416" text-anchor="middle" font-size="10" fill="#544e46">短时签名 URL 访问</text></g>
+        <!-- external nodes -->
+        <g><rect x="864" y="116" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="880" y="140" class="mono-svg" font-size="9" fill="#8a8378">AI PROVIDERS</text><text x="1000" y="164" text-anchor="middle" font-size="16" font-weight="600">模型 / MaaS / Ark</text><text x="1000" y="184" text-anchor="middle" font-size="10" fill="#544e46">推理、视频、媒体理解</text></g>
+        <g><rect x="864" y="232" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="880" y="256" class="mono-svg" font-size="9" fill="#8a8378">PAYMENT / OAUTH</text><text x="1000" y="280" text-anchor="middle" font-size="16" font-weight="600">支付与第三方连接</text><text x="1000" y="300" text-anchor="middle" font-size="10" fill="#544e46">微信/支付宝/汇付/GitHub</text></g>
+        <g><rect x="864" y="348" width="272" height="80" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.28)"/><text x="880" y="372" class="mono-svg" font-size="9" fill="#8a8378">ALIYUN</text><text x="1000" y="396" text-anchor="middle" font-size="16" font-weight="600">短信、验证码、OSS</text><text x="1000" y="416" text-anchor="middle" font-size="10" fill="#544e46">由 Cloud 服务封装</text></g>
+        <g><rect x="464" y="440" width="272" height="56" rx="4" fill="#efece6" stroke="rgba(26,23,20,.28)"/><text x="600" y="464" text-anchor="middle" font-size="14" font-weight="600">项目成员共享“项目域数据”</text><text x="600" y="484" text-anchor="middle" font-size="10" fill="#544e46">不是账号级全量数据同步</text></g>
+      </svg>
+    </div>
+    <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>数据域</th><th>权威位置</th><th>介质/方式</th><th>共享或同步边界</th></tr></thead><tbody>
+      <tr><td>工作区、文件、Git</td><td>用户设备</td><td>本地文件系统与 Git</td><td>默认不上传、不随项目邀请同步</td></tr>
+      <tr><td>会话正文与事件</td><td>用户设备</td><td>JSONL + sidecar；SQLite 目录索引</td><td>个人本地会话；项目任务只建立业务关联，不等于共享全文</td></tr>
+      <tr><td>专家/自动化/模型运行索引</td><td>用户设备</td><td>多个专用 SQLite；配置 TOML/JSON/.env</td><td>按本地 profile；敏感凭证不作为项目数据暴露</td></tr>
+      <tr><td>账号、订阅、积分、订单、用量</td><td>Cloud</td><td>PostgreSQL；Redis 辅助幂等/限流</td><td>账号登录后跨设备读取；由服务端规则变更</td></tr>
+      <tr><td>公共能力目录</td><td>Cloud</td><td>PostgreSQL + API</td><td>客户端拉取缓存；本地安装和凭证仍属个人</td></tr>
+      <tr><td>CloudProject 业务数据</td><td>Cloud</td><td>PostgreSQL</td><td>仅同项目成员、按角色授权共享</td></tr>
+      <tr><td>项目/公共上传对象</td><td>Cloud</td><td>私有/策略化 OSS + PostgreSQL 元数据</td><td>项目资产通过短时签名 URL；删除由清理任务回收</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section id="operations">
+    <div class="section-head"><div class="num">07</div><div><h2>运营治理与后台恢复</h2><p>Admin 是 Cloud 的控制面：受角色/权限保护，通过 API 发出命令或查询；Worker 对跨事务、外部回调和超时状态进行恢复。项目治理在当前实现中刻意保持只读。</p></div></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ops-title ops-desc">
+        <title id="ops-title">Reasonix 运营治理流程</title><desc id="ops-desc">管理员登录后经过前端权限、Cloud 管理 API、领域服务、数据库和后台恢复任务完成运营命令、审计和状态反馈。</desc>
+        <defs><marker id="ops-muted" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#544e46"/></marker><marker id="ops-accent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d97757"/></marker></defs>
+        <rect width="1200" height="480" fill="#fffdfa"/>
+        <!-- arrows -->
+        <g fill="none" stroke="#544e46" stroke-width="2" marker-end="url(#ops-muted)"><line x1="220" y1="208" x2="268" y2="208"/><line x1="428" y1="208" x2="476" y2="208"/><line x1="636" y1="208" x2="684" y2="208"/><line x1="844" y1="208" x2="892" y2="208"/></g><path d="M972 252V328H556V252" fill="none" stroke="#544e46" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ops-muted)"/><path d="M348 252V392H1136V252" fill="none" stroke="#d97757" stroke-width="2" marker-end="url(#ops-accent)"/>
+        <!-- nodes -->
+        <g><rect x="60" y="164" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="140" y="200" text-anchor="middle" font-size="15" font-weight="600">管理员登录</text><text x="140" y="224" text-anchor="middle" font-size="10" fill="#544e46">admin session</text></g>
+        <g><rect x="268" y="164" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="348" y="200" text-anchor="middle" font-size="15" font-weight="600">路由与权限</text><text x="348" y="224" text-anchor="middle" font-size="10" fill="#544e46">Vue meta guard</text></g>
+        <g><rect x="476" y="164" width="160" height="88" rx="4" fill="#fffdfa" stroke="#2f5fa8"/><text x="556" y="200" text-anchor="middle" font-size="15" font-weight="600">Cloud Admin API</text><text x="556" y="224" text-anchor="middle" font-size="10" fill="#544e46">鉴权/ETag/命令</text></g>
+        <g><rect x="684" y="164" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="764" y="200" text-anchor="middle" font-size="15" font-weight="600">领域服务</text><text x="764" y="224" text-anchor="middle" font-size="10" fill="#544e46">校验 + 状态机</text></g>
+        <g><rect x="892" y="164" width="160" height="88" rx="4" fill="#fffdfa" stroke="rgba(26,23,20,.3)"/><text x="972" y="200" text-anchor="middle" font-size="15" font-weight="600">PostgreSQL</text><text x="972" y="224" text-anchor="middle" font-size="10" fill="#544e46">记录 + 审计</text></g>
+        <g><rect x="1052" y="164" width="124" height="88" rx="4" fill="rgba(217,119,87,.12)" stroke="#d97757"/><text x="1114" y="200" text-anchor="middle" font-size="15" font-weight="650">Worker</text><text x="1114" y="224" text-anchor="middle" font-size="10" fill="#544e46">重试/恢复/清理</text></g>
+        <text x="764" y="320" class="mono-svg" text-anchor="middle" font-size="10" fill="#544e46">异步状态回写</text><text x="764" y="384" class="mono-svg" text-anchor="middle" font-size="10" fill="#d97757">查询最新状态 / 审计结果</text>
+      </svg>
+    </div>
+    <div class="callout"><strong>部署注意：</strong><code>scripts/reasonix-dev.ps1</code> 的集成开发路径会启动 Cloud Server、Admin Vite 和 Wails Desktop，但不会同时启动独立的 <code>cmd/worker</code>。涉及支付轮询、结算恢复、项目资产清理、媒体恢复等流程时，必须把 Worker 视为单独运行进程。</div>
+  </section>
+
+  <section id="inventory">
+    <div class="section-head"><div class="num">08</div><div><h2>业务功能全集</h2><p>按业务能力域归并当前代码中可到达的主要功能。表中的“配置后可用”表示路由/实现存在，但真实完成依赖外部凭证、供应商或部署条件。</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th>业务域</th><th>Desktop / 用户端</th><th>Cloud / 服务端</th><th>Admin / 运营端</th><th>状态</th></tr></thead><tbody>
+      <tr><td>Agent 对话与控制</td><td>提交、取消、Steer、审批、问答、模式、压缩、计划、Todo、上下文</td><td>可通过模型/计费链提供服务能力</td><td>用量与结算观察</td><td>已实现</td></tr>
+      <tr><td>会话生命周期</td><td>新建、历史、预览/恢复、删除/回收/清除、重命名、检查点、回退、分叉、摘要</td><td>账号资产 bootstrap，不是本地会话全文权威</td><td>无本地会话管理</td><td>本地权威</td></tr>
+      <tr><td>工作区、文件与 Git</td><td>选择/切换工作区、文件预览/打开/定位、变更、分支、提交历史与详情</td><td>不作为本地 Git 权威</td><td>无</td><td>本地权威</td></tr>
+      <tr><td>模型与提供商</td><td>选择模型、推理强度、token 模式、provider 设置、市场刷新</td><td>模型额度、价格、MaaS key/quota、用量结算</td><td>模型积分、定价刷新、额度治理</td><td>配置后可用</td></tr>
+      <tr><td>专家</td><td>创建、编辑、复制、收藏、导入、选择、团队编排</td><td>专家/分组/资产目录与收藏</td><td>专家、分组和资产管理</td><td>已实现</td></tr>
+      <tr><td>Skills</td><td>路径、启停、刷新、安装使用</td><td>目录、搜索、安装计数、导入导出</td><td>发布、下架、CRUD</td><td>已实现</td></tr>
+      <tr><td>MCP</td><td>CRUD、连接/重连、授权、信任、tier</td><td>公共解析、可执行产物</td><td>目录 CRUD 与发布</td><td>配置后可用</td></tr>
+      <tr><td>Connectors</td><td>目录、状态、安装、授权、连接/断开、取消 OAuth</td><td>目录、GitHub OAuth、状态</td><td>发布/下架与管理</td><td>配置后可用</td></tr>
+      <tr><td>记忆与 Profile</td><td>检查、搜索、详情、批准、禁用、删除、remember/forget、建议</td><td>不替代本地个人记忆权威</td><td>无</td><td>本地权威</td></tr>
+      <tr><td>自动化</td><td>任务 CRUD、启停、校验、配额、触发；运行详情、重试、导出、取消；模板管理</td><td>相关云业务可被调用</td><td>状态与云任务治理按域存在</td><td>已实现</td></tr>
+      <tr><td>IM Bot</td><td>安装、轮询、诊断、测试、运行状态；飞书/Lark/企业微信/QQ 适配</td><td>需要外部平台与网络配置</td><td>无统一 Bot 管理页</td><td>配置后可用</td></tr>
+      <tr><td>账号与安全</td><td>验证码、短信、注册、登录/切换/退出、重置密码、缓存资产</td><td>鉴权、refresh/logout/me、MaaS key、限流</td><td>管理员登录、用户管理</td><td>已实现</td></tr>
+      <tr><td>订阅、支付与积分</td><td>购买/升级、确认、刷新权益</td><td>套餐、订单、微信 v2/v3、支付宝/汇付接入、退款、积分冻结/结算</td><td>套餐、订单、退款、验证、发放重试、积分账本</td><td>配置后可用</td></tr>
+      <tr><td>项目与协作</td><td>项目、说明、工作项、活动、资产、标签、绑定、自动化、成员邀请</td><td>CloudProject 权威 API 与活动/资产治理</td><td>项目聚合只读治理</td><td>已实现；专题详图</td></tr>
+      <tr><td>版本与更新</td><td>更新检查、升级入口、反馈/崩溃上报</td><td>客户端版本 latest/publish/withdraw/history、错误报告</td><td>版本发布与错误报告管理</td><td>已实现</td></tr>
+      <tr><td>视频与媒体理解</td><td>任务发起/结果消费入口按功能集成</td><td>视频生成、媒体理解、任务恢复/轮询</td><td>按任务与供应商状态治理</td><td>配置后可用</td></tr>
+      <tr><td>运行治理</td><td>网络、沙箱、权限、Hooks、更新、快捷键等设置</td><td>并发、IP 限流、health/ready/env/metrics</td><td>并发、IP 限流、云概览与结算视图</td><td>已实现</td></tr>
+    </tbody></table></div>
+
+    <div class="grid" style="margin-top:16px">
+      <article class="card span4"><h3>Desktop 的六类入口</h3><ul><li>Wails + React 桌面工作台</li><li>CLI：run/chat/code/serve/setup/config/init/acp/mcp/doctor/review/bot/update</li><li>HTTP/SSE：会话、审批、计划、专家、自动化等</li><li>ACP 协议适配</li><li>IM Bot</li><li>自动化调度</li></ul></article>
+      <article class="card span4"><h3>Cloud Worker 恢复域</h3><ul><li>积分冻结超时与用量结算</li><li>支付轮询、过期、退款、发放重试</li><li>MaaS 配额恢复与订阅过期</li><li>视频/媒体理解恢复</li><li>项目资产清理</li><li>价格刷新与回调审计清理</li></ul></article>
+      <article class="card span4"><h3>Admin 主要页面域</h3><ul><li>用户、订阅、积分账本</li><li>套餐、订单、退款、支付测试</li><li>专家、Skill、Connector、MCP</li><li>客户端版本与错误报告</li><li>项目只读治理</li><li>IP 限流、并发、云概览</li></ul></article>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <div class="section-head"><div class="num">09</div><div><h2>证据范围、运行边界与阅读方式</h2><p>本文是代码结构和路由可达性的当前快照，不把“存在代码”升级为“外部供应商已联调成功”或“生产环境已验证”。</p></div></div>
+    <div class="grid">
+      <article class="card span6"><h3>审计基线</h3><ul><li>Desktop：<code>codex/integration-main-v3-20260817</code> · <code>643e8d9</code></li><li>Cloud：<code>codex/integration-20260817</code> · <code>8ce8b35</code></li><li>Admin：<code>codex/integration-20260817</code> · <code>faddc7b</code></li><li>Desktop 工作树原本存在未提交业务改动；本文未修改这些文件。</li></ul></article>
+      <article class="card span6"><h3>审计方法</h3><ul><li>从入口、路由、handlers、Wails bindings、前端 feature/page 目录反向建立业务域。</li><li>从迁移、repository、SQLite/JSONL/config 实现确认数据落点。</li><li>从 Server/Worker 入口和本地集成脚本确认运行进程边界。</li><li>未进行外部支付、短信、OSS、OAuth、模型、媒体供应商的真实调用。</li></ul></article>
+      <article class="card span6"><h3>专门文档</h3><p><a class="link" href="2026-08-17-reasonix-project-business-flow.html">Reasonix“项目”业务所有功能全流程</a>：项目创建、邀请、工作项、资产、权限、数据同步边界的 5 张专题图和功能矩阵。</p></article>
+      <article class="card span6"><h3>不应混淆的四组概念</h3><ul><li><code>CloudProject != LocalWorkspace</code></li><li><code>LocalSession != ProjectTask</code></li><li><code>WorkItem != ProjectTask</code></li><li>Cloud 目录可见 <code>!=</code> 本地已授权、已配置、可执行</li></ul></article>
+    </div>
+  </section>
+
+  <footer><span>Reasonix · Overall Architecture &amp; Business Flows</span><span>Generated from current code audit · 2026-08-17 · docs/ai01</span></footer>
+</main>
+</body>
+</html>

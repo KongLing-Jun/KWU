@@ -1,0 +1,9 @@
+{
+  "schema_version": 2,
+  "servers": [{
+    "id": "tencent-docs",
+    "transport": "streamable-http",
+    "url": "https://docs.qq.com/openapi/mcp",
+    "auth": {"type": "oauth", "scopes": ["docs:read", "docs:write"], "resource": "https://docs.qq.com/openapi/mcp"}
+  }]
+}

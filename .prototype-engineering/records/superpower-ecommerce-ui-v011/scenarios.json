@@ -1,0 +1,10 @@
+{
+  "scenarios": [
+    {"id":"hover-ready","description":"Hovering a ready generated card fades in an outline and right-click hint without changing composer state.","fixture":"Any ready registered widget"},
+    {"id":"right-click-select","description":"Right-clicking a ready card prevents the native menu, selects it and writes its reference into the composer.","fixture":"Canvas trend widget"},
+    {"id":"replace-selection","description":"Right-clicking another card moves the persistent selected treatment and replaces the composer reference.","fixture":"Two ready widgets"},
+    {"id":"clear-selection","description":"Removing the composer reference clears the selected card treatment.","fixture":"One selected widget"},
+    {"id":"loading-card","description":"A loading card does not intercept right-click or become selected.","fixture":"Loading scenario widget"},
+    {"id":"reduced-motion","description":"Selection remains visible while fade transitions are disabled when reduced motion is requested.","fixture":"prefers-reduced-motion"}
+  ]
+}

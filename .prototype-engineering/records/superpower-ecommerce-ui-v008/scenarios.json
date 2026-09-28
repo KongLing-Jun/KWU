@@ -1,0 +1,39 @@
+{
+  "scenarios": [
+    {
+      "id": "desktop-first-open",
+      "description": "The active Desktop session is bound to a stable ecommerce task and its ready DashboardDocument is atomically seeded below the profile state root.",
+      "fixture": "Active tab plus deterministic v007 complete-research seed JSON"
+    },
+    {
+      "id": "desktop-action",
+      "description": "A bound session attaches evidence through the host action API, producing one durable revision and idempotent replay behavior.",
+      "fixture": "attach_evidence action with matching baseRevision and stable operationId"
+    },
+    {
+      "id": "desktop-reload",
+      "description": "The same task document reloads from JSON and restores its revision/widgets without browser-local state.",
+      "fixture": "Persisted profile sidecar document"
+    },
+    {
+      "id": "binding-mismatch",
+      "description": "A scope not bound to the active session is rejected before any dashboard path is read or written.",
+      "fixture": "Altered taskId/documentId scope"
+    },
+    {
+      "id": "invalid-action",
+      "description": "Traversal identifiers, stale revisions, unknown widgets, incompatible surfaces and oversized payloads are rejected without changing the file.",
+      "fixture": "Table-driven invalid scope/document/action inputs"
+    },
+    {
+      "id": "browser-fallback",
+      "description": "The standalone Vite page continues to load, render and mutate the same document shape using localStorage when Wails is absent.",
+      "fixture": "Browser runtime without window.go.main.App methods"
+    },
+    {
+      "id": "demo-isolation",
+      "description": "Partial, loading and empty-input demo selections remain in-memory and do not replace the durable ready task document.",
+      "fixture": "Existing deterministic scenario selector"
+    }
+  ]
+}

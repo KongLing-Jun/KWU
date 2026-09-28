@@ -1,0 +1,19 @@
+{
+  "fixture_version": "b0-v1",
+  "dependency_id": "CLOUD-CREDIT-CONFIG-01",
+  "authenticity": "MOCK_ONLY",
+  "cases": [
+    {
+      "name": "success",
+      "config": {
+        "credit_per_cny": "2000",
+        "pricing_group": "default",
+        "version": "cloud-credit-config-fixture-v1",
+        "fetched_at": "2026-07-11T00:00:00Z"
+      }
+    },
+    {"name": "explicit_failure", "error": {"code": "pricing_unavailable", "message": "fixture credit config unavailable", "retryable": true}},
+    {"name": "missing_group", "error": {"code": "contract_invalid", "message": "fixture group is required"}},
+    {"name": "invalid_config", "error": {"code": "contract_invalid", "message": "fixture credit config is invalid"}}
+  ]
+}

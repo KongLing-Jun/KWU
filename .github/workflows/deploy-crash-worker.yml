@@ -1,0 +1,65 @@
+name: Deploy crash worker
+
+on:
+  push:
+    branches: [main-v3]
+    paths:
+      - 'workers/crash-report/**'
+      - '.github/workflows/deploy-crash-worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-crash-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: workers/crash-report/package-lock.json
+      - name: Install and test
+        working-directory: workers/crash-report
+        run: |
+          npm ci
+          npm test
+          npm run typecheck
+
+      - name: Verify D1 schema
+        working-directory: workers/crash-report
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          check_column() {
+            local table="$1"
+            local column="$2"
+
+            if ! npx wrangler d1 execute suiyuan-crash --remote --command "SELECT $column FROM $table LIMIT 0" >/dev/null; then
+              echo "::error::Missing D1 column $table.$column. Apply workers/crash-report/migrate-structured-reports.sql before deploying."
+              return 1
+            fi
+          }
+
+          for column in first_version source label error_type top_frame severity last_os last_arch last_build_commit last_channel resolved_in resolved_at regressed_at last_sample_at; do
+            check_column groups "$column"
+          done
+
+          for column in source label error_type error_message top_frame build_commit channel language view breadcrumbs component_stack stack occurred_at; do
+            check_column reports "$column"
+          done
+
+      - name: Deploy
+        working-directory: workers/crash-report
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx wrangler deploy

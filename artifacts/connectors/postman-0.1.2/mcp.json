@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "servers": [
+    {
+      "id": "postman",
+      "transport": "streamable-http",
+      "url": "https://mcp.postman.com/minimal",
+      "auth": {
+        "type": "token",
+        "schema": "token-schema.json"
+      }
+    }
+  ]
+}

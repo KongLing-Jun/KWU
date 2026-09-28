@@ -1,0 +1,1036 @@
+import { memo, useEffect, useMemo, useRef, useState } from "react";
+import type { FormEvent, KeyboardEvent as ReactKeyboardEvent } from "react";
+import { BrainCircuit, ChevronDown, ChevronRight, FileText, Folder, Image, LoaderCircle, MessageSquare, Pencil, RotateCcw, ScrollText } from "lucide-react";
+import { Markdown } from "./Markdown";
+import { CopyButton } from "./CopyButton";
+import { SkillTokenText } from "./SkillTokenText";
+import { ProcessBrainIcon } from "./ProcessCard";
+import { ComposerContextCard } from "./ComposerContextCard";
+import { bareGeneratedFilePathsForDisplay, baseName, displayAttachmentPathKey, displayAttachmentPathsEquivalent, formatAttachmentRefForDisplay, formatAttachmentRefForSubmit, inlineGeneratedFilePathsForDisplay, linkVerifiedBareGeneratedFilesForDisplay, parseAttachmentRefsForDisplay, parseGeneratedFileRefsForDisplay, sortDisplayAttachments } from "../lib/attachmentDisplay";
+import type { DisplayAttachment } from "../lib/attachmentDisplay";
+import { normalizeArtifactDeliveryV1 } from "../lib/artifactDelivery";
+import { app } from "../lib/bridge";
+import { replaySubmitText } from "../lib/editReplay";
+import { useT } from "../lib/i18n";
+import { cloudScopeKey, hasRecoverableCloudIdentity, useAccountStore } from "../store/account";
+import { useToast } from "../lib/toast";
+import { Tooltip } from "./Tooltip";
+import { useGSAPCollapse } from "../lib/useGSAPCollapse";
+import { displayReasoningText } from "../lib/reasoningDisplay";
+import { stripHiddenSystemPrompt } from "../lib/expertPrompt";
+import type { Item, MessageActionScope } from "../lib/useController";
+import type { CheckpointMeta, MemoryCitation, TurnMetadata } from "../lib/types";
+import type { GeneratedMediaReference } from "../lib/mediaToolResult";
+import {
+  openWorkspacePathForOwner,
+  readWorkspaceFileForOwner,
+  resolveWorkspaceFileOwner,
+  useWorkspaceFileScope,
+  visibleWorkspaceFilePathKeys,
+} from "../lib/workspaceFileScope";
+
+type AssistantItem = Extract<Item, { kind: "assistant" }>;
+export type TurnActionMenu = "summary" | "rewind";
+type ImSourceMessage = {
+  provider: string;
+  label: string;
+  sender: string;
+  chat: string;
+  text: string;
+};
+
+function trimCreditZeros(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed.includes(".")) return trimmed;
+  return trimmed.replace(/0+$/, "").replace(/\.$/, "");
+}
+
+function turnModelLabel(turn: TurnMetadata): string {
+  const modelID = turn.modelId?.trim();
+  if (modelID) return modelID;
+  const modelRef = turn.modelRef.trim();
+  const parts = modelRef.split("/").filter(Boolean);
+  return parts[parts.length - 1] ?? modelRef;
+}
+
+function TurnUsageMeta({ turn }: { turn?: TurnMetadata }) {
+  const t = useT();
+  const account = useAccountStore((store) => store.account);
+  if (!turn) return null;
+  const model = turnModelLabel(turn);
+  const sameScope = !turn.billingScopeKey || (account && hasRecoverableCloudIdentity(account) && turn.billingScopeKey === cloudScopeKey(account));
+  const credits = !sameScope || turn.chargedCredits === undefined ? "" : trimCreditZeros(turn.chargedCredits);
+  const creditsSettling = turn.billingSource === "subscription_pool" && credits === "";
+  const status = sameScope ? turn.billingStatus : "unavailable";
+  const statusText = status === "pending" ? t("msg.creditsSettling")
+    : status === "error" ? t("msg.creditsReadFailed")
+    : status === "unavailable" ? t("msg.creditsUnavailable") : t("msg.creditsLoading");
+  const showCredits = Boolean(credits) || creditsSettling;
+  if (!model && !showCredits) return null;
+  return (
+    <div className="turn-usage" role="group" aria-label={t("msg.turnUsage")}>
+      {showCredits && (
+        <span className="turn-usage__credits" title={creditsSettling ? statusText : t("msg.creditsUsed", { value: credits })}>
+          <span>{t("msg.totalUsed")}</span>
+          <span className="turn-usage__credit-icon" aria-hidden="true">✧</span>
+          {creditsSettling ? (
+            <span className="turn-usage__settling">
+              {status !== "error" && status !== "unavailable" && <LoaderCircle className="turn-usage__credit-loader" aria-hidden="true" size={12} />}
+              <span>{statusText}</span>
+            </span>
+          ) : <span>{credits}</span>}
+        </span>
+      )}
+      {showCredits && model && <span className="turn-usage__separator" aria-hidden="true" />}
+      {model && <span className="turn-usage__model" title={t("msg.modelUsed", { model })}>{model}</span>}
+    </div>
+  );
+}
+
+const IM_SOURCE_START = "[[kwu-im]]";
+const IM_SOURCE_END = "[[/kwu-im]]";
+const noArtifactDeliveryPaths: string[] = [];
+
+function parseImSourceMessage(text: string): ImSourceMessage | null {
+  // Display-only metadata: keep IM sender/chat details out of model prompts.
+  if (!text.startsWith(IM_SOURCE_START)) return null;
+  const end = text.indexOf(IM_SOURCE_END);
+  if (end < 0) return null;
+  const metaBlock = text.slice(IM_SOURCE_START.length, end).trim();
+  const body = text.slice(end + IM_SOURCE_END.length).replace(/^\r?\n/, "");
+  const meta: Record<string, string> = {};
+  for (const line of metaBlock.split(/\r?\n/)) {
+    const index = line.indexOf("=");
+    if (index <= 0) continue;
+    const key = line.slice(0, index).trim().toLowerCase();
+    const value = line.slice(index + 1).trim();
+    if (key) meta[key] = value;
+  }
+  return {
+    provider: meta.provider || "",
+    label: meta.label || "",
+    sender: meta.sender || meta.senderid || "",
+    chat: meta.chat || meta.chat_type || "",
+    text: body,
+  };
+}
+
+const MEMORY_COMPILER_EXECUTION_RE = /<memory-compiler-execution>[\s\S]*?<\/memory-compiler-execution>\s*/g;
+const TEMPORAL_CONTEXT_RE = /^\s*<temporal_context\b[^>]*\/>\s*/;
+
+/** Hides the legacy Memory v5 execution block from transcripts created by
+ *  older releases. New turns never contain this block. */
+function stripMemoryCompilerExecution(text: string): string {
+	return text.replace(TEMPORAL_CONTEXT_RE, "").replace(MEMORY_COMPILER_EXECUTION_RE, "").trimStart();
+}
+
+function imSourceLabel(source: ImSourceMessage, t: ReturnType<typeof useT>): string {
+  if (source.label.trim()) return source.label.trim();
+  const provider = source.provider.trim().toLowerCase();
+  if (provider === "lark") return "Lark";
+  if (provider === "weixin" || provider === "wechat") return t("settings.botWeixin");
+  return t("settings.botFeishu");
+}
+
+function attachmentIcon(kind: "image" | "file" | "folder") {
+  if (kind === "image") return <Image size={15} />;
+  if (kind === "folder") return <Folder size={15} />;
+  return <FileText size={15} />;
+}
+
+function mergeDisplayAttachments(existing: DisplayAttachment[], incoming: DisplayAttachment[]): DisplayAttachment[] {
+  if (incoming.length === 0) return existing;
+  const seen = new Set(existing.map((attachment) => displayAttachmentPathKey(attachment.path)));
+  const merged = [...existing];
+  for (const attachment of incoming) {
+    const key = displayAttachmentPathKey(attachment.path);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    merged.push(attachment);
+  }
+  return merged;
+}
+
+function mergeEquivalentDisplayAttachments(existing: DisplayAttachment[], incoming: DisplayAttachment[]): DisplayAttachment[] {
+  const merged: DisplayAttachment[] = [];
+  for (const attachment of [...existing, ...incoming]) {
+    if (!displayAttachmentPathKey(attachment.path)) continue;
+    const equivalentIndex = merged.findIndex((candidate) => displayAttachmentPathsEquivalent(candidate.path, attachment.path));
+    if (equivalentIndex >= 0) {
+      if (attachment.delivered && !merged[equivalentIndex]?.delivered) {
+        merged[equivalentIndex] = attachment;
+      }
+      continue;
+    }
+    merged.push(attachment);
+  }
+  return merged;
+}
+
+function workspaceDisplayAttachment(path: string, delivered = false): DisplayAttachment {
+  const name = baseName(path) || "attachment";
+  const dot = name.lastIndexOf(".");
+  return {
+    path,
+    name,
+    kind: "file",
+    source: "workspace",
+    ext: dot >= 0 ? name.slice(dot + 1).toUpperCase() : "",
+    ...(delivered ? { delivered: true } : {}),
+  };
+}
+
+function AttachmentCard({
+  attachment,
+  imagePreview,
+  interactive = false,
+  tabId,
+  t,
+}: {
+  attachment: DisplayAttachment;
+  imagePreview?: string;
+  interactive?: boolean;
+  tabId?: string;
+  t: ReturnType<typeof useT>;
+}) {
+  const { showToast } = useToast();
+  const workspaceFileScope = useWorkspaceFileScope();
+  const workspaceFileOwner = resolveWorkspaceFileOwner(tabId, workspaceFileScope);
+  const className = `msg-attachment msg-attachment--${attachment.kind}`;
+  const meta = attachment.kind === "folder"
+    ? t("msg.folderReference")
+    : `${attachment.ext || t("msg.fileAttachment")} · ${attachment.delivered ? t("msg.deliveredArtifact") : attachment.source === "workspace" ? t("msg.workspaceReference") : attachment.kind === "image" ? t("msg.imageAttachment") : t("msg.fileAttachment")}`;
+  const body = (
+    <>
+      <span className={`msg-attachment__icon msg-attachment__icon--${attachment.kind}`} aria-hidden="true">
+        {attachment.kind === "image" && imagePreview ? <img src={imagePreview} alt="" draggable={false} /> : attachmentIcon(attachment.kind)}
+      </span>
+      <span className="msg-attachment__main">
+        <span className="msg-attachment__name">{attachment.name}</span>
+        <span className="msg-attachment__meta">{meta}</span>
+      </span>
+    </>
+  );
+  if (!interactive) {
+    return (
+      <div className={className} title={attachment.path}>
+        {body}
+      </div>
+    );
+  }
+  return (
+    <button
+      type="button"
+      className={className}
+      title={attachment.path}
+      onClick={() => {
+        void openWorkspacePathForOwner(workspaceFileOwner, attachment.path).catch(() => {
+          showToast(t("msg.openFileFailed"), "warn");
+        });
+      }}
+    >
+      {body}
+    </button>
+  );
+}
+
+function MemoryCitations({ citations }: { citations?: MemoryCitation[] }) {
+  const t = useT();
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const clean = (citations ?? [])
+    .filter((citation) => (citation.source ?? citation.id ?? citation.note ?? "").trim() !== "")
+    .slice(0, 5);
+  useGSAPCollapse(bodyRef, open);
+  if (clean.length === 0) return null;
+  return (
+    <div className="msg-memory-citations">
+      <button
+        type="button"
+        className="msg-memory-citations__toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <ChevronRight className={`msg-memory-citations__chevron${open ? " msg-memory-citations__chevron--open" : ""}`} size={15} />
+        <span>{t("msg.memoryCompilerCitationsCount", { n: clean.length })}</span>
+      </button>
+      {open && (
+        <div ref={bodyRef} className="msg-memory-citations__body">
+          {clean.map((citation, index) => {
+            const lines = memoryCitationLines(citation, t);
+            return (
+              <div key={`${citation.id ?? citation.source}-${index}`} className="msg-memory-citations__item">
+                <div className="msg-memory-citations__source">
+                  <span>{memoryCitationSource(citation)}</span>
+                  {lines && <span className="msg-memory-citations__lines">{lines}</span>}
+                </div>
+                {citation.note && <div className="msg-memory-citations__note">{citation.note}</div>}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function memoryCitationSource(citation: MemoryCitation): string {
+	const source = (citation.source || citation.id || "Memory v5").trim();
+	if (citation.kind === "compiler_reference" && source === "Memory v5") return "Memory v5 compiler";
+  return source;
+}
+
+function memoryCitationLines(citation: MemoryCitation, t: ReturnType<typeof useT>): string {
+  const start = citation.lineStart ?? 0;
+  const end = citation.lineEnd ?? 0;
+  if (start <= 0) return "";
+  if (end > 0 && end !== start) return t("msg.memoryCitationLineRange", { start, end });
+  return t("msg.memoryCitationLine", { line: start });
+}
+
+function messageDate(value?: number): Date {
+  return new Date(typeof value === "number" && Number.isFinite(value) && value > 0 ? value : Date.now());
+}
+
+function formatMessageTime(date: Date): string {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+export function UserMessage({
+  text,
+  submitText,
+  failed,
+  turn,
+  anchorId,
+  id,
+  createdAt,
+  onEdit,
+  editDisabled = false,
+}: {
+  text: string;
+  submitText?: string;
+  failed?: boolean;
+  turn?: number;
+  anchorId?: string;
+  id?: string;
+  createdAt?: number;
+  onEdit?: (turn: number, displayText: string, submitText?: string) => boolean | void | Promise<boolean | void>;
+  editDisabled?: boolean;
+}) {
+  const t = useT();
+  const imSource = parseImSourceMessage(text);
+  const actionText = stripMemoryCompilerExecution(stripHiddenSystemPrompt(imSource?.text ?? text));
+  const hasMemoryCompiler = Boolean(submitText?.includes("<memory-compiler-execution>"));
+  const { text: displayText, attachments } = parseAttachmentRefsForDisplay(actionText);
+  const orderedAttachments = sortDisplayAttachments(attachments);
+  const sourceLabel = imSource ? imSourceLabel(imSource, t) : "";
+  const sentAt = createdAt === undefined ? null : messageDate(createdAt);
+  const canEdit = turn !== undefined && onEdit !== undefined && !editDisabled;
+  const [editing, setEditing] = useState(false);
+  const [draftText, setDraftText] = useState(displayText);
+  const [draftAttachments, setDraftAttachments] = useState<DisplayAttachment[]>(attachments);
+  const [editSubmitting, setEditSubmitting] = useState(false);
+  const editRef = useRef<HTMLTextAreaElement>(null);
+  const [imagePreviews, setImagePreviews] = useState<Record<string, string>>({});
+  const orderedDraftAttachments = sortDisplayAttachments(draftAttachments);
+  const imagePreviewKey = orderedAttachments
+    .concat(orderedDraftAttachments)
+    .filter((attachment) => attachment.kind === "image" && attachment.source === "attachment")
+    .map((attachment) => attachment.path)
+    .join("\n");
+
+  useEffect(() => {
+    if (editing) return;
+    const parsed = parseAttachmentRefsForDisplay(actionText);
+    setDraftText(parsed.text);
+    setDraftAttachments(parsed.attachments);
+  }, [actionText, editing]);
+
+  useEffect(() => {
+    if (!editing) return;
+    requestAnimationFrame(() => {
+      const node = editRef.current;
+      if (!node) return;
+      node.focus();
+      node.selectionStart = node.selectionEnd = node.value.length;
+    });
+  }, [editing]);
+
+  const startEdit = () => {
+    if (!canEdit) return;
+    const parsed = parseAttachmentRefsForDisplay(actionText);
+    setDraftText(parsed.text);
+    setDraftAttachments(parsed.attachments);
+    setEditing(true);
+  };
+
+  const cancelEdit = () => {
+    const parsed = parseAttachmentRefsForDisplay(actionText);
+    setDraftText(parsed.text);
+    setDraftAttachments(parsed.attachments);
+    setEditing(false);
+  };
+
+  const updateDraftText = (value: string) => {
+    const parsed = parseAttachmentRefsForDisplay(value);
+    if (parsed.attachments.length > 0) {
+      setDraftText(parsed.text);
+      setDraftAttachments((prev) => mergeDisplayAttachments(prev, parsed.attachments));
+      return;
+    }
+    setDraftText(value);
+  };
+
+  const removeDraftAttachment = (path: string) => {
+    setDraftAttachments((prev) => prev.filter((attachment) => attachment.path !== path));
+  };
+
+  const submitEdit = async (event?: FormEvent) => {
+    event?.preventDefault();
+    if (!canEdit || editSubmitting) return;
+    const parsedDraft = parseAttachmentRefsForDisplay(draftText);
+    const nextAttachments = sortDisplayAttachments(mergeDisplayAttachments(draftAttachments, parsedDraft.attachments));
+    const bodyText = parsedDraft.text.trim();
+    const displayRefs = nextAttachments.map(formatAttachmentRefForDisplay).join(" ");
+    const submitRefs = nextAttachments.map(formatAttachmentRefForSubmit).join(" ");
+    const next = [bodyText, displayRefs].filter(Boolean).join(bodyText && displayRefs ? " " : "");
+    const fallbackSubmit = [bodyText, submitRefs].filter(Boolean).join(bodyText && submitRefs ? " " : "");
+    const submit = replaySubmitText(submitText, actionText, next, fallbackSubmit);
+    if (!next) return;
+    setEditSubmitting(true);
+    try {
+      const ok = await onEdit?.(turn as number, next, submit);
+      if (ok !== false) setEditing(false);
+    } finally {
+      setEditSubmitting(false);
+    }
+  };
+
+  const onEditKeyDown = (event: ReactKeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      cancelEdit();
+      return;
+    }
+    if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+      void submitEdit();
+    }
+  };
+
+  useEffect(() => {
+    const paths = imagePreviewKey ? imagePreviewKey.split("\n") : [];
+    if (paths.length === 0) return;
+    let cancelled = false;
+    for (const path of paths) {
+      if (imagePreviews[path]) continue;
+      app.AttachmentDataURL(path)
+        .then((url) => {
+          if (cancelled) return;
+          setImagePreviews((prev) => (prev[path] ? prev : { ...prev, [path]: url }));
+        })
+        .catch(() => {});
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [imagePreviewKey]);
+  return (
+    <div
+      className={`msg msg--user${imSource ? " msg--im-source" : ""}${failed ? " msg--user-failed" : ""}`}
+      id={anchorId}
+      data-question-anchor={anchorId}
+      data-turn={turn}
+      data-im-source={imSource?.provider || undefined}
+      data-history-restore={id && id.startsWith("h") ? "" : undefined}
+      data-entrance={id || undefined}
+    >
+      <div className={`msg__body${editing ? " msg__body--editing" : ""}`}>
+        {editing ? (
+          <form className="msg-edit" onSubmit={(event) => void submitEdit(event)}>
+            {orderedDraftAttachments.length > 0 && (
+              <div className="msg-edit__attachments composer-context" aria-label={t("composer.contextItems")}>
+                {orderedDraftAttachments.map((attachment) => {
+                  const imagePreview = attachment.kind === "image" ? imagePreviews[attachment.path] : undefined;
+                  const imageOnly = Boolean(imagePreview) && orderedDraftAttachments.every((item) => item.kind === "image" && imagePreviews[item.path]);
+                  return (
+                    <ComposerContextCard
+                      key={attachment.path}
+                      variant={attachment.source === "workspace" ? "workspace" : "attachment"}
+                      tooltipLabel={attachment.source === "workspace" ? formatAttachmentRefForSubmit(attachment) : attachment.path}
+                      removeLabel={attachment.source === "workspace" ? t("composer.removeReference") : t("composer.removeImage")}
+                      removeDisabled={editSubmitting}
+                      onRemove={() => removeDraftAttachment(attachment.path)}
+                      previewUrl={imagePreview}
+                      imageOnly={imageOnly}
+                      folder={attachment.kind === "folder"}
+                      label={attachment.kind === "folder" ? `${attachment.name}/` : attachment.name}
+                      name={attachment.name}
+                      meta={attachment.ext || t("msg.fileAttachment")}
+                      icon={attachment.kind === "image" ? <Image size={20} /> : undefined}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            <textarea
+              ref={editRef}
+              className="msg-edit__input"
+              value={draftText}
+              rows={Math.max(2, Math.min(8, draftText.split(/\r?\n/).length))}
+              aria-label={t("common.edit")}
+              disabled={editSubmitting}
+              onChange={(event) => updateDraftText(event.target.value)}
+              onKeyDown={onEditKeyDown}
+            />
+            <div className="msg-edit__actions">
+              <button className="msg-edit__btn" type="button" disabled={editSubmitting} onClick={cancelEdit}>
+                {t("common.cancel")}
+              </button>
+              <button className="msg-edit__btn msg-edit__btn--primary" type="submit" disabled={editSubmitting || (draftText.trim() === "" && draftAttachments.length === 0)}>
+                {t("msg.editSend")}
+              </button>
+            </div>
+          </form>
+        ) : imSource ? (
+          <div className="im-source-card">
+            <div className="im-source-card__head">
+              <MessageSquare size={14} />
+              <span>{t("msg.fromIm", { source: sourceLabel })}</span>
+            </div>
+            {displayText && <div className="im-source-card__text"><SkillTokenText value={displayText} submitText={submitText} /></div>}
+            {(imSource.sender || imSource.chat) && (
+              <div className="im-source-card__meta">
+                {imSource.sender && <span>{t("msg.imSender", { id: imSource.sender })}</span>}
+                {imSource.chat && <span>{imSource.chat}</span>}
+              </div>
+            )}
+          </div>
+        ) : (
+          displayText && <div className="msg__text"><SkillTokenText value={displayText} submitText={submitText} /></div>
+        )}
+        {failed && <div className="msg__send-failed">{t("msg.sendFailed")}</div>}
+        {orderedAttachments.length > 0 && (
+          <div className="msg-attachments" aria-label={t("msg.attachments")}>
+            {orderedAttachments.map((attachment, index) => (
+              <AttachmentCard key={`${attachment.path}:${index}`} attachment={attachment} imagePreview={imagePreviews[attachment.path]} t={t} />
+            ))}
+          </div>
+        )}
+      </div>
+      {!editing && (
+        <div className="msg-meta" role="group" aria-label={t("rewind.label")}>
+          {sentAt && (
+            <time className="msg-meta__time" dateTime={sentAt.toISOString()} title={sentAt.toLocaleString()}>
+              {formatMessageTime(sentAt)}
+            </time>
+          )}
+          {hasMemoryCompiler && (
+            <span className="msg-meta__indicator" title={t("msg.memoryCompilerApplied")} aria-hidden="true">
+              <BrainCircuit size={14} />
+            </span>
+          )}
+          <CopyButton text={actionText} label={t("msg.copy")} showInlineLabel={false} className="msg-meta__btn msg-meta__copy" />
+          {onEdit && (
+            <button
+              className="msg-meta__btn"
+              type="button"
+              aria-label={t("common.edit")}
+              title={t("common.edit")}
+              disabled={!canEdit}
+              onClick={startEdit}
+            >
+              <Pencil size={14} />
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function TurnActions({
+  text,
+  turn,
+  openMenu,
+  onOpenMenu,
+  onRewind,
+  checkpoint,
+  actionPending = false,
+  rewindDisabled = false,
+  hoverMenus = false,
+  turnMeta,
+}: {
+  text: string;
+  turn?: number;
+  openMenu?: TurnActionMenu | null;
+  onOpenMenu?: (menu: TurnActionMenu | null) => void;
+  onRewind?: (turn: number, scope: MessageActionScope) => void;
+  checkpoint?: CheckpointMeta;
+  actionPending?: boolean;
+  rewindDisabled?: boolean;
+  hoverMenus?: boolean;
+  turnMeta?: TurnMetadata;
+}) {
+  const t = useT();
+  const visibleText = stripHiddenSystemPrompt(text);
+  const [confirmScope, setConfirmScope] = useState<MessageActionScope | null>(null);
+  const hoverCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const canAct = onRewind != null && turn != null;
+  const cancelHoverClose = () => {
+    if (hoverCloseTimerRef.current === null) return;
+    clearTimeout(hoverCloseTimerRef.current);
+    hoverCloseTimerRef.current = null;
+  };
+  useEffect(() => () => {
+    if (hoverCloseTimerRef.current !== null) clearTimeout(hoverCloseTimerRef.current);
+  }, []);
+  const actionDisabledReason = (scope: string): string => {
+    if (rewindDisabled || actionPending) return t("rewind.disabledRunning");
+    if (!checkpoint) return t("rewind.disabledNoCheckpoint");
+    if ((scope === "fork" || scope === "summ-from" || scope === "conversation") && !checkpoint.canConversation) {
+      return t("rewind.disabledNoBoundary");
+    }
+    if (scope === "summ-upto") {
+      if (!checkpoint.canConversation) return t("rewind.disabledNoBoundary");
+      if ((turn ?? 0) <= 0) return t("rewind.disabledNoEarlier");
+    }
+    if (scope === "code" && !checkpoint.canCode) return t("rewind.disabledNoCode");
+    if (scope === "both") {
+      if (!checkpoint.canConversation) return t("rewind.disabledNoBoundary");
+      if (!checkpoint.canCode) return t("rewind.disabledNoCode");
+    }
+    return "";
+  };
+  const actionLabel = (scope: MessageActionScope): string => {
+    if (confirmScope !== scope) {
+      switch (scope) {
+        case "fork":
+          return t("rewind.fork");
+        case "summ-from":
+          return t("rewind.summFrom");
+        case "summ-upto":
+          return t("rewind.summUpto");
+        case "conversation":
+          return t("rewind.conversation");
+        case "code":
+          return t("rewind.code");
+        default:
+          return t("rewind.both");
+      }
+    }
+    switch (scope) {
+      case "fork":
+        return t("rewind.confirmFork");
+      case "summ-from":
+        return t("rewind.confirmSummFrom");
+      case "summ-upto":
+        return t("rewind.confirmSummUpto");
+      case "conversation":
+        return t("rewind.confirmConversation");
+      case "code":
+        return t("rewind.confirmCode");
+      default:
+        return t("rewind.confirmBoth");
+    }
+  };
+  const actionMeta = (scope: MessageActionScope): string => {
+    if ((scope === "code" || scope === "both") && checkpoint?.files?.length) {
+      const total = checkpoint.files.length;
+      const turnCount = checkpoint.turnFileCount ?? 0;
+      if (turnCount > 0 && turnCount < total) {
+        return `${t("rewind.filesChanged", { count: total })} (${t("rewind.turnFiles", { count: turnCount })})`;
+      }
+      return t("rewind.filesChanged", { count: total });
+    }
+    return "";
+  };
+  const actionTooltipLabel = (scope: MessageActionScope) => {
+    const reason = actionDisabledReason(scope);
+    if (reason) return <span>{reason}</span>;
+    if ((scope === "code" || scope === "both") && checkpoint?.files?.length) {
+      return (
+        <div className="rewind__files-tooltip">
+          {checkpoint.files.map((file) => (
+            <div key={file}>{file.split(/[/\\]/).pop() || file}</div>
+          ))}
+        </div>
+      );
+    }
+    return undefined;
+  };
+  const runAction = (scope: MessageActionScope) => {
+    setConfirmScope(null);
+    onOpenMenu?.(null);
+    onRewind?.(turn as number, scope);
+  };
+  const selectRewind = (scope: MessageActionScope) => {
+    if (actionDisabledReason(scope)) return;
+    if (confirmScope !== scope) {
+      setConfirmScope(scope);
+      return;
+    }
+    runAction(scope);
+  };
+  const renderAction = (scope: MessageActionScope, danger = false) => {
+    const disabledReason = actionDisabledReason(scope);
+    const meta = actionMeta(scope);
+    const tipLabel = actionTooltipLabel(scope);
+    const button = (
+      <button
+        className={[
+          "rewind__menu-item",
+          danger ? "rewind__menu-danger" : "",
+          confirmScope === scope ? "rewind__menu-confirm" : "",
+        ].filter(Boolean).join(" ")}
+        type="button"
+        disabled={Boolean(disabledReason)}
+        {...(tipLabel ? {} : { title: disabledReason || undefined })}
+        onClick={() => selectRewind(scope)}
+      >
+        <span>{actionLabel(scope)}</span>
+        {meta && <span className="rewind__menu-meta">{meta}</span>}
+      </button>
+    );
+    return tipLabel ? <Tooltip key={scope} label={tipLabel} side="top" block fill>{button}</Tooltip> : button;
+  };
+  const toggleMenu = (menu: TurnActionMenu) => {
+    cancelHoverClose();
+    if (hoverMenus) {
+      setConfirmScope(null);
+      onOpenMenu?.(menu);
+      return;
+    }
+    setConfirmScope(null);
+    onOpenMenu?.(openMenu === menu ? null : menu);
+  };
+  const openHoverMenu = (menu: TurnActionMenu) => {
+    if (!hoverMenus) return;
+    cancelHoverClose();
+    if (openMenu === menu) return;
+    setConfirmScope(null);
+    onOpenMenu?.(menu);
+  };
+  const scheduleHoverClose = () => {
+    if (!hoverMenus) return;
+    cancelHoverClose();
+    hoverCloseTimerRef.current = setTimeout(() => {
+      hoverCloseTimerRef.current = null;
+      setConfirmScope(null);
+      onOpenMenu?.(null);
+    }, 150);
+  };
+  return (
+    <div className={`turn-actions${openMenu ? " turn-actions--open" : ""}${hoverMenus ? " turn-actions--hover-menu" : ""}`}>
+      <div className="turn-actions__controls">
+        <CopyButton text={visibleText} label={t("msg.copy")} />
+        {canAct && (
+          <>
+          <div
+            className={`turn-actions__group${openMenu === "summary" ? " turn-actions__group--open" : ""}`}
+            onMouseEnter={() => openHoverMenu("summary")}
+            onMouseLeave={scheduleHoverClose}
+          >
+            <button
+              className="turn-actions__btn"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={openMenu === "summary"}
+              onClick={() => toggleMenu("summary")}
+            >
+              <ScrollText size={13} />
+              <span>{t("turnActions.summary")}</span>
+              <ChevronDown size={12} />
+            </button>
+            {openMenu === "summary" && (
+              <div className="rewind__menu turn-actions__menu" role="menu">
+                {rewindDisabled && <div className="rewind__menu-hint">{t("rewind.disabledRunning")}</div>}
+                {!rewindDisabled && !checkpoint && <div className="rewind__menu-hint">{t("rewind.disabledNoCheckpoint")}</div>}
+                {renderAction("summ-from")}
+                {renderAction("summ-upto")}
+              </div>
+            )}
+          </div>
+          <div
+            className={`turn-actions__group${openMenu === "rewind" ? " turn-actions__group--open" : ""}`}
+            onMouseEnter={() => openHoverMenu("rewind")}
+            onMouseLeave={scheduleHoverClose}
+          >
+            <button
+              className="turn-actions__btn"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded={openMenu === "rewind"}
+              onClick={() => toggleMenu("rewind")}
+            >
+              <RotateCcw size={13} />
+              <span>{t("turnActions.rewind")}</span>
+              <ChevronDown size={12} />
+            </button>
+            {openMenu === "rewind" && (
+              <div className="rewind__menu turn-actions__menu" role="menu">
+                {rewindDisabled && <div className="rewind__menu-hint">{t("rewind.disabledRunning")}</div>}
+                {!rewindDisabled && !checkpoint && <div className="rewind__menu-hint">{t("rewind.disabledNoCheckpoint")}</div>}
+                {renderAction("conversation")}
+                {renderAction("code")}
+                {renderAction("both", true)}
+              </div>
+            )}
+          </div>
+          </>
+        )}
+      </div>
+      <TurnUsageMeta turn={turnMeta} />
+    </div>
+  );
+}
+
+export const AssistantMessage = memo(function AssistantMessage({
+  item,
+  defaultExpanded = false,
+  expandWhileStreaming = true,
+  truncateStreamingReasoning = false,
+  creationMode = false,
+  tabId,
+  generatedMedia = [],
+}: {
+  item: AssistantItem;
+  defaultExpanded?: boolean;
+  /** false in compact mode: completed steps fold away, so auto-open + fold reads as flicker. */
+  expandWhileStreaming?: boolean;
+  /** Opt-in for compact mode to keep live DeepSeek reasoning from growing an unbounded DOM. */
+  truncateStreamingReasoning?: boolean;
+  creationMode?: boolean;
+  tabId?: string;
+  generatedMedia?: readonly GeneratedMediaReference[];
+}) {
+  const t = useT();
+  const { showToast } = useToast();
+  const workspaceFileScope = useWorkspaceFileScope();
+  const reasoningBodyRef = useRef<HTMLDivElement>(null);
+  // Thinking streams in before the answer — show it live while the model is still
+  // working, then it stays available behind the toggle once the answer arrives.
+  const [reasoningOpen, setReasoningOpen] = useState((expandWhileStreaming && item.streaming) || defaultExpanded);
+  const userOverridden = useRef(false);
+  const prevStreamingRef = useRef(item.streaming);
+  const prevReasoningCompleteRef = useRef(item.reasoningComplete ?? false);
+  useGSAPCollapse(reasoningBodyRef, reasoningOpen);
+
+  // Follow the current display mode while streaming unless the user manually
+  // toggled this message; auto-close at stream end for untouched messages.
+  useEffect(() => {
+    const wasStreaming = prevStreamingRef.current;
+    const nowStreaming = item.streaming;
+    prevStreamingRef.current = nowStreaming;
+
+    const wasRC = prevReasoningCompleteRef.current;
+    const nowRC = item.reasoningComplete ?? false;
+    prevReasoningCompleteRef.current = nowRC;
+
+    if (nowStreaming) {
+      if (!wasStreaming) userOverridden.current = false;
+      if (defaultExpanded) {
+        setReasoningOpen(true);
+      } else if (!userOverridden.current) {
+        setReasoningOpen(expandWhileStreaming);
+      }
+    } else if (nowRC && !wasRC) {
+      // Reasoning just finished — auto-close while we wait for text.
+      if (!defaultExpanded && !userOverridden.current) {
+        setReasoningOpen(false);
+      }
+    } else if (wasStreaming) {
+      // Stream fully ended — auto-close if user didn't interact.
+      if (!defaultExpanded && !userOverridden.current) {
+        setReasoningOpen(false);
+      }
+    }
+  }, [item.streaming, item.reasoningComplete, defaultExpanded, expandWhileStreaming]);
+
+  const toggleReasoning = () => {
+    userOverridden.current = true;
+    setReasoningOpen((v) => !v);
+  };
+  const visibleText = useMemo(() => stripHiddenSystemPrompt(item.text), [item.text]);
+  const visibleReasoningText = useMemo(() => stripHiddenSystemPrompt(item.reasoning), [item.reasoning]);
+  const hasText = item.streaming || visibleText.trim() !== "";
+  const artifactDelivery = useMemo(() => normalizeArtifactDeliveryV1(item.artifactDelivery), [item.artifactDelivery]);
+  const hasArtifactDelivery = item.artifactDelivery !== undefined;
+  const deliveredArtifactPaths = artifactDelivery?.paths ?? noArtifactDeliveryPaths;
+  // Contracts are authoritative for every state. The old text/paths heuristic is
+  // only safe for a persisted, successfully accepted legacy final answer.
+  const canInferLegacyArtifacts = !hasArtifactDelivery && item.finalAnswer === true && !item.streaming;
+  const generatedFileCandidates = useMemo(() => {
+    if (hasArtifactDelivery) return deliveredArtifactPaths;
+    if (!canInferLegacyArtifacts) return noArtifactDeliveryPaths;
+    const parsed = parseGeneratedFileRefsForDisplay(visibleText).attachments.map((attachment) => attachment.path);
+    const candidates: string[] = [];
+    const seen = new Set<string>();
+    for (const path of [...(item.artifactPaths ?? []), ...parsed, ...inlineGeneratedFilePathsForDisplay(visibleText), ...bareGeneratedFilePathsForDisplay(visibleText)]) {
+      const key = displayAttachmentPathKey(path);
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      candidates.push(path);
+    }
+    return candidates;
+  }, [canInferLegacyArtifacts, deliveredArtifactPaths, hasArtifactDelivery, item.artifactPaths, visibleText]);
+  const generatedFileCandidateKey = generatedFileCandidates.join("\n");
+  const workspaceFileOwner = useMemo(
+    () => resolveWorkspaceFileOwner(tabId, workspaceFileScope),
+    [tabId, workspaceFileScope.allowActiveWorkspace, workspaceFileScope.tabId, workspaceFileScope.workspaceRoot],
+  );
+  const workspaceFileOwnerKeyRef = useRef(workspaceFileOwner.ownerKey);
+  workspaceFileOwnerKeyRef.current = workspaceFileOwner.ownerKey;
+  const [verifiedGeneratedPathState, setVerifiedGeneratedPathState] = useState<{
+    ownerKey: string;
+    paths: Set<string>;
+  }>(() => ({ ownerKey: workspaceFileOwner.ownerKey, paths: new Set() }));
+  const verifiedGeneratedPathKeys = visibleWorkspaceFilePathKeys(verifiedGeneratedPathState, workspaceFileOwner.ownerKey);
+  const verifiedGeneratedPathKey = useMemo(() => Array.from(verifiedGeneratedPathKeys).sort().join("\n"), [verifiedGeneratedPathKeys]);
+  useEffect(() => {
+    const paths = generatedFileCandidateKey ? generatedFileCandidateKey.split("\n") : [];
+    const candidateKeys = new Set(paths.map(displayAttachmentPathKey));
+    const ownerKey = workspaceFileOwner.ownerKey;
+    setVerifiedGeneratedPathState((prev) => {
+      const previousPaths = prev.ownerKey === ownerKey ? prev.paths : new Set<string>();
+      const nextPaths = new Set(Array.from(previousPaths).filter((key) => candidateKeys.has(key)));
+      if (prev.ownerKey === ownerKey && nextPaths.size === prev.paths.size && Array.from(nextPaths).every((key) => prev.paths.has(key))) return prev;
+      return { ownerKey, paths: nextPaths };
+    });
+    if (paths.length === 0 || workspaceFileOwner.kind === "none") return;
+    let cancelled = false;
+    for (const path of paths) {
+      readWorkspaceFileForOwner(workspaceFileOwner, path)
+        .then((file) => {
+          if (cancelled || workspaceFileOwnerKeyRef.current !== ownerKey || file.err) return;
+          setVerifiedGeneratedPathState((prev) => {
+            if (prev.ownerKey !== ownerKey) return prev;
+            const key = displayAttachmentPathKey(path);
+            if (!key || prev.paths.has(key)) return prev;
+            const nextPaths = new Set(prev.paths);
+            nextPaths.add(key);
+            return { ownerKey, paths: nextPaths };
+          });
+        })
+        .catch(() => {});
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [generatedFileCandidateKey, workspaceFileOwner]);
+  const { text: displayText, attachments: textGeneratedAttachments } = useMemo(
+    () => hasArtifactDelivery
+      ? { text: visibleText, attachments: [] }
+      : canInferLegacyArtifacts
+        ? parseGeneratedFileRefsForDisplay(visibleText, { verifiedGeneratedPathKeys })
+        : { text: visibleText, attachments: [] },
+    [canInferLegacyArtifacts, hasArtifactDelivery, verifiedGeneratedPathKey, visibleText],
+  );
+  const generatedAttachments = useMemo(() => {
+    const structured = (hasArtifactDelivery ? deliveredArtifactPaths : canInferLegacyArtifacts ? item.artifactPaths ?? [] : noArtifactDeliveryPaths)
+      .filter((path) => verifiedGeneratedPathKeys.has(displayAttachmentPathKey(path)))
+      .map((path) => workspaceDisplayAttachment(path, true));
+    return hasArtifactDelivery ? structured : mergeEquivalentDisplayAttachments(structured, textGeneratedAttachments);
+  }, [canInferLegacyArtifacts, deliveredArtifactPaths, hasArtifactDelivery, item.artifactPaths, textGeneratedAttachments, verifiedGeneratedPathKey]);
+  const linkedDisplayText = useMemo(
+    () => hasArtifactDelivery || !canInferLegacyArtifacts ? displayText : linkVerifiedBareGeneratedFilesForDisplay(displayText, verifiedGeneratedPathKeys),
+    [canInferLegacyArtifacts, displayText, hasArtifactDelivery, verifiedGeneratedPathKey],
+  );
+  const orderedGeneratedAttachments = useMemo(() => sortDisplayAttachments(generatedAttachments), [generatedAttachments]);
+  const hasDisplayText = item.streaming || displayText.trim() !== "" || orderedGeneratedAttachments.length > 0;
+  const processOnly = Boolean(visibleReasoningText) && !hasText;
+  const processWithText = Boolean(visibleReasoningText) && hasDisplayText;
+  const visibleReasoning = reasoningOpen
+    ? displayReasoningText(visibleReasoningText, {
+        streaming: item.streaming,
+        truncateStreaming: truncateStreamingReasoning,
+      })
+    : "";
+  return (
+    <div className={`msg msg--assistant${processOnly ? " msg--process-only" : ""}${processWithText ? " msg--process-with-text" : ""}`} data-history-restore={item.id.startsWith("h") ? "" : undefined} data-entrance={item.id}>
+      {visibleReasoningText && (
+        <div className="reasoning">
+          <button
+            type="button"
+            className="reasoning__head"
+            data-running={item.streaming && !item.reasoningComplete ? "" : undefined}
+            onClick={toggleReasoning}
+            aria-expanded={reasoningOpen}
+          >
+            <ProcessBrainIcon size={12} />
+            <span data-creation-label={t("creation.reasoningLabel")}>{t("msg.thinking")}</span>
+            <span className="reasoning__meta">{item.streaming && !item.reasoningComplete ? t("msg.thinkingRunning") : t("msg.thinkingDone")}</span>
+            <ChevronRight className={`reasoning__chevron${reasoningOpen ? " reasoning__chevron--open" : ""}`} size={12} />
+          </button>
+          {reasoningOpen && (
+            <div ref={reasoningBodyRef} className="reasoning__body">{visibleReasoning}</div>
+          )}
+        </div>
+      )}
+      {hasDisplayText && (
+        <div className="msg__body">
+          {linkedDisplayText.trim() !== "" && <Markdown text={linkedDisplayText} plainStatusBlocks={creationMode} tabId={tabId} />}
+          {orderedGeneratedAttachments.length > 0 && (
+            <div className="msg-attachments" aria-label={t("msg.attachments")}>
+              {orderedGeneratedAttachments.map((attachment, index) => (
+                <AttachmentCard key={`${attachment.path}:${index}`} attachment={attachment} interactive tabId={tabId} t={t} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      <MemoryCitations citations={item.memoryCitations} />
+      {generatedMedia.length > 0 && (
+        <div className="msg-generated-media-paths" aria-label={t("msg.generatedMediaPaths")}>
+          <div className="msg-generated-media-paths__label">{t("msg.generatedMediaPaths")}</div>
+          {generatedMedia.map((reference) => {
+            const location = reference.path || reference.url || "";
+            if (!location) return null;
+            if (reference.path) {
+              const path = reference.path;
+              const openLocalMedia = () => {
+                void openWorkspacePathForOwner(workspaceFileOwner, path).catch(() => {
+                  showToast(t("msg.openFileFailed"), "warn");
+                });
+              };
+              return (
+                <a
+                  className="msg-generated-media-paths__path"
+                  href={path}
+                  key={`${reference.type}:${location}`}
+                  title={location}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    openLocalMedia();
+                  }}
+                  onAuxClick={(event) => {
+                    event.preventDefault();
+                    openLocalMedia();
+                  }}
+                  onMouseDown={(event) => {
+                    if (event.button === 1) event.preventDefault();
+                  }}
+                >
+                  {location}
+                </a>
+              );
+            }
+            return reference.url ? (
+              <a
+                className="msg-generated-media-paths__path"
+                href={reference.url}
+                key={`${reference.type}:${location}`}
+                target="_blank"
+                rel="noreferrer"
+                title={location}
+              >
+                {location}
+              </a>
+            ) : null;
+          })}
+        </div>
+      )}
+    </div>
+  );
+});

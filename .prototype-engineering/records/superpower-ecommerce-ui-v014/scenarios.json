@@ -1,0 +1,9 @@
+{
+  "scenarios": [
+    {"id":"multi-source-execution","description":"Two selected cards resolve task-scoped artifacts and produce answer blocks whose citation orders map to both request citations.","fixture":"eBay snapshot plus 1688 supply trend"},
+    {"id":"partially-unresolved","description":"Known evidence is used while unknown evidence IDs are reported and never fabricated.","fixture":"One catalog artifact plus ev:session:active-citation"},
+    {"id":"empty-evidence","description":"A request with no citations returns an explicit no-bound-evidence result without source claims.","fixture":"Valid v1 request with empty citations"},
+    {"id":"scope-mismatch","description":"Artifacts outside the request capability/workspace/task scope are unresolved.","fixture":"Valid evidence ID under the wrong task scope"},
+    {"id":"bounded-context","description":"Resolved summaries are assembled under a fixed character budget and evidence is marked as untrusted data.","fixture":"Several maximum-sized artifact summaries"}
+  ]
+}

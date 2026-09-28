@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-ui);
+}
+
+.workbuddy-project-fixture {
+  display: flex;
+  width: min(1120px, calc(100vw - 32px));
+  height: calc(100vh - 32px);
+  min-height: 560px;
+  flex-direction: column;
+  margin: 16px auto;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-soft);
+  box-shadow: var(--shadow-1);
+}
+
+.workbuddy-project-fixture > .cloud-projects {
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.workbuddy-project-fixture__controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.workbuddy-project-fixture__controls button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-elev);
+  color: var(--fg);
+  font: inherit;
+}
+
+.workbuddy-project-fixture__events {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .workbuddy-project-fixture {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
+    min-height: 0;
+    margin: 10px auto;
+    padding: 14px;
+  }
+}

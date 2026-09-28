@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "documentation_url": "https://learning.postman.com/docs/reference/postman-api/authentication",
+  "documentation_label": "获取 Postman API Key",
+  "fields": [
+    {
+      "id": "postman_api_key",
+      "label": "Postman API Key",
+      "type": "secret",
+      "required": true
+    }
+  ],
+  "headers": [
+    {
+      "name": "Authorization",
+      "template": "Bearer {postman_api_key}"
+    }
+  ]
+}

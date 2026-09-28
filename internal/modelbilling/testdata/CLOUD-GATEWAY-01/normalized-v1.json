@@ -1,0 +1,276 @@
+{
+  "fixture_version": "b0-v1",
+  "dependency_id": "CLOUD-GATEWAY-01",
+  "scope": {"profile_id": "default", "cloud_user_id": "usr_fixture", "binding_generation": 1},
+  "cases": [
+    {
+      "name": "stream_success",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {
+        "task_id": "task_01",
+        "call_id": "call_success",
+        "model_id": "model_fixture_01",
+        "role": "main",
+        "provider_request": {
+          "Messages": [{"role": "user", "content": "fixture prompt"}],
+          "Tools": [],
+          "Temperature": 0,
+          "MaxTokens": 128
+        }
+      },
+      "chunks": [
+        {"type": "text", "text": "fixture response"},
+        {
+          "type": "usage",
+          "provider_request_id": "provider_req_fixture",
+          "usage": {
+            "input_tokens": 10,
+            "normal_input_tokens": 8,
+            "cached_input_tokens": 2,
+            "cache_read_tokens": 2,
+            "cache_write_tokens": 0,
+            "output_tokens": 4,
+            "provider_total_tokens": 14,
+            "request_count": 1,
+            "breakdown_status": "exact"
+          },
+          "raw_usage_redacted": {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+        },
+        {
+          "type": "done",
+          "quota_observation": {
+            "headers": {"X-Oneapi-Request-Id": ["provider_req_fixture"]},
+            "final_json": {"billing": {"quota": 50}, "usage": {"quota": 50.0}},
+            "observed_at": "2026-07-11T00:09:30Z"
+          }
+        }
+      ]
+    },
+    {
+      "name": "retryable_stream_error",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {
+        "task_id": "task_retry",
+        "call_id": "call_retry",
+        "model_id": "model_fixture_01",
+        "role": "planner",
+        "provider_request": {"Messages": [], "Tools": [], "Temperature": 0, "MaxTokens": 64}
+      },
+      "chunks": [
+        {"type": "error", "error": {"code": "gateway_unavailable", "message": "fixture gateway unavailable", "retryable": true}}
+      ]
+    },
+    {
+      "name": "non_retryable_start_error",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "non_streaming",
+      "request": {
+        "task_id": "task_auth",
+        "call_id": "call_auth",
+        "model_id": "model_fixture_01",
+        "role": "executor",
+        "provider_request": {"Messages": [], "Tools": [], "Temperature": 0, "MaxTokens": 64}
+      },
+      "error": {"code": "auth_required", "message": "fixture session required"}
+    },
+    {
+      "name": "usage_missing",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {
+        "task_id": "task_missing",
+        "call_id": "call_missing",
+        "model_id": "model_fixture_01",
+        "role": "subagent",
+        "provider_request": {"Messages": [], "Tools": [], "Temperature": 0, "MaxTokens": 64}
+      },
+      "chunks": [
+        {"type": "text", "text": "fixture output without usage"},
+        {
+          "type": "done",
+          "quota_observation": {
+            "headers": {"X-Oneapi-Request-Id": ["provider_req_usage_missing"]},
+            "final_json": {"usage": {"quota": 1}},
+            "observed_at": "2026-07-11T00:09:31Z"
+          }
+        }
+      ]
+    },
+    {
+      "name": "responses_non_stream_success",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {
+        "task_id": "task_responses",
+        "call_id": "call_responses",
+        "model_id": "model_fixture_01",
+        "role": "main",
+        "provider_request": {
+          "Messages": [{"role": "user", "content": "fixture responses prompt"}],
+          "Tools": [],
+          "Temperature": 0,
+          "MaxTokens": 128
+        }
+      },
+      "chunks": [
+        {"type": "text", "text": "fixture responses output"},
+        {
+          "type": "usage",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 1,
+            "provider_total_tokens": 4,
+            "request_count": 1,
+            "breakdown_status": "exact"
+          },
+          "raw_usage_redacted": {"input_tokens": 3, "output_tokens": 1, "total_tokens": 4}
+        },
+        {
+          "type": "done",
+          "quota_observation": {
+            "headers": {"x-oneapi-request-id": ["provider_req_responses"]},
+            "final_json": {"billing": {"quota": 0}, "usage": {"quota": 0.0}},
+            "observed_at": "2026-07-11T00:09:32Z"
+          }
+        }
+      ]
+    },
+    {
+      "name": "chat_billing_only",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_chat_billing", "call_id": "call_chat_billing", "model_id": "model_fixture_01", "role": "main", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_chat_billing"]}, "final_json": {"billing": {"quota": 1}}, "observed_at": "2026-07-11T00:09:33Z"}}]
+    },
+    {
+      "name": "chat_usage_only",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_chat_usage", "call_id": "call_chat_usage", "model_id": "model_fixture_01", "role": "planner", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_chat_usage"]}, "final_json": {"usage": {"quota": 2}}, "observed_at": "2026-07-11T00:09:34Z"}}]
+    },
+    {
+      "name": "chat_quota_missing",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_chat_missing", "call_id": "call_chat_missing", "model_id": "model_fixture_01", "role": "executor", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_chat_missing"]}, "final_json": {}, "observed_at": "2026-07-11T00:09:35Z"}}]
+    },
+    {
+      "name": "chat_quota_invalid",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_chat_invalid", "call_id": "call_chat_invalid", "model_id": "model_fixture_01", "role": "subagent", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_chat_invalid"]}, "final_json": {"billing": {"quota": -1}}, "observed_at": "2026-07-11T00:09:36Z"}}]
+    },
+    {
+      "name": "chat_quota_conflicting",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_chat_conflict", "call_id": "call_chat_conflict", "model_id": "model_fixture_01", "role": "compaction", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_chat_conflict"]}, "final_json": {"billing": {"quota": 4}, "usage": {"quota": 5}}, "observed_at": "2026-07-11T00:09:37Z"}}]
+    },
+    {
+      "name": "chat_request_id_missing",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_chat_request_missing", "call_id": "call_chat_request_missing", "model_id": "model_fixture_01", "role": "classifier", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {}, "final_json": {"billing": {"quota": 6}}, "observed_at": "2026-07-11T00:09:38Z"}}]
+    },
+    {
+      "name": "responses_billing_only",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_responses_billing", "call_id": "call_responses_billing", "model_id": "model_fixture_01", "role": "main", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"x-oneapi-request-id": ["req_responses_billing"]}, "final_json": {"billing": {"quota": 1.5}}, "observed_at": "2026-07-11T00:09:39Z"}}]
+    },
+    {
+      "name": "responses_usage_only",
+      "endpoint": "/v1/responses",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_responses_usage", "call_id": "call_responses_usage", "model_id": "model_fixture_01", "role": "planner", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"x-oneapi-request-id": ["req_responses_usage"]}, "final_json": {"usage": {"quota": 2.5}}, "observed_at": "2026-07-11T00:09:40Z"}}]
+    },
+    {
+      "name": "responses_quota_missing",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_responses_missing", "call_id": "call_responses_missing", "model_id": "model_fixture_01", "role": "executor", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"x-oneapi-request-id": ["req_responses_missing"]}, "final_json": {}, "observed_at": "2026-07-11T00:09:41Z"}}]
+    },
+    {
+      "name": "responses_quota_invalid",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_responses_invalid", "call_id": "call_responses_invalid", "model_id": "model_fixture_01", "role": "subagent", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"x-oneapi-request-id": ["req_responses_invalid"]}, "final_json": {"usage": {"quota": "3"}}, "observed_at": "2026-07-11T00:09:42Z"}}]
+    },
+    {
+      "name": "responses_quota_conflicting",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_responses_conflict", "call_id": "call_responses_conflict", "model_id": "model_fixture_01", "role": "compaction", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"x-oneapi-request-id": ["req_responses_conflict"]}, "final_json": {"billing": {"quota": 7}, "usage": {"quota": 8}}, "observed_at": "2026-07-11T00:09:43Z"}}]
+    },
+    {
+      "name": "responses_request_id_missing",
+      "endpoint": "/v1/responses",
+      "response_mode": "non_streaming",
+      "request": {"task_id": "task_responses_request_missing", "call_id": "call_responses_request_missing", "model_id": "model_fixture_01", "role": "classifier", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {}, "final_json": {"usage": {"quota": 9}}, "observed_at": "2026-07-11T00:09:44Z"}}]
+    },
+    {
+      "name": "chat_duplicate_header_request_ids",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {"task_id": "task_header_conflict", "call_id": "call_header_conflict", "model_id": "model_fixture_01", "role": "guardian", "provider_request": {}},
+      "chunks": [{"type": "done", "quota_observation": {"headers": {"X-Oneapi-Request-Id": ["req_header_a"], "x-oneapi-request-id": ["req_header_b"]}, "final_json": {"billing": {"quota": 10}}, "observed_at": "2026-07-11T00:09:45Z"}}]
+    },
+    {
+      "name": "desktop_stream_zero",
+      "endpoint": "/v1/chat/completions",
+      "response_mode": "streaming",
+      "request": {
+        "task_id": "task_desktop_zero",
+        "call_id": "call_desktop_zero",
+        "model_id": "model_fixture_01",
+        "role": "main",
+        "provider_request": {
+          "Messages": [{"role": "user", "content": "fixture prompt"}],
+          "Tools": [],
+          "Temperature": 0,
+          "MaxTokens": 128
+        }
+      },
+      "chunks": [
+        {"type": "text", "text": "fixture response"},
+        {
+          "type": "usage",
+          "provider_request_id": "${runtime.call_id}",
+          "usage": {
+            "input_tokens": 10,
+            "normal_input_tokens": 8,
+            "cached_input_tokens": 2,
+            "cache_read_tokens": 2,
+            "cache_write_tokens": 0,
+            "output_tokens": 4,
+            "provider_total_tokens": 14,
+            "request_count": 1,
+            "breakdown_status": "exact"
+          },
+          "raw_usage_redacted": {"input_tokens": 10, "output_tokens": 4, "total_tokens": 14}
+        },
+        {
+          "type": "done",
+          "quota_observation": {
+            "headers": {"X-Oneapi-Request-Id": ["${runtime.call_id}"]},
+            "final_json": {"billing": {"quota": 0}, "usage": {"quota": 0.0}},
+            "observed_at": "2026-07-11T00:09:30Z"
+          }
+        }
+      ]
+    }
+  ]
+}
