@@ -122,7 +122,7 @@ jobs:
           }
 
       - name: Check out trusted release tooling and full history
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ github.sha }}
@@ -154,7 +154,7 @@ jobs:
       receipt_macos_universal: ${{ steps.stage.outputs.receipt_macos_universal }}
     steps:
       - name: Check out trusted release tooling
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           # The helper revalidates the private source tag with git ls-remote.
@@ -162,7 +162,7 @@ jobs:
           persist-credentials: true
 
       - name: Check out frozen source only for approved release notes
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.resolve.outputs.source_commit }}
           path: release-source
@@ -204,7 +204,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out validation tooling
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
@@ -278,7 +278,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out validation tooling
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
@@ -315,7 +315,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Check out trusted signing and publication tooling
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           # The helper revalidates the private source tag immediately before publication.
@@ -323,14 +323,14 @@ jobs:
           persist-credentials: true
 
       - name: Check out frozen source only for approved release notes
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.resolve.outputs.source_commit }}
           path: release-source
           persist-credentials: false
 
       - name: Set up Go
-        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: desktop/go.mod
           cache: true
@@ -528,7 +528,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out trusted cloud publication tooling
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           # Cloud-only recovery also revalidates the private source tag before POST.
@@ -536,14 +536,14 @@ jobs:
           persist-credentials: true
 
       - name: Check out frozen source only for approved release notes
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ needs.resolve.outputs.source_commit }}
           path: release-source
           persist-credentials: false
 
       - name: Set up Go
-        uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: desktop/go.mod
           cache: true
