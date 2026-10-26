@@ -17,7 +17,7 @@ jobs:
   cache-impact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           ref: ${{ github.event.pull_request.base.sha }}
 
